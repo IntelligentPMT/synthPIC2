@@ -1,0 +1,305 @@
+# Initializing and seeding
+defaults:
+  - BaseRecipe
+  - _self_
+initial_runtime_state:
+  seed: 42
+# Defining blueprints
+blueprints:
+  measurement_techniques:
+    TopCamInAir:
+      measurement_technique_prototype_name: woodTable_sideCam
+      measurement_volume_material_prototype_name: vacuum
+      background_material_prototype_name: wood
+  particles:
+    Bead:
+      geometry_prototype_name: ellipsoid
+      material_prototype_name: colored_subtle
+      parent: MeasurementVolume
+      number: 200
+# Physical boundary conditions
+process_conditions:
+  feature_criteria:
+    IsCat1:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 1
+      compartments_total: 8
+      default_return_value: False
+    IsCat2:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 2
+      compartments_total: 8
+      default_return_value: False
+    IsCat3:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 3
+      compartments_total: 8
+      default_return_value: False
+    IsCat4:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 4
+      compartments_total: 8
+      default_return_value: False
+    IsCat5:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 5
+      compartments_total: 8
+      default_return_value: False
+    IsCat6:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 6
+      compartments_total: 8
+      default_return_value: False
+    IsCat7:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 7
+      compartments_total: 8
+      default_return_value: False
+    IsCat8:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 8
+      compartments_total: 8
+      default_return_value: False
+    IsPink:
+      _target_: $plugins.official.InHsvRange
+      feature_name: color
+      h_min: 0.945
+      h_max: 0.950
+      s_min: 0.895
+      s_max: 0.900
+      v_min: 0.648
+      v_max: 0.653
+      default_return_value: False
+  sets: 
+    Category1:
+      criterion: $IsParticle and $IsCat1
+    Category2:
+      criterion: $IsParticle and $IsCat2
+    Category3:
+      criterion: $IsParticle and $IsCat3
+    Category4:
+      criterion: $IsParticle and $IsCat4
+    Category5:
+      criterion: $IsParticle and $IsCat5
+    Category6:
+      criterion: $IsParticle and $IsCat6
+    Category7:
+      criterion: $IsParticle and $IsCat7
+    Category8:
+      criterion: $IsParticle and $IsCat8
+    PinkParticles:
+      criterion: $IsParticle and $IsPink
+  feature_variabilities:
+    CameraNearTable:
+      feature_name: cam_location_z
+      variability:
+        _target_: $builtins.Constant
+        value: -35.0
+    InitialParticleLocation:
+      feature_name: location
+      variability:
+        _target_: $builtins.UniformlyRandomLocationInMeasurementVolume
+    ParticleDimension:
+      feature_name: dimensions
+      variability:
+        _target_: $builtins.UniformDistribution3dHomogeneous
+        location: 3.58
+        scale: 0.6
+    ParticleWidth:
+      feature_name: width
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.85
+        scale: 0.15
+        num_dimensions: 1
+    ParticleHeight:
+      feature_name: height
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.475
+        scale: 0.15
+        num_dimensions: 1
+    PinkColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.945
+        h_max: 0.950
+        s_min: 0.895
+        s_max: 0.900
+        v_min: 0.648
+        v_max: 0.653
+    RedColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.990
+        h_max: 0.995
+        s_min: 0.995
+        s_max: 1.000
+        v_min: 0.448
+        v_max: 0.453
+    OrangeColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.020
+        h_max: 0.025
+        s_min: 0.995
+        s_max: 1.000
+        v_min: 0.895
+        v_max: 0.900
+    YellowColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.087
+        h_max: 0.092
+        s_min: 0.945
+        s_max: 0.950
+        v_min: 0.862
+        v_max: 0.867
+    GreenColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.321
+        h_max: 0.326
+        s_min: 0.770
+        s_max: 0.775
+        v_min: 0.253
+        v_max: 0.258
+    BlueColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.622
+        h_max: 0.627
+        s_min: 0.846
+        s_max: 0.851
+        v_min: 0.547
+        v_max: 0.552
+    PurpleColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.716
+        h_max: 0.721
+        s_min: 0.801
+        s_max: 0.806
+        v_min: 0.348
+        v_max: 0.353
+    BrownColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.020
+        h_max: 0.025
+        s_min: 0.796
+        s_max: 0.801
+        v_min: 0.082
+        v_max: 0.087
+    RenderingResolutionPercentage:
+      feature_name: resolution_percentage
+      variability:
+        _target_: $builtins.Constant
+        value: 25
+    CyclesSamples:
+      feature_name: cycles_samples
+      variability:
+        _target_: $builtins.Constant
+        value: 64
+        # value: 512 # only for final render
+# Procedural steps of synthetization chain
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllParticleBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: CameraNearTable
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: InitialParticleLocation
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDimension
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleWidth
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleHeight
+      affected_set_name: AllParticles 
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: PinkColor
+      affected_set_name: Category1
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: RedColor
+      affected_set_name: Category2
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: OrangeColor
+      affected_set_name: Category3
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: YellowColor
+      affected_set_name: Category4
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: GreenColor
+      affected_set_name: Category5
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: BlueColor
+      affected_set_name: Category6
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: PurpleColor
+      affected_set_name: Category7
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: BrownColor
+      affected_set_name: Category8
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      num_frames: 5
+      time_scale: 10
+      collision_shape: CONVEX_HULL
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      use_gravity: True
+      damping: 0.07
+      friction: 0.999
+      restitution: 0.001
+      collision_margin: 0.001
+      num_frames: 200
+      collision_shape: CONVEX_HULL
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: RenderingResolutionPercentage
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: CyclesSamples
+      affected_set_name: AllMeasurementTechniques
+  rendering_steps:
+    - _target_: $builtins.SaveState
+      name: state
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real
+      do_save_features: True
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: categorical
+      output_file_name_prefix: all_
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: categorical
+      set_name_of_interest: PinkParticles
+      output_file_name_prefix: pink_
+    - _target_: $builtins.RenderParticlesIndividually
+      rendering_mode: categorical
+      set_name_of_interest: PinkParticles
+      subfolder: pink
+
+

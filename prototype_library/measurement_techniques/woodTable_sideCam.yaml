@@ -1,0 +1,28 @@
+# HDRI "interior.exr" is taken from standard HDRIs of Blender.
+# The HDRI is licensed as CC0 and was created by Greg Zaal (HDRI Haven https://hdrihaven.com)
+# The glass model is licensed as CC0 and was taken from:
+# "set-of-drinking-glasses-3d-model.zip" (https://creazilla.com/nodes/41631-set-of-drinking-glasses-3d-model)
+
+features:
+  - name: glass_hide
+    blender_link: bpy.data.objects["Glass"].hide_render
+  - name: glass_collision
+    blender_link: bpy.data.objects["Glass"].rigid_body.collision_collections[0]
+  - name: glass_location_z
+    blender_link: bpy.data.objects["Glass"].location[2] # on table: -29.9
+  - name: cam_rotation
+    blender_link: bpy.data.objects["Empty_RotationCam"].rotation_euler[0] # min: -0.05235987901687622 ; max: 0.05235987901687622
+  - name: cam_altitude
+    blender_link: bpy.data.objects["Empty_RotationCam"].rotation_euler[1] # min: -0.15707963705062866 ; max: 0.15707963705062866
+  - name: cam_azimuth
+    blender_link: bpy.data.objects["Empty_RotationCam"].rotation_euler[2] # min: 0 ; max: 6.2831854820251465
+  - name: cam_location_z
+    blender_link: bpy.data.objects["Empty_RotationCam"].location[2] # without glass, good cam height: -35.0
+  - name: glass_rotation
+    blender_link: bpy.data.objects["Glass"].rotation_euler[2] # min: 0 ; max: 0.6981316804885864
+  - name: table_rotation
+    blender_link: bpy.data.objects["Background"].rotation_euler[2] # min: 0 ; max: 6.2831854820251465
+hideable_object_names:
+  - Background
+  - Glass
+background_object_name: Background

@@ -1,0 +1,48 @@
+# Initializing and seeding
+defaults:
+  - BaseRecipe
+  - _self_
+initial_runtime_state:
+  seed: 42
+# Defining blueprints
+blueprints:
+  measurement_techniques:
+    Camera:
+      measurement_technique_prototype_name: default
+  particles:
+    Sphere:
+      geometry_prototype_name: default
+      number: 40
+# Physical boundary conditions
+process_conditions:
+  feature_variabilities:
+    ParticleLocation:
+      feature_name: location
+      variability:
+        _target_: $builtins.UniformlyRandomLocationInMeasurementVolume
+    ParticleDimension:
+      feature_name: dimensions
+      variability:
+        _target_: $builtins.UniformDistribution3dHomogeneous
+        location: 0.6
+        scale: 0
+# Procedural steps of synthesis chain
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllParticleBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleLocation
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDimension
+      affected_set_name: AllParticles
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      collision_shape: SPHERE
+  rendering_steps:
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real
+      do_save_features: True

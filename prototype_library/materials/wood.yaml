@@ -1,0 +1,6 @@
+# this material is mainly designed following the great tutorial "Creating Procedural Wood in Blender" by Michael McCann 
+# with some minor adaptions made to fit the scale of the scene
+# https://www.blendernation.com/2022/10/18/creating-procedural-wood-in-blender/
+features:
+  - name: texture_seed
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["Mapping.003"].inputs[1].default_value[0]

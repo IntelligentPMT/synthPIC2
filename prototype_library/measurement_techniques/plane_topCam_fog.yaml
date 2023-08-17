@@ -1,0 +1,6 @@
+features:
+  - name: fog
+    blender_link: bpy.data.worlds["World"].node_tree.nodes["Volume Scatter"].inputs["Density"].default_value
+hideable_object_names:
+  - Background
+background_object_name: Background

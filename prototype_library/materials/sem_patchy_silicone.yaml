@@ -1,0 +1,5 @@
+features:
+  - name: patch_scale
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["Noise Texture"].inputs["Scale"].default_value
+  - name: patch_seed
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["Seed"].outputs["Value"].default_value

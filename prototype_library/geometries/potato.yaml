@@ -1,0 +1,9 @@
+features:
+  - name: dimensions
+    blender_link: bpy.data.objects['GeometryPrototype'].dimensions
+  - name: location
+    blender_link: bpy.data.objects['GeometryPrototype'].location
+  - name: location_z
+    blender_link: bpy.data.objects['GeometryPrototype'].location.z
+  - name: shape
+    blender_link: bpy.data.objects['GeometryPrototype'].modifiers['GeometryNodes'].node_group.nodes['ValueSeedInputGP'].integer

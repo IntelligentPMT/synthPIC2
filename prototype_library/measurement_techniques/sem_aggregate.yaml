@@ -1,0 +1,12 @@
+features:
+  - name: illumination_strength
+    blender_link: bpy.data.materials["Illumination"].node_tree.nodes["Emission"].inputs["Strength"].default_value
+  - name: noise_threshold
+    blender_link: bpy.data.scenes["Scene"].cycles.adaptive_threshold
+  - name: defocus
+    blender_link: bpy.data.cameras["Camera"]["defocus"]
+  - name: illumination_rotation
+    blender_link: bpy.data.objects["Illumination"].rotation_euler[1] # rotation y axis
+  - name: illumination_location
+    blender_link: bpy.data.objects["Illumination"].location[2] # location z axis
+background_object_name: Substrate

@@ -1,0 +1,7 @@
+features:
+  - name: input_text
+    blender_link: bpy.data.objects["InputText"].modifiers["GeometryNodes"]["Input_2"]
+hideable_object_names:
+  - Background
+  - InputText
+background_object_name: Background

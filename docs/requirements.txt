@@ -1,0 +1,3 @@
+# See docker/Pipfile for the list of packages
+
+sphinx-copybutton == 0.5.1

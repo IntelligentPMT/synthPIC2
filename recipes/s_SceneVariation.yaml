@@ -1,0 +1,32 @@
+# Defining blueprints
+blueprints:
+  measurement_techniques:
+    TopCamInAir:
+      measurement_technique_prototype_name: woodTable_sideCam
+      measurement_volume_material_prototype_name: vacuum
+      background_material_prototype_name: wood
+  particles:
+    Bead:
+      geometry_prototype_name: ellipsoid
+      material_prototype_name: colored_subtle
+      parent: MeasurementVolume
+      number: 200
+      # number: 500
+# Physical boundary conditions
+process_conditions:
+  feature_variabilities:
+    CameraNearTable: # throw out after first comparison render!
+      feature_name: cam_location_z
+      variability:
+        _target_: $builtins.Constant
+        value: -35.0
+    ShowGlass:
+      feature_name: glass_hide
+      variability:
+        _target_: $builtins.Constant
+        value: False
+    CollisionGlass:
+      feature_name: glass_collision
+      variability:
+        _target_: $builtins.Constant
+        value: True

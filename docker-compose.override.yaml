@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
+      args:
+        DEV: "--dev" # use "--dev" to install dev-packages, empty "" to leave them out

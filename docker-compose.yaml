@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  app:
+    image: maxfrei750/synthpic2:v0.5dev
+    volumes:
+      - ./:/home/user/app
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [ gpu ]
+    env_file:
+      - .env
+    cap_add:
+      - SYS_PTRACE
+    ports:
+      - 8000:8000

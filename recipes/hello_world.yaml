@@ -1,0 +1,9 @@
+defaults:
+  - s_PrepareWorld
+  - _self_
+
+process_conditions:
+  feature_variabilities:
+    WriteText:
+      variability:
+        value: Hello World

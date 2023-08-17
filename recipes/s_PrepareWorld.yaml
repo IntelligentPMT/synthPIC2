@@ -1,0 +1,41 @@
+# Initializing and seeding
+defaults:
+  - BaseRecipe
+  - _self_
+initial_runtime_state:
+  seed: 42
+# Defining blueprints
+blueprints:
+  measurement_techniques:
+    Camera:
+      measurement_technique_prototype_name: write_text
+      background_material_prototype_name: plain
+# Physical boundary conditions
+process_conditions:
+  feature_variabilities:
+    BackgroundColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.ConstantHsvColorAsRgb
+        hue: 0.624
+        saturation: 0.416
+        value: 0.334
+    WriteText:
+      feature_name: input_text
+      variability:
+        _target_: $builtins.Constant
+        value: 'Hello World'
+# Procedural steps of synthetization chain
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: BackgroundColor
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: WriteText
+      affected_set_name: AllMeasurementTechniques
+  rendering_steps:
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real

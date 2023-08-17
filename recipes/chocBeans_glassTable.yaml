@@ -1,0 +1,115 @@
+# Initializing and seeding
+defaults:
+  - BaseRecipe
+  - s_SceneVariation
+  - s_BeanParams
+  - s_ColorCategories
+  - _self_
+initial_runtime_state:
+  seed: 42
+# Physical boundary conditions
+process_conditions:
+  feature_variabilities:
+    RenderingResolutionPercentage:
+      feature_name: resolution_percentage
+      variability:
+        _target_: $builtins.Constant
+        value: 25
+    CyclesSamples:
+      feature_name: cycles_samples
+      variability:
+        _target_: $builtins.Constant
+        value: 64
+# Procedural steps of synthetization chain
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    # - _target_: $builtins.InvokeBlueprints
+    #   affected_set_name: AllParticleBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ShowGlass
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: CollisionGlass
+      affected_set_name: AllMeasurementTechniques
+    # - _target_: $builtins.TriggerFeatureUpdate  # throw out after first comparison render!
+    #   feature_variability_name: CameraNearTable
+    #   affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: InitialParticleLocation
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDimension
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleWidth
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleHeight
+      affected_set_name: AllParticles 
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: PinkColor
+    #   affected_set_name: Category1
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: RedColor
+    #   affected_set_name: Category2
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: OrangeColor
+    #   affected_set_name: Category3
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: YellowColor
+    #   affected_set_name: Category4
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: GreenColor
+    #   affected_set_name: Category5
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: BlueColor
+    #   affected_set_name: Category6
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: PurpleColor
+    #   affected_set_name: Category7
+    # - _target_: $builtins.TriggerFeatureUpdate
+    #   feature_variability_name: BrownColor
+    #   affected_set_name: Category8
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      # mass: 0.0012 # new
+      num_frames: 5
+      time_scale: 10
+      # collision_margin: 0.001 # NEW
+      collision_shape: CONVEX_HULL
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      use_gravity: True
+      damping: 0.07
+      friction: 0.999 # initial 0.999; new 0.4
+      restitution: 0.001 # initial 0.001; 0.1
+      # mass: 0.0012 # NEW
+      collision_margin: 0.001
+      num_frames: 200
+      collision_shape: CONVEX_HULL
+      dry_run: True # TURN OFF WHEN NOT NEEDED
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: RenderingResolutionPercentage
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: CyclesSamples
+      affected_set_name: AllMeasurementTechniques
+  rendering_steps:
+    - _target_: $builtins.SaveState
+      name: state
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real
+      do_save_features: True
+    # - _target_: $builtins.RenderParticlesTogether
+    #   rendering_mode: categorical
+    #   output_file_name_prefix: all_
+    # - _target_: $builtins.RenderParticlesTogether
+    #   rendering_mode: categorical
+    #   set_name_of_interest: PinkParticles
+    #   output_file_name_prefix: pink_
+    # - _target_: $builtins.RenderParticlesIndividually
+    #   rendering_mode: categorical
+    #   set_name_of_interest: PinkParticles
+    #   subfolder: pink

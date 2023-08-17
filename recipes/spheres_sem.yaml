@@ -1,0 +1,122 @@
+defaults:
+  - BaseRecipe
+  - _self_
+
+initial_runtime_state:
+  time: 0.0
+  seed: 42
+blueprints:
+  measurement_techniques:
+    SEM:
+      measurement_technique_prototype_name: secondary_electron_microscope
+      background_material_prototype_name: sem_patchy_silicone
+  particles:
+    Bead:
+      geometry_prototype_name: sphere
+      material_prototype_name: sem_polystyrene
+      parent: MeasurementVolume
+      number: 600
+process_conditions:
+  feature_variabilities:
+    ParticleDimension:
+      feature_name: dimensions
+      variability:
+        _target_: $builtins.UniformDistribution3dHomogeneous
+        location: 5
+        scale: 2
+    ParticleSubdivisions:
+      feature_name: subdivisions
+      variability:
+        _target_: $builtins.Constant
+        value: 1
+    InitialParticleLocation:
+      feature_name: location
+      variability:
+        _target_: $builtins.UniformlyRandomLocationInMeasurementVolume
+    NoiseThreshold:
+      feature_name: noise_threshold
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.05
+        scale: 0.05
+        num_dimensions: 1
+    Defocus:
+      feature_name: defocus
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.2
+        scale: 0.3
+        num_dimensions: 1
+    IlluminationStrength:
+      feature_name: illumination_strength
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 1
+        scale: 2
+        num_dimensions: 1
+    BackgroundPatchScale:
+      feature_name: patch_scale
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 25
+        scale: 75
+        num_dimensions: 1
+    BackgroundPatchSeed:
+      feature_name: patch_seed
+      variability:
+        _target_: $builtins.Constant
+        value: ${initial_runtime_state.seed}
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllParticleBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDimension
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleSubdivisions
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: InitialParticleLocation
+      affected_set_name: AllParticles
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      collision_shape: SPHERE
+      use_gravity: True
+      gravity:
+        - 0
+        - 0
+        - -100
+      num_frames: 250
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: Defocus
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: NoiseThreshold
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: IlluminationStrength
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: BackgroundPatchScale
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: BackgroundPatchSeed
+      affected_set_name: AllMeasurementTechniques
+  rendering_steps:
+    - _target_: $builtins.SaveState
+      name: state
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: categorical
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: depth_map
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: normal_map
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: stylized
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: stylized_xray

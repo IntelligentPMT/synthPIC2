@@ -1,0 +1,13 @@
+features:
+  - name: dimensions
+    blender_link: bpy.data.objects["GeometryPrototype"].dimensions
+  - name: location
+    blender_link: bpy.data.objects["GeometryPrototype"].location
+  - name: location_z
+    blender_link: bpy.data.objects["GeometryPrototype"].location.z
+  - name: render_resolution
+    blender_link: bpy.data.objects["GeometryPrototype"].data.render_resolution
+  - name: influence_threshold
+    blender_link: bpy.data.objects["GeometryPrototype"].data.threshold
+  - name: resolution
+    blender_link: bpy.data.objects["GeometryPrototype"].data.resolution

@@ -1,0 +1,3 @@
+features:
+  - name: density
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["Volume Absorption"].inputs["Density"].default_value

@@ -1,0 +1,123 @@
+defaults:
+  - BaseRecipe
+  - _self_
+
+initial_runtime_state:
+  time: 0.0
+  seed: 42
+blueprints:
+  measurement_techniques:
+    SEM:
+      measurement_technique_prototype_name: sem_aggregate
+      background_material_prototype_name: band_noise
+  particles:
+    Bead:
+      geometry_prototype_name: meta_ball_sphere
+      material_prototype_name: aggregated_texture
+      parent: MeasurementVolume
+      number: 10
+process_conditions:
+  feature_variabilities:
+    ParticleDimension:
+      feature_name: dimensions
+      variability:
+        _target_: $builtins.UniformDistribution3dHomogeneous
+        location: 6
+        scale: 1
+    MballInfluenceThreshold:
+      feature_name: influence_threshold
+      variability:
+        _target_: $builtins.Constant
+        value: 0.001
+    MballRenderResolution:
+      feature_name: render_resolution
+      variability:
+        _target_: $builtins.Constant
+        value: 0.2
+    MballResolution:
+      feature_name: resolution
+      variability:
+        _target_: $builtins.Constant
+        value: 0.6
+    NoiseThreshold:
+      feature_name: noise_threshold
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.05
+        scale: 0.05
+        num_dimensions: 1
+    Defocus:
+      feature_name: defocus
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.2
+        scale: 0.3
+        num_dimensions: 1
+    IlluminationStrength:
+      feature_name: illumination_strength
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 1
+        scale: 2
+        num_dimensions: 1
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllParticleBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDimension
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: MballInfluenceThreshold
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: MballRenderResolution
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: MballResolution
+      affected_set_name: AllParticles
+    - _target_: $builtins.AgglomerateParticles
+      affected_set_name: AllParticles
+      speed: 10
+      randomness: 0
+      mode: cluster-cluster
+      sintering_ratio: 0.1
+      primary_particle_number_variability:
+        _target_: synthpic2.recipe.process_conditions.variabilities.Constant
+        value: 3
+    - _target_: $builtins.DistributeInMeasurementVolume
+      affected_set_name: AllParticles
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      mass: 0.01
+      restitution: 0
+      num_frames: 250
+      linear_damping: 0.999
+      angular_damping: 0.01
+      use_gravity: True
+      gravity:
+        - 0
+        - 0
+        - -12.0
+      collision_margin: 0.1
+      time_scale: 10
+      dry_run: False
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: Defocus
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: NoiseThreshold
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: IlluminationStrength
+      affected_set_name: AllMeasurementTechniques
+  rendering_steps:
+    - _target_: $builtins.SaveState
+      name: state
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real
+      # do_save_features: True
+    # - _target_: $plugins.RenderAgglomeratesIndividually
+    #   rendering_mode: stl

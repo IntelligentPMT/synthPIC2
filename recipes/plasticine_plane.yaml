@@ -1,0 +1,146 @@
+# Initializing and seeding
+defaults:
+  - BaseRecipe
+  - colPearls_plane
+  - _self_
+# Defining blueprints
+blueprints:
+  measurement_techniques:
+    TopCamInAir:
+      background_material_prototype_name: cracks_subtle
+  particles:
+    Bead:
+      geometry_prototype_name: potato
+      material_prototype_name: colored_subtle
+      number: 15
+    Worm:
+      geometry_prototype_name: worm_twisted
+      material_prototype_name: colored_subtle
+      parent: MeasurementVolume
+      number: 25
+# Physical boundary conditions
+process_conditions:
+  feature_criteria:
+    IsBead:
+      _target_: $builtins.ContainsString
+      feature_name: blueprint_name
+      search_string: Bead
+      default_return_value: False
+    IsWorm:
+      _target_: $builtins.ContainsString
+      feature_name: blueprint_name
+      search_string: Worm
+      default_return_value: False
+  sets: 
+    BeadsInView:
+      criterion: $IsParticle and $IsBead
+    WormsInView:
+      criterion: $IsParticle and $IsWorm
+  feature_variabilities:
+    BeadShape:
+      feature_name: shape
+      variability:
+        _target_: $plugins.official.UniformDistributionInt
+        location: 0
+        scale: 10000
+    WormRotations:
+      feature_name: rotations
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.4
+        scale: 0.8
+    WormThickness:
+      feature_name: thickness
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.035
+        scale: 0.01
+    WormResolution:
+      feature_name: resolution
+      variability:
+        _target_: $builtins.Constant
+        value: 0.15
+    ReddishColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.95
+        h_max: 1
+        s_min: 0.85
+        s_max: 0.95
+        v_min: 0.35
+        v_max: 1
+    MeasurementVolumeFog:
+      feature_name: fog
+      variability:
+        _target_: $builtins.Constant
+        value: 0.025
+    CyclesSamples:
+      variability:
+        value: 64 # small during tutorial, high for final render
+# Procedural steps of synthetization chain
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllParticleBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: InitialParticleLocation
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDimension
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: BeadShape
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: WormRotations
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: WormThickness
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: WormResolution
+      affected_set_name: AllParticles
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      num_frames: 20
+      collision_shape: SPHERE
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      use_gravity: True
+      damping: 0.07
+      friction: 0.4
+      restitution: 0.1
+      collision_margin: 0.5
+      num_frames: 150
+      collision_shape: CONVEX_HULL
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: BackgroundColor
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: PinkColor
+      # affected_set_name: AllParticles
+      affected_set_name: BeadsInView
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ReddishColor
+      affected_set_name: WormsInView
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: MeasurementVolumeFog
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: RenderingResolutionPercentage
+      affected_set_name: AllMeasurementTechniques
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: CyclesSamples
+      affected_set_name: AllMeasurementTechniques
+  rendering_steps:
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real
+      do_save_features: True
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: categorical
+    - _target_: $builtins.RenderParticlesIndividually
+      rendering_mode: categorical
+      subfolder: individual

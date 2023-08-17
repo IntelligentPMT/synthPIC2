@@ -1,0 +1,7 @@
+# this material uses some textures from the "Procedural Noise Pack" by Simon Thommes
+# https://simonthommes.gumroad.com/l/NOISE-P
+features:
+  - name: color
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["RGB"].outputs[0].default_value
+  - name: material_structure
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["ValueSeedStructure"].outputs["Value"].default_value

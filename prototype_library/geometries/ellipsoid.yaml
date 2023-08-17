@@ -1,0 +1,13 @@
+features:
+  - name: dimensions
+    blender_link: bpy.data.objects["GeometryPrototype"].dimensions
+  - name: width
+    blender_link: bpy.data.objects["GeometryPrototype"].scale[1]
+  - name: height
+    blender_link: bpy.data.objects["GeometryPrototype"].scale[2]
+  - name: location
+    blender_link: bpy.data.objects["GeometryPrototype"].location
+  - name: location_z
+    blender_link: bpy.data.objects["GeometryPrototype"].location.z
+  - name: subdivisions
+    blender_link: bpy.data.objects["GeometryPrototype"].modifiers["Subdivision"].render_levels

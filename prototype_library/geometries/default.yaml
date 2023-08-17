@@ -1,0 +1,5 @@
+features:
+  - name: dimensions
+    blender_link: bpy.data.objects["GeometryPrototype"].dimensions
+  - name: location
+    blender_link: bpy.data.objects["GeometryPrototype"].location

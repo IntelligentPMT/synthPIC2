@@ -1,0 +1,27 @@
+# Physical boundary conditions
+process_conditions:
+  feature_variabilities:
+    InitialParticleLocation:
+      feature_name: location
+      variability:
+        _target_: $builtins.UniformlyRandomLocationInMeasurementVolume
+    ParticleDimension:
+      feature_name: dimensions
+      variability:
+        _target_: $builtins.UniformDistribution3dHomogeneous
+        location: 3.58
+        scale: 0.6
+    ParticleWidth:
+      feature_name: width
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.85
+        scale: 0.15
+        num_dimensions: 1
+    ParticleHeight:
+      feature_name: height
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.475
+        scale: 0.15
+        num_dimensions: 1

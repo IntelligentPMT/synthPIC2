@@ -1,0 +1,56 @@
+defaults:
+  - BaseRecipe
+  - _self_
+
+initial_runtime_state:
+  time: 0.0
+  seed: 42
+blueprints:
+  measurement_techniques:
+    SecondaryElectronMicroscope:
+      measurement_technique_prototype_name: transmission_electron_microscope
+  particles:
+    Bead:
+      geometry_prototype_name: meta_ball_sphere
+      material_prototype_name: tem_amorphous
+      parent: MeasurementVolume
+      number: 25
+process_conditions:
+  feature_variabilities:
+    ParticleDimension:
+      feature_name: dimensions
+      variability:
+        _target_: $builtins.UniformDistribution3dHomogeneous
+        location: 6
+        scale: 3
+    ParticleDensity:
+      feature_name: density
+      variability:
+        _target_: $builtins.Constant
+        value: 0.1
+synth_chain:
+  feature_generation_steps:
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllMeasurementTechniqueBlueprints
+    - _target_: $builtins.InvokeBlueprints
+      affected_set_name: AllParticleBlueprints
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDimension
+      affected_set_name: AllParticles
+    - _target_: $builtins.TriggerFeatureUpdate
+      feature_variability_name: ParticleDensity
+      affected_set_name: AllParticles
+    - _target_: $builtins.AgglomerateParticles
+      affected_set_name: AllParticles
+      speed: 10
+      randomness: 0
+      mode: cluster-cluster
+      sintering_ratio: 0.1
+  rendering_steps:
+    - _target_: $builtins.SaveState
+      name: state
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: real
+      do_save_features: True
+    - _target_: $builtins.RenderParticlesTogether
+      rendering_mode: stl

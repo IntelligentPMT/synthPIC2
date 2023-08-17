@@ -1,0 +1,6 @@
+features:
+  - name: noise_threshold
+    blender_link: bpy.data.scenes["Scene"].cycles.adaptive_threshold
+  - name: defocus
+    blender_link: bpy.data.cameras["Camera"]["defocus"]
+background_object_name: Substrate

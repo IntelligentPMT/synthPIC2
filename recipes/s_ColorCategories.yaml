@@ -1,0 +1,161 @@
+# Physical boundary conditions
+process_conditions:
+  feature_criteria:
+    IsCat1:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 1
+      compartments_total: 8
+      default_return_value: False
+    IsCat2:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 2
+      compartments_total: 8
+      default_return_value: False
+    IsCat3:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 3
+      compartments_total: 8
+      default_return_value: False
+    IsCat4:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 4
+      compartments_total: 8
+      default_return_value: False
+    IsCat5:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 5
+      compartments_total: 8
+      default_return_value: False
+    IsCat6:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 6
+      compartments_total: 8
+      default_return_value: False
+    IsCat7:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 7
+      compartments_total: 8
+      default_return_value: False
+    IsCat8:
+      _target_: $plugins.official.InCompartment
+      feature_name: location_z
+      compartment_no: 8
+      compartments_total: 8
+      default_return_value: False
+    IsPink:
+      _target_: $plugins.official.InHsvRange
+      feature_name: color
+      h_min: 0.945
+      h_max: 0.950
+      s_min: 0.895
+      s_max: 0.900
+      v_min: 0.648
+      v_max: 0.653
+      default_return_value: False
+  sets: 
+    Category1:
+      criterion: $IsParticle and $IsCat1
+    Category2:
+      criterion: $IsParticle and $IsCat2
+    Category3:
+      criterion: $IsParticle and $IsCat3
+    Category4:
+      criterion: $IsParticle and $IsCat4
+    Category5:
+      criterion: $IsParticle and $IsCat5
+    Category6:
+      criterion: $IsParticle and $IsCat6
+    Category7:
+      criterion: $IsParticle and $IsCat7
+    Category8:
+      criterion: $IsParticle and $IsCat8
+    PinkParticles:
+      criterion: $IsParticle and $IsPink
+  feature_variabilities:
+    PinkColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.945
+        h_max: 0.950
+        s_min: 0.895
+        s_max: 0.900
+        v_min: 0.648
+        v_max: 0.653
+    RedColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.990
+        h_max: 0.995
+        s_min: 0.995
+        s_max: 1.000
+        v_min: 0.448
+        v_max: 0.453
+    OrangeColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.020
+        h_max: 0.025
+        s_min: 0.995
+        s_max: 1.000
+        v_min: 0.895
+        v_max: 0.900
+    YellowColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.087
+        h_max: 0.092
+        s_min: 0.945
+        s_max: 0.950
+        v_min: 0.862
+        v_max: 0.867
+    GreenColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.321
+        h_max: 0.326
+        s_min: 0.770
+        s_max: 0.775
+        v_min: 0.253
+        v_max: 0.258
+    BlueColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.622
+        h_max: 0.627
+        s_min: 0.846
+        s_max: 0.851
+        v_min: 0.547
+        v_max: 0.552
+    PurpleColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.716
+        h_max: 0.721
+        s_min: 0.801
+        s_max: 0.806
+        v_min: 0.348
+        v_max: 0.353
+    BrownColor:
+      feature_name: color
+      variability:
+        _target_: $plugins.official.RandomHsvColorAsRgb
+        h_min: 0.020
+        h_max: 0.025
+        s_min: 0.796
+        s_max: 0.801
+        v_min: 0.082
+        v_max: 0.087

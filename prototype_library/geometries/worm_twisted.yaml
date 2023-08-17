@@ -1,0 +1,13 @@
+features:
+  - name: dimensions
+    blender_link: bpy.data.objects['GeometryPrototype'].dimensions
+  - name: location
+    blender_link: bpy.data.objects['GeometryPrototype'].location
+  - name: location_z
+    blender_link: bpy.data.objects['GeometryPrototype'].location.z
+  - name: rotations
+    blender_link: bpy.data.objects["GeometryPrototype"].modifiers["GeometryNodes"]["Input_2"]
+  - name: thickness
+    blender_link: bpy.data.objects["GeometryPrototype"].modifiers["GeometryNodes"]["Input_3"]
+  - name: resolution
+    blender_link: bpy.data.objects['GeometryPrototype'].modifiers["Remesh"].voxel_size

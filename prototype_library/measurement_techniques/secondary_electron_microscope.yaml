@@ -1,0 +1,8 @@
+features:
+  - name: illumination_strength
+    blender_link: bpy.data.materials["Illumination"].node_tree.nodes["Emission"].inputs["Strength"].default_value
+  - name: noise_threshold
+    blender_link: bpy.data.scenes["Scene"].cycles.adaptive_threshold
+  - name: defocus
+    blender_link: bpy.data.cameras["Camera"]["defocus"]
+background_object_name: Substrate
