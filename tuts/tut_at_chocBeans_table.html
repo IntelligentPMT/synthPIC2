@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Chocolate Beans on Table &#8212; synthPIC2 0.5dev documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Chocolate Beans in Glass" href="tut_at_chocBeans_glassTable.html" />
+    <link rel="prev" title="Pearls &amp; Plasticine on Plane" href="tut_bs_plasticine_plane.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="chocolate-beans-on-table">
+<span id="sec-tut-at-chocbeans-table"></span><h1>Chocolate Beans on Table<a class="headerlink" href="#chocolate-beans-on-table" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we’ll extend our workflow by including the generation of a prototype. Based on the previous <cite>basic</cite> tutorials, our starting scene will be similar: We generate pink pearls on a plane and step-by-step increase the complexity of the scene. A more in-depth use of our beloved <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function will introduce the <code class="docutils literal notranslate"><span class="pre">dry_run</span></code> mode.</p>
+<div class="section" id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/AAG_02.png"><img alt="../_images/AAG_02.png" src="../_images/AAG_02.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_12.png"><img alt="../_images/AAG_12.png" src="../_images/AAG_12.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_22.png"><img alt="../_images/AAG_22.png" src="../_images/AAG_22.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_31.png"><img alt="../_images/AAG_31.png" src="../_images/AAG_31.png" style="width: 24.5%;" /></a>
+</div>
+<div class="section" id="what-we-will-learn">
+<h2>What We Will Learn<a class="headerlink" href="#what-we-will-learn" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Create a new, own prototype</p></li>
+<li><p>Illuminate the scene by HDRI light</p></li>
+<li><p>Create different particle classes</p></li>
+<li><p>Color definition in HSV representation</p></li>
+<li><p>Specify particles based on dynamic sets</p></li>
+</ul>
+</div>
+<div class="section" id="step-1-prepare-a-clean-start">
+<h2>Step 1: Prepare a Clean Start<a class="headerlink" href="#step-1-prepare-a-clean-start" title="Permalink to this headline">¶</a></h2>
+<p>Let’s put aside those plasticines and deformed particles. We want to start this time, by a clean and simple scene with pink pearls: Create a new recipe and call it <code class="docutils literal notranslate"><span class="pre">chocBeans_table.yaml</span></code>. Our first code snippet, as usual, will initialize and seed the recipe.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
+<span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="nt">initial_runtime_state</span><span class="p">:</span>
+  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+</pre></div>
+</div>
+</div>
+<p>We want to start with a similar scene like last time, choosing the <code class="docutils literal notranslate"><span class="pre">cracks_subtle</span></code> material for our background and the <code class="docutils literal notranslate"><span class="pre">colored_subtle</span></code> material for our particles. However, the measurement technique used in this tutorial will be another one, called <code class="docutils literal notranslate"><span class="pre">woodTable_sideCam</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining blueprints</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">TopCamInAir</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">woodTable_sideCam</span>
+      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cracks_subtle</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
+      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">colored_subtle</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+</pre></div>
+</div>
+</div>
+<p>As the name of the measurement technique suggests, we need to slightly adjust the camera angle. Doing so, let’s directly add our other <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code>, as well.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Physical boundary conditions</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CameraAltitude</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cam_altitude</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.96</span>
+    <span class="nt">InitialParticleLocation</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.58</span>
+        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.6</span>
+    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">resolution_percentage</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+    <span class="nt">CyclesSamples</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cycles_samples</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">64</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can build our synth chain by starting with the invocation of our blueprints. Afterwards, we trigger of the updates for our features <code class="docutils literal notranslate"><span class="pre">cam_altitude</span></code>, <code class="docutils literal notranslate"><span class="pre">location</span></code> and <code class="docutils literal notranslate"><span class="pre">dimensions</span></code>, which are allowed in the ranges <code class="docutils literal notranslate"><span class="pre">CameraAltitude</span></code>, <code class="docutils literal notranslate"><span class="pre">InitialParticleLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code>, respectively.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Procedural steps of synthetization chain</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CameraAltitude</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</pre></div>
+</div>
+</div>
+<p>Since again, we want to distribute particles laying flat on a plane, we use the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function two times, as we did in our previous tutorials. First, to get rid of intersections. A second call – with gravity enabled – to bring all particles onto the ground level.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll">      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+</span><span class="hll">      <span class="nt">time_scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+</span><span class="hll">      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll">      <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</span><span class="hll">      <span class="nt">damping</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</span><span class="hll">      <span class="nt">friction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.999</span>
+</span><span class="hll">      <span class="nt">restitution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+</span><span class="hll">      <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+</span><span class="hll">      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+</span><span class="hll">      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+</span></pre></div>
+</div>
+</div>
+<p>The last ingredients, we add to our recipe are two more elements in the list of <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> and one step for the list of <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CyclesSamples</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll">  <span class="nt">rendering_steps</span><span class="p">:</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+</span><span class="hll">      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</span></pre></div>
+</div>
+</div>
+<p>Now we have our whole recipe together for a clean, basic start. Let’s execute it!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="n">recipes</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">chocBeans_table</span>
+</pre></div>
+</div>
+<img alt="First clean start of a scene" src="../_images/AAG_02.png" />
+<p>Since, you very attentively followed the tutorial, instead of just copy-pasting the code snippets, you rightly ask yourself: “Why is there color?” The answer is: It sits in the both material prototypes and we’re looking at their default colors. It just coincidentally happens to be the color of our previous tutorials: pink for the particles, beige for the background. Pretty!</p>
+<p>Some more little changes we notice. There is no gap between the particles – see parameter <code class="docutils literal notranslate"><span class="pre">collision_margin:</span> <span class="pre">0.001</span></code> of our second <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function – and one particle at the bottom is almost out of our field of view. The latter is caused by another bounding box than that used in earlier tutorials, i.e. the <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code>, which limits our particles’ spatial distribution for this loaded measurement technique prototype. Furthermore, we notice the two shadows of each particle and will come to the explanation later.</p>
+<p>As a last measure, let’s add the <code class="docutils literal notranslate"><span class="pre">material</span> <span class="pre">prototype</span></code> for our <code class="docutils literal notranslate"><span class="pre">measurement</span> <span class="pre">volume</span></code> and the <code class="docutils literal notranslate"><span class="pre">parent</span></code> of our particle blueprint <code class="docutils literal notranslate"><span class="pre">Bead</span></code>. This doesn’t change the appearance of the scene, but is just good practice for completion of our recipe at this stage.</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">TopCamInAir</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">woodTable_sideCam</span>
+<span class="hll">      <span class="nt">measurement_volume_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">vacuum</span>
+</span>      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cracks_subtle</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
+      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">colored_subtle</span>
+<span class="hll">      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+</span>      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="step-2-our-own-offspring">
+<h2>Step 2: Our Own Offspring<a class="headerlink" href="#step-2-our-own-offspring" title="Permalink to this headline">¶</a></h2>
+<p>In this step, we will actually create a new <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code> for our particle blueprint <code class="docutils literal notranslate"><span class="pre">Bead</span></code>, integrate it in our recipe and manipulate some features of it. Keep in mind that this is not a <code class="docutils literal notranslate"><span class="pre">Blender</span></code> tutorial, so we’ll barely scratch the surface of that wonderful tool. Rather, we introduce the general idea of integrating a new <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code> to our toolbox <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>.</p>
+<p>Let’s first start by opening <code class="docutils literal notranslate"><span class="pre">Blender</span></code> with a new default <code class="docutils literal notranslate"><span class="pre">General</span></code> scene. We delete the default cube and add a <code class="docutils literal notranslate"><span class="pre">Mesh</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Round</span> <span class="pre">Cube</span></code>. As <code class="docutils literal notranslate"><span class="pre">Radius</span></code> we specify <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and a <code class="docutils literal notranslate"><span class="pre">Size</span></code> of <code class="docutils literal notranslate"><span class="pre">1.0</span></code> in all three spatial dimensions <code class="docutils literal notranslate"><span class="pre">X</span></code>, <code class="docutils literal notranslate"><span class="pre">Y</span></code> and <code class="docutils literal notranslate"><span class="pre">Z</span></code>. In general, we want our prototypes to have a basic spatial extent of <code class="docutils literal notranslate"><span class="pre">1.0</span></code> in all directions to achieve size consistency across multiple <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototypes</span></code>. For <code class="docutils literal notranslate"><span class="pre">Divisions</span></code>, we define a number of <code class="docutils literal notranslate"><span class="pre">8</span></code> for <code class="docutils literal notranslate"><span class="pre">Arc</span></code> as sufficient.</p>
+<img alt="Deleted default cube and created sphere" src="../_images/cube_sphere.png" />
+<p>Next, we want to change the faces’ appearance of our geometry. Therefore, we set <code class="docutils literal notranslate"><span class="pre">Shade</span> <span class="pre">Smooth</span></code> (right click on object), which renders and displays faces smooth, using interpolated vertex normals. Furthermore, let’s add a <cite>Subdivision Surface</cite> modifier and keep all the settings as their default values. This will set the <cite>Catmull-Clark</cite> algorithm with <code class="docutils literal notranslate"><span class="pre">1</span></code> subdivision level for the viewport and a level of <code class="docutils literal notranslate"><span class="pre">2</span></code> for the final render. The <cite>Subdivision Surface</cite> modifier gives us a great opportunity to later on – during the execution of our <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> in <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> – change the resolution of our particle geometry.</p>
+<img alt="Smooth shaded and subdivided surfaces" src="../_images/subdiv_modifier.png" />
+<p>We want to create a prototype that represents an ellipsoid. So, let’s scale it along the <code class="docutils literal notranslate"><span class="pre">Z</span></code> axis by a factor of <code class="docutils literal notranslate"><span class="pre">0.5</span></code>. Basically, this should just obviously show that this prototype represents an ellipsoid – we’ll anyways make this parameter available as a feature to enable a manipulation directly in <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>. As per definition for a <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code>, we also need to rename the object of interest in our scene, which is still called <code class="docutils literal notranslate"><span class="pre">Roundcube</span></code>. The concrete name must be <code class="docutils literal notranslate"><span class="pre">GeometryPrototype</span></code> for <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> to identify it.</p>
+<img alt="Rename object and get blender link of features" src="../_images/rename_features.png" />
+<p>Now let’s introduce the flexibility: We will give <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> access to change <cite>any</cite> feature, for which we want to allow a manipulation. To do so, you must first setup <code class="docutils literal notranslate"><span class="pre">Blender</span></code> to display the <code class="docutils literal notranslate"><span class="pre">blender_link</span></code>, which we need in <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>. Therefore, in <code class="docutils literal notranslate"><span class="pre">Blender</span></code> go to <code class="docutils literal notranslate"><span class="pre">Edit</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Preferences...</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Interface</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Tooltips</span></code> and enable the option <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Tooltips</span></code>. Now, when you hover over (almost) any menu entry in the GUI of <code class="docutils literal notranslate"><span class="pre">Blender</span></code>, you will see the address of that concrete parameter in <code class="docutils literal notranslate"><span class="pre">Python</span></code> with its namespace. It reads something like, e.g. <code class="docutils literal notranslate"><span class="pre">bpy.data.objects…</span></code> and equals the entry, which we need for our accompanying <code class="docutils literal notranslate"><span class="pre">yaml</span></code> file of each <code class="docutils literal notranslate"><span class="pre">prototype</span></code>. You can easily copy this concrete link of a specific <code class="docutils literal notranslate"><span class="pre">feature</span></code> within <code class="docutils literal notranslate"><span class="pre">Blender</span></code> by right-clicking on it and then select <code class="docutils literal notranslate"><span class="pre">Copy</span> <span class="pre">Full</span> <span class="pre">Data</span> <span class="pre">Path</span></code>.</p>
+<p>The name of a <code class="docutils literal notranslate"><span class="pre">feature</span></code> for <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>, which represents the <code class="docutils literal notranslate"><span class="pre">blender_link</span></code>, can be freely chosen. But keep in mind! <code class="docutils literal notranslate"><span class="pre">Features</span></code> can be manipulated completely flexible across all invoked blueprints, independent if the feature, e.g. <code class="docutils literal notranslate"><span class="pre">color</span></code> origins from the <code class="docutils literal notranslate"><span class="pre">material</span> <span class="pre">prototype</span></code> of a particle or the <code class="docutils literal notranslate"><span class="pre">measurement</span> <span class="pre">volume</span> <span class="pre">material</span></code> or the <code class="docutils literal notranslate"><span class="pre">background</span> <span class="pre">material</span></code> of the measurement technique or if it origins from any <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code>. Once invoked, every object of the scene possesses those features with the names defined in their corresponding <code class="docutils literal notranslate"><span class="pre">prototypes</span></code>. Therefore, you should establish some rules for generic feature names and exclusive feature names to make use of this powerful capability of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> to change all kinds of <code class="docutils literal notranslate"><span class="pre">features</span></code> across all objects in the scene at once – if wanted and constrainable to specific groups of objects by <code class="docutils literal notranslate"><span class="pre">sets</span></code>.</p>
+<p>Now that we know how to do it: Let’s actually take some parameters in <code class="docutils literal notranslate"><span class="pre">Blender</span></code> and define those to become our manipulable <code class="docutils literal notranslate"><span class="pre">features</span></code> in <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>!</p>
+<p>First, we save the modeled <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code> for our ellipsoid. We need to place it in the location <code class="docutils literal notranslate"><span class="pre">prototype_library/geometries/</span></code> and give the name <code class="docutils literal notranslate"><span class="pre">ellipsoid.blend</span></code>. For the accompanying file, we create a new file with name <code class="docutils literal notranslate"><span class="pre">ellipsoid.yaml</span></code> and place it in the same directory. Let’s add the following lines to that accompanying file to make manipulation of these features available in <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">ellipsoid.yaml</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">features</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].dimensions</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">width</span>
+    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].scale[1]</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">height</span>
+    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].scale[2]</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].location</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].location.z</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdivisions</span>
+    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].modifiers[&quot;Subdivision&quot;].render_levels</span>
+</pre></div>
+</div>
+</div>
+<p>Finally, let’s bring it into our scene, that new prototype! To do so, within our <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code>, we need to change the <code class="docutils literal notranslate"><span class="pre">geometry_prototype_name</span></code> of our <code class="docutils literal notranslate"><span class="pre">Bead</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+<span class="hll">      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ellipsoid</span>
+</span>      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">colored_subtle</span>
+      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+</pre></div>
+</div>
+</div>
+<p>We also want to see the change of some parameters! So let’s play with the height. To see an obvious effect, we try a weird shape with a height that is three times the width of the ellipsoid by adding a new <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> called <code class="docutils literal notranslate"><span class="pre">ParticleHeight</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CameraAltitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">ParticleHeight</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">height</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+</span><span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+</span></pre></div>
+</div>
+</div>
+<p>Furthermore, we add the corresponding <code class="docutils literal notranslate"><span class="pre">feature_generation_step</span></code> to trigger the feature update.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleHeight</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span></pre></div>
+</div>
+</div>
+<p>An execution of the recipe will give us a – yes, let’s call it a weird – shape of our ellipsoidal particles, which obviously differs from the sphere.</p>
+<img alt="Obviously elongated shape of ellipsoid" src="../_images/suppository.png" />
+<p>Keep in mind that we already triggered the updates of our features <code class="docutils literal notranslate"><span class="pre">location</span></code> and <code class="docutils literal notranslate"><span class="pre">dimensions</span></code> within their allowed ranges <code class="docutils literal notranslate"><span class="pre">InitialParticleLocation</span></code> and <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code>, respectively for these ellipsoids. We did so by choosing the appropriate <code class="docutils literal notranslate"><span class="pre">feature</span></code> names, when we defined the <code class="docutils literal notranslate"><span class="pre">features</span></code> in the accompanying file <code class="docutils literal notranslate"><span class="pre">ellipsoid.yaml</span></code>. So, since we kept to those naming conventions, we didn’t need to adjust anything else in the recipe.</p>
+<p>Okay, that works. Now let’s go more in the direction of a usual shape for a chocolate bean. We create a further <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> for the feature <code class="docutils literal notranslate"><span class="pre">width</span></code> and also adapt the recent one for the feature <code class="docutils literal notranslate"><span class="pre">height</span></code>. Both shall be allowed within a certain range instead of only defining a specific constant.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CameraAltitude</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">ParticleWidth</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">width</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.85</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.15</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span>    <span class="nt">ParticleHeight</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">height</span>
+      <span class="nt">variability</span><span class="p">:</span>
+<span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.475</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.15</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span></pre></div>
+</div>
+</div>
+<p>We only need to add the <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> for <code class="docutils literal notranslate"><span class="pre">ParticleWidth</span></code> now.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleWidth</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleHeight</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</pre></div>
+</div>
+</div>
+<p>The currently rendered image looks more like ellipsoids in the shape of chocolate beans.</p>
+<img alt="Ellipsoids with shapes of chocolate beans" src="../_images/ellipsoid_shapeChocBean.png" />
+</div>
+<div class="section" id="step-3-material-light-and-perspective">
+<h2>Step 3: Material, Light and Perspective<a class="headerlink" href="#step-3-material-light-and-perspective" title="Permalink to this headline">¶</a></h2>
+<p>We’re getting closer! Now, let’s tune it a little bit and slightly change the behavior of how the particles fall: We’ll only turn down the <code class="docutils literal notranslate"><span class="pre">damping</span></code> of the <cite>second</cite> <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function just a little bit.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+      <span class="nt">time_scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="hll">      <span class="nt">damping</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.07</span>
+</span>      <span class="nt">friction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.999</span>
+      <span class="nt">restitution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+      <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+</pre></div>
+</div>
+</div>
+<p>Furthermore, we change the material of our background to a material named <code class="docutils literal notranslate"><span class="pre">wood</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">TopCamInAir</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">woodTable_sideCam</span>
+      <span class="nt">measurement_volume_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">vacuum</span>
+<span class="hll">      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">wood</span>
+</span></pre></div>
+</div>
+</div>
+<img alt="Ellipsoids on wooden background" src="../_images/AAG_22.png" />
+<p>The currently rendered image placed our particles more in the right light. Speaking of <cite>light</cite>, we wanted to have a closer look on how our scene is actually illuminated. Why is there more than one shadow? Why do we see several specular reflections in the particles?</p>
+<img alt="Multiple reflections and shadows" src="../_images/lighting.png" />
+<p>The answer lies in the way of how the scene is illuminated. In the chosen <code class="docutils literal notranslate"><span class="pre">measurement</span> <span class="pre">technique</span> <span class="pre">prototype</span></code> named <code class="docutils literal notranslate"><span class="pre">woodTable_sideCam</span></code>, the scene is illuminated by an <cite>HDRI</cite>. You can have a look at this by opening the file <code class="docutils literal notranslate"><span class="pre">woodTable_sideCam.blend</span></code> in <code class="docutils literal notranslate"><span class="pre">Blender</span></code> and check <code class="docutils literal notranslate"><span class="pre">World</span> <span class="pre">Properties</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Surface</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Background</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Color</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Color</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Image</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">interior.exr</span></code>. The last filename is actually the name of the HDRI file, which is shown in the following image.</p>
+<img alt="HDRI used to illuminate the scene" src="../_images/interior.png" />
+<p>We’re looking at an HDRI spherical panorama image. HDRI (High Dynamic Range Imaging) stands for a technique that combines images – usually multiple shots at various exposure times – to output a file with increased pixel depth / dynamic range. <code class="docutils literal notranslate"><span class="pre">EXR</span></code> and <code class="docutils literal notranslate"><span class="pre">HDR</span></code> are the industry standard file formats to store the data.</p>
+<p>In the following figure, this image is plotted onto a UV sphere. You can imagine that the same happens to our scene: We’re sitting just right in the middle of such a big ball and looking at the outside with that big image projected everywhere around us. The light, which illuminates every detail in our scene comes from the surrounding sphere and is represented in location, brightness and color by the corresponding pixels of the HDRI. The HDRI used here is part of the standard HDRIs, which are deployed with <code class="docutils literal notranslate"><span class="pre">Blender</span></code>.</p>
+<img alt="HDRI plotted on a UV sphere" src="../_images/hdri_sphere.png" />
+<p>The next thing we do, is changing the perspective. Instead of looking from the top onto our wooden table with chocolate beans, this time, we want to watch the scene from the side. To achieve this, we will change some features of our <code class="docutils literal notranslate"><span class="pre">measurement</span> <span class="pre">technique</span></code>. We will not need the <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> for our feature <code class="docutils literal notranslate"><span class="pre">cam_altitude</span></code> any longer, since the default value of the <code class="docutils literal notranslate"><span class="pre">measurement</span> <span class="pre">technique</span> <span class="pre">prototype</span></code> already fits our wanted perspective well. Let’s therefore completely <cite>replace</cite> the code block for <code class="docutils literal notranslate"><span class="pre">CameraAltitude</span></code> with a new one called <code class="docutils literal notranslate"><span class="pre">CameraNearTable</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="hll">    <span class="nt">CameraNearTable</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cam_location_z</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+</span><span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-35.0</span>
+</span>    <span class="nt">InitialParticleLocation</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+</pre></div>
+</div>
+</div>
+<p>We also need to change the <code class="docutils literal notranslate"><span class="pre">feature_variability_name</span></code> of the corresponding <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code>. Afterwards, we can execute the recipe and admire our rendered image with a view at the scene from this new perspective.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CameraNearTable</span>
+</span>      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</pre></div>
+</div>
+</div>
+<img alt="Perspective view at the scene from the side" src="../_images/chocBeansWood_perspective.png" />
+</div>
+<div class="section" id="step-4-categories-and-color">
+<h2>Step 4: Categories and Color<a class="headerlink" href="#step-4-categories-and-color" title="Permalink to this headline">¶</a></h2>
+<p>Okay, pink. Pink is nice. But looking at our title: <cite>Chocolate beans</cite> was the idea… Those usually come in different colors.</p>
+<p>In order to assign different colors to different particles, we will use – I think you already guessed – <code class="docutils literal notranslate"><span class="pre">features</span></code>. We will use the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> and assign an HSV value, the same way as we did in the previous tutorials. This time however, we want to differentiate between particles, which were invoked from the same blueprint. Therefore, in order to purposefully distinguish between the individual particles with the help of <code class="docutils literal notranslate"><span class="pre">sets</span></code>, we need to find another criterion for our current case. Doing so, we will discover the dynamic character of sets…</p>
+<p>We want to distinguish between single particles by their feature <code class="docutils literal notranslate"><span class="pre">location_z</span></code>. To better understand why we choose this feature, we <cite>could</cite> open the <code class="docutils literal notranslate"><span class="pre">measurement</span> <span class="pre">technique</span> <span class="pre">prototype</span></code> in <code class="docutils literal notranslate"><span class="pre">Blender</span></code> and observe how the <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code> is setup to bound the distribution of the particles in the volume of the 3D virtual scene. However, rather than opening the <code class="docutils literal notranslate"><span class="pre">measurement</span> <span class="pre">technique</span> <span class="pre">prototype</span></code>, let’s open the result of our current recipe execution to actually see the particles distributed in the volume!</p>
+<p>To do so, we need to add <cite>two</cite> more elements to our <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code>. First, we add the parameter <code class="docutils literal notranslate"><span class="pre">dry_run</span></code> to our <cite>second</cite> <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function step of the <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> and set it to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id18" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+      <span class="nt">time_scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+      <span class="nt">damping</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.07</span>
+      <span class="nt">friction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.999</span>
+      <span class="nt">restitution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+      <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+<span class="hll">      <span class="nt">dry_run</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</span></pre></div>
+</div>
+</div>
+<p>Second, we add a new element to our list of <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code> to output a <code class="docutils literal notranslate"><span class="pre">blend</span></code> file of the scene, after the recipe ran through all <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> – another type of <cite>rendering</cite>, i.e. translating features from our virtual scene into an explicit format.</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">rendering_steps</span><span class="p">:</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.SaveState</span>
+</span><span class="hll">      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">state</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</div>
+<p>Now, we open that file in <code class="docutils literal notranslate"><span class="pre">Blender</span></code>, which can be found under <code class="docutils literal notranslate"><span class="pre">output/chocBeans_table/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/state.blend</span></code> – ignore the <code class="docutils literal notranslate"><span class="pre">Glass</span></code> for a moment in joyful anticipation for the next tutorial – and have a look at the particles being distributed in the virtual scene. The advantage of using the parameter <code class="docutils literal notranslate"><span class="pre">dry_run</span></code> is that we can visualize every frame of the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> simulation, meaning: our falling particles. The images below show the first frame and the last frame of this simulation.</p>
+<a class="reference internal image-reference" href="../_images/measVol_pinkStart.png"><img alt="First frame of physics simulation" src="../_images/measVol_pinkStart.png" style="width: 49%;" /></a>
+<a class="reference internal image-reference" href="../_images/measVol_pinkEnd.png"><img alt="Last frame of physics simulation" src="../_images/measVol_pinkEnd.png" style="width: 49%;" /></a>
+<p>In the beginning, the particles are randomly distributed in the <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code>. In the end of the physics simulation – more specific: after our second <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function – all particles are located on the ground due to the simulated gravity. The <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code> doesn’t participate in the physics simulation, i.e. the boundary doesn’t affect the particles’ movement, especially doesn’t block the particles from moving out of the volume.</p>
+<p>As can be seen, the measurement volume is represented by an elongated shape along the <code class="docutils literal notranslate"><span class="pre">z</span></code> axis. This is why we decide to use the feature <code class="docutils literal notranslate"><span class="pre">location_z</span></code>. For the moment, let’s categorize our particles in three groups, i.e. <code class="docutils literal notranslate"><span class="pre">sets</span></code>. We call those sets <code class="docutils literal notranslate"><span class="pre">Category1</span></code>, <code class="docutils literal notranslate"><span class="pre">Category2</span></code> and <code class="docutils literal notranslate"><span class="pre">Category3</span></code>. They must fulfil the criteria <code class="docutils literal notranslate"><span class="pre">IsCat1</span></code>, <code class="docutils literal notranslate"><span class="pre">IsCat2</span></code> and <code class="docutils literal notranslate"><span class="pre">IsCat3</span></code>, respectively.</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_criteria</span><span class="p">:</span>
+<span class="hll">    <span class="nt">IsCat1</span><span class="p">:</span>
+</span>      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+      <span class="nt">interval_length</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">27</span>
+      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="hll">    <span class="nt">IsCat2</span><span class="p">:</span>
+</span>      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+      <span class="nt">interval_length</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">27</span>
+      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="hll">    <span class="nt">IsCat3</span><span class="p">:</span>
+</span>      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+      <span class="nt">interval_length</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">27</span>
+      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+  <span class="nt">sets</span><span class="p">:</span>
+<span class="hll">    <span class="nt">Category1</span><span class="p">:</span>
+</span>      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat1</span>
+<span class="hll">    <span class="nt">Category2</span><span class="p">:</span>
+</span>      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat2</span>
+<span class="hll">    <span class="nt">Category3</span><span class="p">:</span>
+</span>      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat3</span>
+</pre></div>
+</div>
+</div>
+<p>Admittedly, we use a rather unusual categorization by creating a dependence on the feature <code class="docutils literal notranslate"><span class="pre">location_z</span></code> here. But, since it’s suitable for the purpose of illustration, it’s expedient in the current tutorial case. Let’s visualize, what we actually did.</p>
+<img alt="Compartments in measurement volume" src="../_images/measVol_compartments.png" />
+<p>The function <code class="docutils literal notranslate"><span class="pre">InCompartment</span></code>, which we used to define our three criteria, can be read as follows: “Divide every <code class="docutils literal notranslate"><span class="pre">&lt;interval_length&gt;</span></code> units into <code class="docutils literal notranslate"><span class="pre">&lt;compartments_total&gt;</span></code> equidistant compartments. Check if <code class="docutils literal notranslate"><span class="pre">&lt;feature_name&gt;</span></code> lies inside compartment <code class="docutils literal notranslate"><span class="pre">&lt;compartment_no&gt;</span></code>.” For the example of <code class="docutils literal notranslate"><span class="pre">IsCat1</span></code>, for every object the criterion would “Divide every <code class="docutils literal notranslate"><span class="pre">27</span></code> units into <code class="docutils literal notranslate"><span class="pre">3</span></code> equidistant compartments. Check if <code class="docutils literal notranslate"><span class="pre">location_z</span></code> lies inside compartment <code class="docutils literal notranslate"><span class="pre">1</span></code>” and – if so – return <code class="docutils literal notranslate"><span class="pre">True</span></code>. If the criterion is fulfilled (<code class="docutils literal notranslate"><span class="pre">$IsCat1</span></code>) <cite>and</cite> the checked object is a particle (<code class="docutils literal notranslate"><span class="pre">$IsParticle</span></code>), it will be accounted for the set <code class="docutils literal notranslate"><span class="pre">Category1</span></code>.</p>
+<p>To see it in action, let’s assign different colors to the different sets. First, we add three more <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> to our list and name those <code class="docutils literal notranslate"><span class="pre">PinkColor</span></code>, <code class="docutils literal notranslate"><span class="pre">YellowColor</span></code> and <code class="docutils literal notranslate"><span class="pre">GreenColor</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_criteria</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">sets</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CameraNearTable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleWidth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleHeight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">PinkColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">hue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.95</span>
+</span><span class="hll">        <span class="nt">saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.85</span>
+</span><span class="hll">    <span class="nt">YellowColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">hue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.09</span>
+</span><span class="hll">        <span class="nt">saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.95</span>
+</span><span class="hll">    <span class="nt">GreenColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">hue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.32</span>
+</span><span class="hll">        <span class="nt">saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.77</span>
+</span>    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">CyclesSamples</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>Then we trigger the update of the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> three times by adding the corresponding <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> to the <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> of our <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code>. The first trigger will only affect <code class="docutils literal notranslate"><span class="pre">Category1</span></code> and change the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> according to the definition in <code class="docutils literal notranslate"><span class="pre">PinkColor</span></code>. The second trigger affects <code class="docutils literal notranslate"><span class="pre">Category2</span></code> and will restrict the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> to <code class="docutils literal notranslate"><span class="pre">YellowColor</span></code>. The third trigger updates the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> only for the particles in <code class="docutils literal notranslate"><span class="pre">Category3</span></code> and will apply <code class="docutils literal notranslate"><span class="pre">GreenColor</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleHeight</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category1</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">YellowColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category2</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GreenColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category3</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+      <span class="nt">time_scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+</pre></div>
+</div>
+</div>
+<p>We placed the new <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdates</span></code> right after the one for <code class="docutils literal notranslate"><span class="pre">ParticleHeight</span></code> and the <cite>first</cite> <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function. The order is of major importance here! It is the reason why we speak of <cite>dynamic</cite> <code class="docutils literal notranslate"><span class="pre">sets</span></code>. What is dynamic about a <code class="docutils literal notranslate"><span class="pre">set</span></code>? Its content! The content of a set, i.e. the decision whether a particle (more general: an object of the scene) belongs to it or not, is evaluated <cite>at runtime</cite> – exactly at the moment, when the <code class="docutils literal notranslate"><span class="pre">feature_generation_step</span></code> is executed with respect to its sequential order in the chain, thus, in sequential relation to the other steps.</p>
+<img alt="Influence of step sequence on dynamic sets" src="../_images/sequenceDynSets.png" />
+<p>In our current case in this tutorial, it is important, that the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> of the particles is updated <cite>first</cite>, and only <cite>then</cite> do we execute the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> functions, which change the feature <code class="docutils literal notranslate"><span class="pre">location_z</span></code> of our particles – especially the second one with gravity acting along the <code class="docutils literal notranslate"><span class="pre">z</span></code> axis and therefore moving particles along this direction. If we would first execute the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> functions and afterwards call for the <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdates</span></code> of the <code class="docutils literal notranslate"><span class="pre">color</span></code>, only <cite>then</cite> would we also check the content of the <code class="docutils literal notranslate"><span class="pre">sets</span></code> and evaluate if the <code class="docutils literal notranslate"><span class="pre">feature_criteria</span></code> are fulfilled. Since, our three criteria <code class="docutils literal notranslate"><span class="pre">IsCat1</span></code>, <code class="docutils literal notranslate"><span class="pre">IsCat2</span></code> and <code class="docutils literal notranslate"><span class="pre">IsCat3</span></code> depend all on the feature <code class="docutils literal notranslate"><span class="pre">location_z</span></code>, which has almost exactly the same value for every particle after the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> functions (namely: floor level), this feature <code class="docutils literal notranslate"><span class="pre">location_z</span></code> is then rather unsuitable to distinguish between particles. Exactly this is the dynamic character about <code class="docutils literal notranslate"><span class="pre">sets</span></code>: They will change their content dynamically, dependent on the current “<code class="docutils literal notranslate"><span class="pre">feature</span></code> situation” in the 3D virtual scene. Very powerful. Use it!</p>
+<p>For the rest of the tutorial, you should again remove the parameter <code class="docutils literal notranslate"><span class="pre">dry_run</span></code>, since it is not needed any further. It is always good practice to <cite>only</cite> use <code class="docutils literal notranslate"><span class="pre">dry_run</span></code>, if you really need it, e.g. for debugging reasons or if you just want to check how the particles move during the physics simulation, while fine-tuning parameters. The reason is that <code class="docutils literal notranslate"><span class="pre">dry_run</span></code>, if enabled, will not <cite>end</cite> the simulation in a clean state: The transformations in the 3D virtual scene are not <cite>actually</cite> applied. Whereas, per default after the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function (<code class="docutils literal notranslate"><span class="pre">dry_run:</span> <span class="pre">False</span></code>), the transformations would indeed apply and the <code class="docutils literal notranslate"><span class="pre">features</span></code> are then correctly, “cleanly” set. Therefore unintentionally leaving <code class="docutils literal notranslate"><span class="pre">dry_run</span></code> enabled could lead to unforeseen consequences.</p>
+<p>Let’s now execute our recipe and look at some colorful chocolate beans from our lateral perspective!</p>
+<img alt="Different colors for different chocolate beans" src="../_images/chocBeansCOL_perspective.png" />
+<p>Nice! Okay, we’re almost done here. Let’s now crank it all up: More colors, different colors, more color variation, more particles!</p>
+<p>We will assign eight different colors, so let’s first create the eight sets <code class="docutils literal notranslate"><span class="pre">Category1</span></code>, <code class="docutils literal notranslate"><span class="pre">Category2</span></code>… <code class="docutils literal notranslate"><span class="pre">Category8</span></code>, which are defined by the eight criteria <code class="docutils literal notranslate"><span class="pre">IsCat1</span></code>, <code class="docutils literal notranslate"><span class="pre">IsCat2</span></code>… <code class="docutils literal notranslate"><span class="pre">IsCat8</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id23" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_criteria</span><span class="p">:</span>
+    <span class="nt">IsCat1</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+    <span class="nt">IsCat2</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+    <span class="nt">IsCat3</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="hll">    <span class="nt">IsCat4</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+</span><span class="hll">      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">4</span>
+</span><span class="hll">      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span><span class="hll">    <span class="nt">IsCat5</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+</span><span class="hll">      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+</span><span class="hll">      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span><span class="hll">    <span class="nt">IsCat6</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+</span><span class="hll">      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6</span>
+</span><span class="hll">      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span><span class="hll">    <span class="nt">IsCat7</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+</span><span class="hll">      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">7</span>
+</span><span class="hll">      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span><span class="hll">    <span class="nt">IsCat8</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InCompartment</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z</span>
+</span><span class="hll">      <span class="nt">compartment_no</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+</span><span class="hll">      <span class="nt">compartments_total</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span>  <span class="nt">sets</span><span class="p">:</span>
+    <span class="nt">Category1</span><span class="p">:</span>
+      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat1</span>
+    <span class="nt">Category2</span><span class="p">:</span>
+      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat2</span>
+    <span class="nt">Category3</span><span class="p">:</span>
+      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat3</span>
+<span class="hll">    <span class="nt">Category4</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat4</span>
+</span><span class="hll">    <span class="nt">Category5</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat5</span>
+</span><span class="hll">    <span class="nt">Category6</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat6</span>
+</span><span class="hll">    <span class="nt">Category7</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat7</span>
+</span><span class="hll">    <span class="nt">Category8</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsCat8</span>
+</span>  <span class="nt">feature_variabilities</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>We define all the <code class="docutils literal notranslate"><span class="pre">feature_criteria</span></code> and new <code class="docutils literal notranslate"><span class="pre">sets</span></code> analogously to the example before, but this time we use a number of <code class="docutils literal notranslate"><span class="pre">8</span></code> for <code class="docutils literal notranslate"><span class="pre">compartments_total</span></code> and do not further specify the <code class="docutils literal notranslate"><span class="pre">interval_length</span></code>. The latter will default to <code class="docutils literal notranslate"><span class="pre">1.0</span></code> and will therefore be much smaller than the usual extent of each particle (see <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code> as specified under <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code>) – ultimately resulting in a “kind of” almost randomized color assignment. Worth mentioning, the exact <code class="docutils literal notranslate"><span class="pre">location_z</span></code> of each particle corresponds to its origin – in the case of our ellipsoid: its center of symmetry.</p>
+<p>Now we specify more colors with more variation.</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id24" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CameraNearTable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleWidth</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleHeight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">PinkColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.945</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.950</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.895</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.900</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.648</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.653</span>
+</span><span class="hll">    <span class="nt">RedColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.990</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.995</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.995</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.000</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.448</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.453</span>
+</span><span class="hll">    <span class="nt">OrangeColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.020</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.025</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.995</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.000</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.895</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.900</span>
+</span><span class="hll">    <span class="nt">YellowColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.087</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.092</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.945</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.950</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.862</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.867</span>
+</span><span class="hll">    <span class="nt">GreenColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.321</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.326</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.770</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.775</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.253</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.258</span>
+</span><span class="hll">    <span class="nt">BlueColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.622</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.627</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.846</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.851</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.547</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.552</span>
+</span><span class="hll">    <span class="nt">PurpleColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.716</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.721</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.801</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.806</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.348</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.353</span>
+</span><span class="hll">    <span class="nt">BrownColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.020</span>
+</span><span class="hll">        <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.025</span>
+</span><span class="hll">        <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.796</span>
+</span><span class="hll">        <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.801</span>
+</span><span class="hll">        <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.082</span>
+</span><span class="hll">        <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.087</span>
+</span>    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">CyclesSamples</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>As can be seen, we play quite a lot with the color wheel this time. Be aware that in the figure below, only the color with the average values of <code class="docutils literal notranslate"><span class="pre">hue</span></code>, <code class="docutils literal notranslate"><span class="pre">saturation</span></code> and <code class="docutils literal notranslate"><span class="pre">value</span></code> is shown for each <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code>. Every <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> actually spans a 3D range for each color to allow for a little bit of variation in tone for each of the eight colors.</p>
+<img alt="Multiple colors picked from color wheel" src="../_images/hsvMultiCol.png" />
+<p>Last thing to do? Right: <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdates</span></code>!</p>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id25" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleHeight</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category1</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RedColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category2</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">OrangeColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category3</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">YellowColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category4</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GreenColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category5</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BlueColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category6</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PurpleColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category7</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BrownColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category8</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+</pre></div>
+</div>
+</div>
+<p>An execution of the current recipe will output the following rendered image.</p>
+<img alt="Chocolate beans with eight different color categories" src="../_images/chocBeansMultiCOL.png" />
+<p>They’re looking really pretty, but when starting to nibble… 40 chocolate beans are rather a joy for a minute or two. Let’s put some more of these tasteful little things on the table! We increase the <code class="docutils literal notranslate"><span class="pre">number</span></code> of our <code class="docutils literal notranslate"><span class="pre">Beads</span></code> to <code class="docutils literal notranslate"><span class="pre">200</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id26" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ellipsoid</span>
+      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">colored_subtle</span>
+      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+<span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+</span></pre></div>
+</div>
+</div>
+<a class="reference internal image-reference" href="../_images/measVol_multiCol40start.png"><img alt="Measurement volume with 40 invoked chocolate beans" src="../_images/measVol_multiCol40start.png" style="width: 49%;" /></a>
+<a class="reference internal image-reference" href="../_images/measVol_multiCol40end.png"><img alt="40 chocolate beans on table after gravity simulation" src="../_images/measVol_multiCol40end.png" style="width: 49%;" /></a>
+<a class="reference internal image-reference" href="../_images/measVol_multiCol200start.png"><img alt="Measurement volume with 200 invoked chocolate beans" src="../_images/measVol_multiCol200start.png" style="width: 49%;" /></a>
+<a class="reference internal image-reference" href="../_images/measVol_multiCol200end.png"><img alt="200 chocolate beans on table after gravity simulation" src="../_images/measVol_multiCol200end.png" style="width: 49%;" /></a>
+<p>Let’s finalize this tutorial: We will render out our <code class="docutils literal notranslate"><span class="pre">real</span></code> image and some <code class="docutils literal notranslate"><span class="pre">categorical</span></code> images. When creating the latter, for two of the <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code>, we want to focus only on the <cite>pink</cite> particles. Aww… those <cite>pink</cite> ones!</p>
+<p>Therefore, we create one more, last <code class="docutils literal notranslate"><span class="pre">feature_criteria</span></code> with name <code class="docutils literal notranslate"><span class="pre">IsPink</span></code> and one more <code class="docutils literal notranslate"><span class="pre">set</span></code> with name <code class="docutils literal notranslate"><span class="pre">PinkParticles</span></code>.</p>
+<p>If you ask yourself: “Why do we not easily take the already existing set <code class="docutils literal notranslate"><span class="pre">Category1</span></code>?” Because after all, those were the ones, to which we assigned the <cite>pink</cite> <code class="docutils literal notranslate"><span class="pre">color</span></code>… Our <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code> come in the very end: When all particles already have fallen. So, in order to filter for the <cite>pink</cite> particles, let’s <cite>not</cite> take that <code class="docutils literal notranslate"><span class="pre">set</span></code>, which <cite>dynamically</cite> (at the time, when we check the <code class="docutils literal notranslate"><span class="pre">affected</span> <span class="pre">set</span></code>) evaluates the feature <code class="docutils literal notranslate"><span class="pre">location_z</span></code>. But let’s actually define that criterion by our concrete definition of the <code class="docutils literal notranslate"><span class="pre">feature</span></code>, we’re looking for: <cite>pink</cite> <code class="docutils literal notranslate"><span class="pre">color</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id27" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_criteria</span><span class="p">:</span>
+    <span class="nt">IsCat1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">IsCat2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">IsCat3</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">IsCat4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">IsCat5</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">IsCat6</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">IsCat7</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">IsCat8</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">IsPink</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.InHsvRange</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.945</span>
+</span><span class="hll">      <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.950</span>
+</span><span class="hll">      <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.895</span>
+</span><span class="hll">      <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.900</span>
+</span><span class="hll">      <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.648</span>
+</span><span class="hll">      <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.653</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span>  <span class="nt">sets</span><span class="p">:</span>
+    <span class="nt">Category1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">Category2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">Category3</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">Category4</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">Category5</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">Category6</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">Category7</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">Category8</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">PinkParticles</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsPink</span>
+</span>  <span class="nt">feature_variabilities</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>Now, we add three more <code class="docutils literal notranslate"><span class="pre">categorical</span></code> rendering steps, two of them only affecting the <code class="docutils literal notranslate"><span class="pre">PinkParticles</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id28" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.SaveState …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+</span><span class="hll">      <span class="nt">output_file_name_prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all_</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+</span><span class="hll">      <span class="nt">set_name_of_interest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkParticles</span>
+</span><span class="hll">      <span class="nt">output_file_name_prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pink_</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesIndividually</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+</span><span class="hll">      <span class="nt">set_name_of_interest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkParticles</span>
+</span><span class="hll">      <span class="nt">subfolder</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pink</span>
+</span></pre></div>
+</div>
+</div>
+<p>Before we execute our recipe one last time, we increase the render samples to a number of <code class="docutils literal notranslate"><span class="pre">512</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id29">
+<div class="code-block-caption"><span class="caption-text">chocBeans_table.yaml</span><a class="headerlink" href="#id29" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="nt">CyclesSamples</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cycles_samples</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+<span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">512</span>
+</span></pre></div>
+</div>
+</div>
+<p>We can find our output files of the <code class="docutils literal notranslate"><span class="pre">RenderParticlesTogether</span></code> steps in the locations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">output/chocBeans_table/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/real/&lt;hash&gt;.png</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output/chocBeans_table/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/categorical/all_&lt;hash&gt;.png</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output/chocBeans_table/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/categorical/pink_&lt;hash&gt;.png</span></code></p></li>
+</ul>
+<p>For the <code class="docutils literal notranslate"><span class="pre">RenderParticlesIndividually</span></code> step, the subfolder <code class="docutils literal notranslate"><span class="pre">output/chocBeans_table/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/categorical/pink/</span></code> contains one image for <cite>each</cite> pink particle without overlapping of other particles. Three of them are shown at the bottom row.</p>
+<a class="reference internal image-reference" href="../_images/AAG_31.png"><img alt="../_images/AAG_31.png" src="../_images/AAG_31.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/categ_all.png"><img alt="../_images/categ_all.png" src="../_images/categ_all.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/categ_pink.png"><img alt="../_images/categ_pink.png" src="../_images/categ_pink.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/categ_singlePink_1.png"><img alt="../_images/categ_singlePink_1.png" src="../_images/categ_singlePink_1.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/categ_singlePink_2.png"><img alt="../_images/categ_singlePink_2.png" src="../_images/categ_singlePink_2.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/categ_singlePink_3.png"><img alt="../_images/categ_singlePink_3.png" src="../_images/categ_singlePink_3.png" style="width: 32.5%;" /></a>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorials.html#basic-start">Basic Start</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials.html#advanced-topics">Advanced Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../tutorials.html">Tutorials</a><ul>
+      <li>Previous: <a href="tut_bs_plasticine_plane.html" title="previous chapter">Pearls &amp; Plasticine on Plane</a></li>
+      <li>Next: <a href="tut_at_chocBeans_glassTable.html" title="next chapter">Chocolate Beans in Glass</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tuts/tut_at_chocBeans_table.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

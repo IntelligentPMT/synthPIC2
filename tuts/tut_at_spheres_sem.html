@@ -1,0 +1,521 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>SEM: More Rendering Modes &amp; Production Scale Use &#8212; synthPIC2 0.5dev documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="TEM: Agglomeration, Metaballs &amp; STL export" href="tut_at_agglom_tem.html" />
+    <link rel="prev" title="Chocolate Beans in Glass" href="tut_at_chocBeans_glassTable.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="sem-more-rendering-modes-production-scale-use">
+<h1>SEM: More Rendering Modes &amp; Production Scale Use<a class="headerlink" href="#sem-more-rendering-modes-production-scale-use" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial demonstrates a real use-case: the generation of data for the training of a neural network for particle detection in secondary electron microscopy (SEM) images. To train the network, we need a lot of lifelike and <cite>heterogeneous</cite> data, so that the network is applicable to real images and learns to generalize.</p>
+<p>Therefore, we create a recipe with a lot of feature variabilities, so that we can introduce some randomness in the generated images. While we’re at it, we demonstrate a few more rendering modes, to have some more versatile forms of ground truth available for our training.</p>
+<p>Since this is an advanced tutorial, we assume that you are already familiar with the basic concepts of the toolbox.</p>
+<div class="section" id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/real1.png"><img alt="../_images/real1.png" src="../_images/real1.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/stylized.png"><img alt="../_images/stylized.png" src="../_images/stylized.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/normal_map.png"><img alt="../_images/normal_map.png" src="../_images/normal_map.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/categorical.png"><img alt="../_images/categorical.png" src="../_images/categorical.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/stylized_xray.png"><img alt="../_images/stylized_xray.png" src="../_images/stylized_xray.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/depth_map.png"><img alt="../_images/depth_map.png" src="../_images/depth_map.png" style="width: 32%;" /></a>
+</div>
+<div class="section" id="what-you-will-learn">
+<h2>What You Will Learn<a class="headerlink" href="#what-you-will-learn" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Recap of basic rendering modes: <code class="docutils literal notranslate"><span class="pre">real</span></code> and <code class="docutils literal notranslate"><span class="pre">categorical</span></code></p></li>
+<li><p>More exotic rendering modes: <code class="docutils literal notranslate"><span class="pre">stylized</span></code>, <code class="docutils literal notranslate"><span class="pre">stylized_xray</span></code>, <code class="docutils literal notranslate"><span class="pre">normal_map</span></code> and <code class="docutils literal notranslate"><span class="pre">depth_map</span></code></p></li>
+<li><p>How to create a recipe that is versatile enough to create a large and heterogeneous data set, suitable for the training of a particle detection network.</p></li>
+</ul>
+</div>
+<div class="section" id="recipe">
+<h2>Recipe<a class="headerlink" href="#recipe" title="Permalink to this headline">¶</a></h2>
+<p>The recipe for this tutorial can be found in <cite>recipes/spheres_sem.yaml</cite>:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">recipes/spheres_sem.yaml</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+
+<span class="nt">initial_runtime_state</span><span class="p">:</span>
+  <span class="nt">time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
+  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">SEM</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">secondary_electron_microscope</span>
+      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sem_patchy_silicone</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
+      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sem_polystyrene</span>
+      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">600</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+    <span class="nt">ParticleSubdivisions</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdivisions</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">InitialParticleLocation</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+    <span class="nt">NoiseThreshold</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">noise_threshold</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">Defocus</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">defocus</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
+        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3</span>
+        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">IlluminationStrength</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">illumination_strength</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">BackgroundPatchScale</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">patch_scale</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">75</span>
+        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">BackgroundPatchSeed</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">patch_seed</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${initial_runtime_state.seed}</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleSubdivisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
+      <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+      <span class="nt">gravity</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">-100</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">250</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Defocus</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">NoiseThreshold</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">IlluminationStrength</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BackgroundPatchScale</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BackgroundPatchSeed</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.SaveState</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">state</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">depth_map</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">normal_map</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stylized</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stylized_xray</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="step-1-simulating-scanning-electron-microscopy-sem">
+<h2>Step 1: Simulating Scanning Electron Microscopy (SEM)<a class="headerlink" href="#step-1-simulating-scanning-electron-microscopy-sem" title="Permalink to this headline">¶</a></h2>
+<p>To achieve the style of SEM images, we not only have to specify a suitable measurement technique prototype, but we need suitable material prototypes as well:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">SEM</span><span class="p">:</span>
+<span class="hll">      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">secondary_electron_microscope</span>
+</span><span class="hll">      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sem_patchy_silicone</span>
+</span>  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
+<span class="hll">      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sem_polystyrene</span>
+</span>      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">600</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Blender was not made to simulate electrons. This means that we have to fake the SEM style using <a class="reference external" href="https://docs.blender.org/manual/en/latest/render/shader_nodes/shader/sss.html">subsurface scattering</a>.</p>
+</div>
+</div>
+<div class="section" id="step-2-feature-variabilities">
+<h2>Step 2: Feature Variabilities<a class="headerlink" href="#step-2-feature-variabilities" title="Permalink to this headline">¶</a></h2>
+<p>As mentioned before, this recipe makes extensive use of feature variabilities. For the sake of brevity, we will go over them just briefly.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">ParticleDimension</span><span class="p">:</span>
+    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+    <span class="nt">variability</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+      <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+      <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Although unrealistic for real particle systems, we scale our particles according to a uniform distribution, as not to create a bias towards a certain particle size.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">ParticleSubdivisions</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdivisions</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>The used geometry prototype has quite a high resolution. Since we’re only dealing with spheres (and
+actually lots of them), we can reduce the <a class="reference external" href="https://docs.blender.org/manual/en/latest/modeling/modifiers/generate/subdivision_surface.html">number of subdivisions</a>, to speed up the upcoming physics simulation and the rendering.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">InitialParticleLocation</span><span class="p">:</span>
+    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+    <span class="nt">variability</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Although later on, we will use a small physics simulation, to place our particles, we initialize their position, by distributing them evenly in the measurement volume.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">NoiseThreshold</span><span class="p">:</span>
+    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">noise_threshold</span>
+    <span class="nt">variability</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+      <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+      <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.05</span>
+      <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>This feature variability randomizes the <a class="reference external" href="https://docs.blender.org/manual/en/latest/render/cycles/render_settings/sampling.html#adaptive-sampling">noise threshold</a> of Blender’s Cycles rendering engine through our measurement technique. Here, it is used to control the noise of the resulting images, to match the noisiness of real SEM images.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">Defocus</span><span class="p">:</span>
+    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">defocus</span>
+    <span class="nt">variability</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+      <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
+      <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3</span>
+      <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>To vary the amount of blur, which can occur in SEM images, we add variation to the <code class="docutils literal notranslate"><span class="pre">defocus</span></code> feature of our measurement technique, which controls the depth of field of a camera in Blender.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">IlluminationStrength</span><span class="p">:</span>
+    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">illumination_strength</span>
+    <span class="nt">variability</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+      <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
+      <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Since the brightness of SEM images is very dependent on the operator, we introduce some variation. The varied feature controls a light source in our measurement technique.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">BackgroundPatchScale</span><span class="p">:</span>
+    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">patch_scale</span>
+    <span class="nt">variability</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+      <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+      <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">75</span>
+      <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>The utilized measurement technique allows us to enable a background plane, which acts as substrate for our particles. The <code class="docutils literal notranslate"><span class="pre">sem_patchy_silicone</span></code> material prototype that we assigned is a procedural material and features a lot of small patches. Here, we introduce some variation to the scale of these patches.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+  <span class="nt">BackgroundPatchSeed</span><span class="p">:</span>
+    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">patch_seed</span>
+    <span class="nt">variability</span><span class="p">:</span>
+      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+      <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${initial_runtime_state.seed}</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>To avoid that our substrate is too similar for images with similar <code class="docutils literal notranslate"><span class="pre">patch_scale</span></code> values, we tie the random seed of the substrate material to our global random seed.</p>
+</div>
+<div class="section" id="step-3-feature-generation-steps">
+<h2>Step 3: Feature Generation Steps<a class="headerlink" href="#step-3-feature-generation-steps" title="Permalink to this headline">¶</a></h2>
+<p>Most feature generation steps of the recipe should already be familiar from other tutorials, so we will not elaborate upon them here, with exception of the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> step, since we will reference it in Step 5 of this tutorial.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+    <span class="l l-Scalar l-Scalar-Plain">- _target_</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="l l-Scalar l-Scalar-Plain">affected_set_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="l l-Scalar l-Scalar-Plain">collision_shape</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
+      <span class="l l-Scalar l-Scalar-Plain">use_gravity</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+      <span class="l l-Scalar l-Scalar-Plain">gravity</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="hll">        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">-100</span>
+</span>    <span class=" -Error">  </span><span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">250</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>The noteworthy parameter here is the third element of the <code class="docutils literal notranslate"><span class="pre">gravity</span></code> parameter (-100). We will use it to create a more loose or more dense packing of our particle heap. Since the gravity of this feature generation step is not accessible as a feature, we cannot apply a feature variability. However, we can override the value for different executions of the recipe as part of a multirun (see step 5).</p>
+</div>
+<div class="section" id="step-4-rendering-steps">
+<h2>Step 4: Rendering Steps<a class="headerlink" href="#step-4-rendering-steps" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.SaveState</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">state</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Saves the scene as a Blender file. The ultimate ground truth.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Renders a lifelike SEM image.</p>
+<div class="figure align-default" style="width: 70%">
+<img alt="The &quot;real&quot; image." src="../_images/real1.png" />
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Renders a categorical image, where pixels of a certain color represent a particle.</p>
+<div class="figure align-default" style="width: 70%">
+<img alt="2D ground truth." src="../_images/categorical.png" />
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">depth_map</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Renders a depth map, where each pixel is color-coded based on the relative distance of the underlying geometry to the camera. Darker pixels are closer to the camera than lighter pixels. Despite being 2D, this representation holds some 3D information.</p>
+<div class="figure align-default" style="width: 70%">
+<img alt="Depth map." src="../_images/depth_map.png" />
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">normal_map</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>Renders a normal map, where each pixel is color-coded based on the normal vector of the underlying geometry. Each color channel represents a spatial dimension. Despite being 2D, this representation holds some 3D information.</p>
+<div class="figure align-default" style="width: 70%">
+<img alt="Normal map of the geometry." src="../_images/normal_map.png" />
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stylized</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>This render mode uses a generic material and lighting. Therefore, it is very universal but abstract.</p>
+<div class="figure align-default" style="width: 70%">
+<img alt="Stylized render." src="../_images/stylized.png" />
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stylized_xray</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>The same as the <code class="docutils literal notranslate"><span class="pre">stylized</span></code> rendering mode, but with transparency.</p>
+<div class="figure align-default" style="width: 70%">
+<img alt="Stylized render with transparency." src="../_images/stylized_xray.png" />
+</div>
+</div>
+<div class="section" id="step-5-multirun-producing-a-lot-of-data">
+<h2>Step 5: Multirun: Producing a Lot of Data<a class="headerlink" href="#step-5-multirun-producing-a-lot-of-data" title="Permalink to this headline">¶</a></h2>
+<p>Now that we completed our recipe, we can use it to create a lifelike image and the associated ground truth representations. However, to train a neural network, we need a whole stack of training samples. Since we don’t want to write many recipes, we will leverage the power of the <code class="docutils literal notranslate"><span class="pre">--multirun</span></code> command-line parameter. Since want to be able to look up the overrides that we are using in a few months from now, we create a small bash script (see <code class="docutils literal notranslate"><span class="pre">recipes/secondary_electron_microscopy_multirun.sh</span></code>):</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">recipes/secondary_electron_microscopy_multirun.sh</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+
+<span class="nv">temp</span><span class="o">=</span><span class="k">$(</span> realpath <span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span>  <span class="k">)</span>
+<span class="nv">script_directory</span><span class="o">=</span><span class="k">$(</span> dirname <span class="s2">&quot;</span><span class="nv">$temp</span><span class="s2">&quot;</span> <span class="k">)</span>
+
+<span class="nb">cd</span> <span class="nv">$script_directory</span>/..
+
+python run.py <span class="se">\</span>
+    --config-dir<span class="o">=</span>recipes <span class="se">\</span>
+    --config-name<span class="o">=</span>secondary_electron_microscopy <span class="se">\</span>
+    --multirun <span class="se">\</span>
+    blueprints.particles.Bead.number<span class="o">=</span><span class="m">100</span>,200,300,400,500,600 <span class="se">\</span>
+    initial_runtime_state.seed<span class="o">=</span>range<span class="se">\(</span><span class="m">15</span><span class="se">\)</span> <span class="se">\</span>
+    synth_chain.feature_generation_steps.5.gravity.2<span class="o">=</span>-100,-10000
+</pre></div>
+</div>
+</div>
+<p>The script consists of two parts. First, it changes into the base directory of the toolbox (independently from the directory it was called from). Secondly, it executes a multirun with three overrides:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">blueprints.particles.Bead.number=100,200,300,400,500,600</span></code>: Here we vary the number of particles, by iterating a list of six values, so that we yield images with more or less coverage.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_runtime_state.seed=range\(15\)</span></code>: Here we vary the random seed in the range from 0 to 14, to get different values for the feature variabilities that we defined in Step 2 of this tutorial. Note the use of <code class="docutils literal notranslate"><span class="pre">\</span></code> to escape the parentheses.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">synth_chain.feature_generation_steps.5.gravity.2=-100,-10000</span></code>: Here we vary the <cite>third</cite> element (<cite>z</cite> coordinate) of the <code class="docutils literal notranslate"><span class="pre">gravity</span></code> parameter of the <cite>sixth</cite> feature generation step (<code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code>, see Step 3 of this tutorial).</p></li>
+</ul>
+<p>Since a multirun executes all permutations of the overrides, we can calculate the number of resulting runs:
+<code class="docutils literal notranslate"><span class="pre">(6</span> <span class="pre">possible</span> <span class="pre">numbers</span> <span class="pre">of</span> <span class="pre">particles)</span> <span class="pre">x</span> <span class="pre">(15</span> <span class="pre">possible</span> <span class="pre">random</span> <span class="pre">seeds)</span> <span class="pre">x</span> <span class="pre">(2</span> <span class="pre">possible</span> <span class="pre">gravities)</span> <span class="pre">=</span> <span class="pre">180</span> <span class="pre">runs</span></code></p>
+<p>To get a feeling for the heterogeneity of the resulting data, let us examine a few examples:</p>
+<a class="reference internal image-reference" href="../_images/0.png"><img alt="../_images/0.png" src="../_images/0.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/1.png"><img alt="../_images/1.png" src="../_images/1.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/2.png"><img alt="../_images/2.png" src="../_images/2.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/3.png"><img alt="../_images/3.png" src="../_images/3.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/4.png"><img alt="../_images/4.png" src="../_images/4.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/5.png"><img alt="../_images/5.png" src="../_images/5.png" style="width: 32%;" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We execute the shell script inside our Docker container that is running Linux, so it will work on any host operating system.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorials.html#basic-start">Basic Start</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials.html#advanced-topics">Advanced Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../tutorials.html">Tutorials</a><ul>
+      <li>Previous: <a href="tut_at_chocBeans_glassTable.html" title="previous chapter">Chocolate Beans in Glass</a></li>
+      <li>Next: <a href="tut_at_agglom_tem.html" title="next chapter">TEM: Agglomeration, Metaballs &amp; STL export</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tuts/tut_at_spheres_sem.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

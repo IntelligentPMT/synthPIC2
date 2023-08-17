@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pearls &amp; Plasticine on Plane &#8212; synthPIC2 0.5dev documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Chocolate Beans on Table" href="tut_at_chocBeans_table.html" />
+    <link rel="prev" title="Colored Pearls on Plane" href="tut_bs_colPearls_plane.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="pearls-plasticine-on-plane">
+<h1>Pearls &amp; Plasticine on Plane<a class="headerlink" href="#pearls-plasticine-on-plane" title="Permalink to this headline">¶</a></h1>
+<p>Now we will bring a little variance into the shape of our particles. Furthermore, we do not just vary the shape of our one particle kind, but also introduce a second particle type, which distinguishes in shape and color from the first type. The whole scene’s complexity is increased by various feature manipulations.</p>
+<div class="section" id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/AAG_05.png"><img alt="../_images/AAG_05.png" src="../_images/AAG_05.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_15.png"><img alt="../_images/AAG_15.png" src="../_images/AAG_15.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_25.png"><img alt="../_images/AAG_25.png" src="../_images/AAG_25.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_32.png"><img alt="../_images/AAG_32.png" src="../_images/AAG_32.png" style="width: 24.5%;" /></a>
+</div>
+<div class="section" id="what-we-will-learn">
+<h2>What We Will Learn<a class="headerlink" href="#what-we-will-learn" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Inheritance of recipes</p></li>
+<li><p>Several particle blueprints with complex geometries</p></li>
+<li><p>Assign more realistic materials</p></li>
+<li><p>Separately adapt attributes via specified sets</p></li>
+<li><p>Add turbidity to the scene</p></li>
+<li><p>Learn new render mode <code class="docutils literal notranslate"><span class="pre">categorical</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="step-1-value-the-past-inheritance">
+<h2>Step 1: Value the Past: Inheritance<a class="headerlink" href="#step-1-value-the-past-inheritance" title="Permalink to this headline">¶</a></h2>
+<p>As usual, we start by creating a new recipe file – call it <code class="docutils literal notranslate"><span class="pre">plasticine_plane.yaml</span></code> this time – and add our first block to initialize and seed the recipe. However, instead of starting all over every time when creating a new recipe, this time we’ll make use of another recipe and build upon that. In fact, we take the last one, which we created in the previous tutorial: <code class="docutils literal notranslate"><span class="pre">colPearls_plane.yaml</span></code>. In order to reference that and build upon it, we easily need to add it to our list of defaults.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
+<span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+<span class="hll">  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">colPearls_plane</span>
+</span>  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+</pre></div>
+</div>
+</div>
+<p>What we just did, is defining a list of single recipes, where every subsequent recipe builds upon the previous one and adds the content from itself. When specific definitions already existed before, it overwrites that content. In our case, we build upon the <code class="docutils literal notranslate"><span class="pre">BaseRecipe</span></code> and afterwards add the content of the recipe, which is defined in the file <code class="docutils literal notranslate"><span class="pre">colPearls_plane.yaml</span></code> (the toolbox <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> knows that the recipes are located under <code class="docutils literal notranslate"><span class="pre">recipes/..</span></code> and we do not need to name the file extension). In the end, we add the content of the current recipe itself by putting the entry <code class="docutils literal notranslate"><span class="pre">_self_</span></code> into the list. The current recipe is quite empty at the moment (nothing else than <code class="docutils literal notranslate"><span class="pre">defaults</span></code>), so actually, we only specified to execute the repice <code class="docutils literal notranslate"><span class="pre">colPearls_plane</span></code> at the moment. When we currently run our new recipe, we get the same result as if we would run <code class="docutils literal notranslate"><span class="pre">colPearls_plane</span></code> from the last tutorial.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="n">recipes</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">plasticine_plane</span>
+</pre></div>
+</div>
+<img alt="Final rendering of previous tutorial" src="../_images/firstRenderPrevRecipe.png" />
+<p>You’re advised to decrease the render samples to a low value like <code class="docutils literal notranslate"><span class="pre">64</span></code> or <code class="docutils literal notranslate"><span class="pre">128</span></code> in this tutorial, if you want to save some time or are bound to hardware limitations. However, we will present those versions of images rendered with <code class="docutils literal notranslate"><span class="pre">2048</span></code> samples throughout the tutorial.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Physical boundary conditions</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CyclesSamples</span><span class="p">:</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">64</span> <span class="c1"># small during tutorial, high for final render</span>
+</pre></div>
+</div>
+</div>
+<p>As can be seen, we really only needed to add the one value, which we wanted to change, here <code class="docutils literal notranslate"><span class="pre">value:</span> <span class="pre">64</span></code> (of course in the namespace tree containing it <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code> <span class="math notranslate nohighlight">\(\curvearrowright\)</span> <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> <span class="math notranslate nohighlight">\(\curvearrowright\)</span> <code class="docutils literal notranslate"><span class="pre">CyclesSamples</span></code> <span class="math notranslate nohighlight">\(\curvearrowright\)</span> <code class="docutils literal notranslate"><span class="pre">variability</span></code>). That means, this time we didn’t need to specify <code class="docutils literal notranslate"><span class="pre">feature_name:</span> <span class="pre">cycles_samples</span></code> under <code class="docutils literal notranslate"><span class="pre">CyclesSamples:</span></code> and we didn’t need to specify <code class="docutils literal notranslate"><span class="pre">_target_:</span> <span class="pre">$builtins.Constant</span></code> under <code class="docutils literal notranslate"><span class="pre">variability:</span></code> again, since those are both already defined in the recipe <code class="docutils literal notranslate"><span class="pre">colPearls_plane</span></code> from which we inherit and therefore build upon.</p>
+<p>One last thing we actually want to change before concluding the first step in this tutorial, is to bring in a new shape: a new <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code> for the particles. Therefore, let’s just change this one attribute in its corresponding namespace by adding four lines of code: three for the namespace and one for the attribute <code class="docutils literal notranslate"><span class="pre">geometry_prototype_name</span></code>, which we want to change.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
+<span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">colPearls_plane</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="hll"><span class="c1"># Defining blueprints</span>
+</span><span class="hll"><span class="nt">blueprints</span><span class="p">:</span>
+</span><span class="hll">  <span class="nt">particles</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">Bead</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">potato</span>
+</span><span class="c1"># Physical boundary conditions</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CyclesSamples</span><span class="p">:</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2048</span> <span class="c1"># small during tutorial, high for final render</span>
+</pre></div>
+</div>
+</div>
+<img alt="Altered shape of particles" src="../_images/AAG_05.png" />
+<p>In this first step, we saw how easy it is to create a new recipe based on prior work using the inheritance mechanism of recipes.</p>
+</div>
+<div class="section" id="step-2-playing-with-plasticine">
+<h2>Step 2: Playing With Plasticine<a class="headerlink" href="#step-2-playing-with-plasticine" title="Permalink to this headline">¶</a></h2>
+<p>Now we introduce a second shape and again want to end up with 40 particles in total.</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">potato</span>
+<span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">15</span>
+</span><span class="hll">    <span class="nt">Worm</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worm_twisted</span>
+</span><span class="hll">      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+</span><span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+</span></pre></div>
+</div>
+</div>
+<p>This new shape, which we added, has a worm-like, twisted appearance – something you could achieve by playing with plasticine. We’ll have a look at the possibilities of how to play around with it in a moment. Let’s first visualize our result.</p>
+<img alt="Regular pearls and worms" src="../_images/regularPearlsWorms.png" />
+<p>To get an idea what we can do with those plasticine worms, let’s have a look at their geometry prototype: We can find it under <code class="docutils literal notranslate"><span class="pre">prototype_library/geometries/..</span></code> in the two files <code class="docutils literal notranslate"><span class="pre">worm_twisted.blend</span></code> and <code class="docutils literal notranslate"><span class="pre">worm_twisted.yaml</span></code>. The first describes the geometry in a <code class="docutils literal notranslate"><span class="pre">.blend</span></code> file, while the second <cite>accompanying file</cite> specifies the features which are allowed to be changed. Let’s first have a look in the latter.</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">worm_twisted.yaml</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">features</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions …</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location …</span>
+  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location_z …</span>
+<span class="hll">  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rotations</span>
+</span>    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].modifiers[&quot;GeometryNodes&quot;][&quot;Input_2&quot;]</span>
+<span class="hll">  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">thickness</span>
+</span>    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&quot;GeometryPrototype&quot;].modifiers[&quot;GeometryNodes&quot;][&quot;Input_3&quot;]</span>
+<span class="hll">  <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">resolution</span>
+</span>    <span class="nt">blender_link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bpy.data.objects[&#39;GeometryPrototype&#39;].modifiers[&quot;Remesh&quot;].voxel_size</span>
+</pre></div>
+</div>
+</div>
+<p>Next to the first three features <code class="docutils literal notranslate"><span class="pre">dimensions</span></code>, <code class="docutils literal notranslate"><span class="pre">location</span></code> and <code class="docutils literal notranslate"><span class="pre">location_z</span></code> (which can also be found, e.g. in the <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code> of the <code class="docutils literal notranslate"><span class="pre">sphere</span></code>), we have three further features for the shape definition of our worms. They are called <code class="docutils literal notranslate"><span class="pre">rotations</span></code>, <code class="docutils literal notranslate"><span class="pre">thickness</span></code> and <code class="docutils literal notranslate"><span class="pre">resolution</span></code>. For the moment, the statements after <code class="docutils literal notranslate"><span class="pre">blender_link:</span></code> after each feature name can be ignored. For a better – visual – understanding of what we actually change, let’s open the geometry <code class="docutils literal notranslate"><span class="pre">.blend</span></code> file in <code class="docutils literal notranslate"><span class="pre">Blender</span></code>.</p>
+<img alt="Different worm shapes by feature manipulation" src="../_images/wormShapes.png" />
+<p>When we now want to adjust those features in our recipe, we define the <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> and call the <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> as usual. Actually, we do not <cite>adjust</cite> them directly, but rather define a range, in which those features are allowed to be set during randomization while <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code>. So, let’s first define our <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> under <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code>. Keep in mind, that we’re still inheriting from the other recipe <code class="docutils literal notranslate"><span class="pre">colPearls_plane</span></code> and therefore, just need to add/overwrite our desired new elements. However, changing the <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> works a little bit different, as we will see soon.</p>
+<p>Let’s add the new <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code>, which we call <code class="docutils literal notranslate"><span class="pre">WormRotations</span></code>, <code class="docutils literal notranslate"><span class="pre">WormThickness</span></code> and <code class="docutils literal notranslate"><span class="pre">WormResolution</span></code>, to vary our features (as named in the prototype accompanying file) <code class="docutils literal notranslate"><span class="pre">rotations</span></code>, <code class="docutils literal notranslate"><span class="pre">thickness</span></code> and <code class="docutils literal notranslate"><span class="pre">resolution</span></code>, respectively.</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="hll">    <span class="nt">WormRotations</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">rotations</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.4</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.8</span>
+</span><span class="hll">    <span class="nt">WormThickness</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">thickness</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.035</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.01</span>
+</span><span class="hll">    <span class="nt">WormResolution</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">resolution</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+</span><span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.15</span>
+</span>    <span class="nt">CyclesSamples</span><span class="p">:</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2048</span> <span class="c1"># small during tutorial, high for final render</span>
+</pre></div>
+</div>
+</div>
+<p>Via the <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> named <code class="docutils literal notranslate"><span class="pre">WormResolution</span></code>, we specified a constant value of <code class="docutils literal notranslate"><span class="pre">0.15</span></code> for the feature <code class="docutils literal notranslate"><span class="pre">resolution</span></code> of our worms. The other both features were restricted to the allowed intervals as <code class="docutils literal notranslate"><span class="pre">rotations</span></code><span class="math notranslate nohighlight">\(\in [0.4,1.2)\)</span> and <code class="docutils literal notranslate"><span class="pre">thickness</span></code><span class="math notranslate nohighlight">\(\in [0.035,0.045)\)</span> by their corresponding <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> named <code class="docutils literal notranslate"><span class="pre">WormRotations</span></code> and <code class="docutils literal notranslate"><span class="pre">WormThickness</span></code>, respectively. Now we only need to add the corresponding calls to trigger the update of those features.</p>
+<p>However, while we heavily used the concept of inheritance so far, this <cite>isn’t</cite> quite as easy for the <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code>, as well. The latter contains only two more attributes which we can add/overwrite, namely the <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> and the <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code>. When we want to manipulate a specific step below this level, it is <cite>not</cite> possible to granularly change one element solely by a further recipe in the inheritance chain. The reason for that is that we’re dealing with lists here: A list can only be replaced in its whole. Therefore, in the current version of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>, when we want to change one or more elements of the <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> <cite>or</cite> the <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code>, we need to redefine the whole list. And that is what we do now:</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Procedural steps of synthetization chain</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WormRotations</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WormThickness</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WormResolution</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+      <span class="nt">damping</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.07</span>
+      <span class="nt">friction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.4</span>
+      <span class="nt">restitution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+      <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
+      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">150</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BackgroundColor</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkColor</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CyclesSamples</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</pre></div>
+</div>
+</div>
+<p>Actually, only the highlighted lines differ from those of the last tutorial, i.e. the recipe that we inherit from. However, as described above we need to add the whole list of <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> to our new recipe.</p>
+<p>As a last detail of shape manipulation, we also want to introduce some variation for our <code class="docutils literal notranslate"><span class="pre">Beads</span></code> and therefore supply a random value (acting as seed) to the available feature <code class="docutils literal notranslate"><span class="pre">shape</span></code> of our <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code> named <code class="docutils literal notranslate"><span class="pre">potato</span></code>. Let’s add the new <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> directly add the top of all <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="hll">    <span class="nt">BeadShape</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">shape</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.UniformDistributionInt</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10000</span>
+</span>    <span class="nt">WormRotations</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>We will add the corresponding <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">generation</span> <span class="pre">step</span></code> to trigger that feature update right in between our <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> for <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code> and <code class="docutils literal notranslate"><span class="pre">WormRotations</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BeadShape</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WormRotations</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</pre></div>
+</div>
+</div>
+<p>Our rendered image of the scene after adding those variations to shape for our particle types <code class="docutils literal notranslate"><span class="pre">Bead</span></code> and <code class="docutils literal notranslate"><span class="pre">Worm</span></code> looks as follows.</p>
+<img alt="All particles show shape variation now" src="../_images/AAG_15.png" />
+</div>
+<div class="section" id="step-3-richness-in-material-details">
+<h2>Step 3: Richness in Material Details<a class="headerlink" href="#step-3-richness-in-material-details" title="Permalink to this headline">¶</a></h2>
+<p>After we brought in a lot of variation for our particle shapes, i.e. the geometry, we now want to tweak our materials. Two major aspects, which strongly influence the image’s final appearance, are <cite>color</cite> and <cite>texture</cite>.</p>
+<p>We already have some color in our image, which we inherited from the recipe <code class="docutils literal notranslate"><span class="pre">colPearls_plane</span></code>. Our particles are pink and the background is beige. Both were defined as a constant, exact color by the HSV color representation. We remember the definitions in our old recipe from the previous tutorial.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">CyclesSamples</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">BackgroundColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">hue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.15</span>
+</span><span class="hll">        <span class="nt">saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.35</span>
+</span><span class="hll">    <span class="nt">PinkColor</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
+</span><span class="hll">        <span class="nt">hue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.95</span>
+</span><span class="hll">        <span class="nt">saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.85</span>
+</span></pre></div>
+</div>
+</div>
+<p>We now want to introduce some variation. To be more specific, we want to give the <cite>pink</cite> color of our particles a little bit more possibilities of appearance – we want to allow the color to spread further into the red area of our color wheel. To better understand what this actually means, expressed in numeric HSV values, let’s bring up the color wheel one more time.</p>
+<img alt="Allowed range for reddish color" src="../_images/reddish_hsv.png" />
+<p>Based on our old <cite>pink</cite> color with values <code class="docutils literal notranslate"><span class="pre">hue:</span> <span class="pre">0.95</span></code>, <code class="docutils literal notranslate"><span class="pre">saturation:</span> <span class="pre">0.85</span></code> and <code class="docutils literal notranslate"><span class="pre">value:</span> <span class="pre">1.00</span></code> (implicitly chosen, since no specification of <code class="docutils literal notranslate"><span class="pre">value</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">1.0</span></code>), we want to extend the range in all these three dimensions. As can be seen in the figure, the two-dimensional range limits of <span class="math notranslate nohighlight">\(0.95\dots 1.00\)</span> for <code class="docutils literal notranslate"><span class="pre">hue</span></code> and <span class="math notranslate nohighlight">\(0.85\dots 0.95\)</span> for <code class="docutils literal notranslate"><span class="pre">saturation</span></code> correspond to a segment of an annulus in the color wheel (see dark area). The <code class="docutils literal notranslate"><span class="pre">value</span></code>, which is plotted in the third dimension, defines the brightness. Note that the little markers in the figure do not indicate the exact color position, but illustrate the <code class="docutils literal notranslate"><span class="pre">value</span></code> parameter of the HSV representation. To get an idea how strongly we increased the range of possible colors, let’s search for our previous <cite>pink</cite> color: In the right square – showing the colors for <code class="docutils literal notranslate"><span class="pre">value:</span> <span class="pre">1.00</span></code> – our previous <cite>pink</cite> color sits in the bottom left corner as a fixed color with an exact value. More variation, we didn’t allow by the <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> named <code class="docutils literal notranslate"><span class="pre">PinkColor</span></code> from the last tutorial.</p>
+<p>Now, we add another <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code> in our new recipe, right below our earlier definitions for the shape features and call it <code class="docutils literal notranslate"><span class="pre">ReddishColor</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">feature_variabilities</span><span class="p">:</span>
+  <span class="nt">BeadShape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">WormRotations</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">WormThickness</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">WormResolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">  <span class="nt">ReddishColor</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll">    <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.RandomHsvColorAsRgb</span>
+</span><span class="hll">      <span class="nt">h_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.95</span>
+</span><span class="hll">      <span class="nt">h_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span class="hll">      <span class="nt">s_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.85</span>
+</span><span class="hll">      <span class="nt">s_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.95</span>
+</span><span class="hll">      <span class="nt">v_min</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.35</span>
+</span><span class="hll">      <span class="nt">v_max</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span>  <span class="nt">CyclesSamples</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>Since we do not want to allow this color variety for all of our particles, but only for our plasticine worms, let’s again control this distinction by <code class="docutils literal notranslate"><span class="pre">sets</span></code>. This time however, we cannot easily take standard sets (e.g. <code class="docutils literal notranslate"><span class="pre">AllMeasurementTechniques</span></code>, <code class="docutils literal notranslate"><span class="pre">AllParticles</span></code>) as we did last time, when we assigned separate background and particle colors. Hence, we need to create two new <code class="docutils literal notranslate"><span class="pre">sets</span></code> to distinguish our both particle kinds.</p>
+<p>The content of <code class="docutils literal notranslate"><span class="pre">sets</span></code>, i.e. which objects belong to them <cite>during runtime</cite>, is defined by logical combination of criteria. Let’s think about it: What is our criterion for distinction? The difference between a <code class="docutils literal notranslate"><span class="pre">Bead</span></code> and a <code class="docutils literal notranslate"><span class="pre">Worm</span></code>… They are different particle types, defined by different <code class="docutils literal notranslate"><span class="pre">blueprints</span></code>! So let’s take this criterion: The distinction by their origin and filter for their blueprints’ name. We create two new <code class="docutils literal notranslate"><span class="pre">feature_criteria</span></code> and two corresponding <code class="docutils literal notranslate"><span class="pre">sets</span></code> under our <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code>. Let’s add them before our <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+<span class="hll">  <span class="nt">feature_criteria</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">IsBead</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.ContainsString</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blueprint_name</span>
+</span><span class="hll">      <span class="nt">search_string</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Bead</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span><span class="hll">    <span class="nt">IsWorm</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.ContainsString</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blueprint_name</span>
+</span><span class="hll">      <span class="nt">search_string</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Worm</span>
+</span><span class="hll">      <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+</span><span class="hll">  <span class="nt">sets</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">BeadsInView</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsBead</span>
+</span><span class="hll">    <span class="nt">WormsInView</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsWorm</span>
+</span>  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">BeadShape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">WormRotations</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">WormThickness</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">WormResolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ReddishColor</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">CyclesSamples</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>Everything is prepared now to assign the colors (more exactly: the allowed color variabilities) to our desired particles, based on their affiliation to a certain set. This assignment will be evaluated during runtime, i.e. the evaluation which particle belongs to which <code class="docutils literal notranslate"><span class="pre">set</span></code> happens when the concrete <code class="docutils literal notranslate"><span class="pre">feature_generation_step</span></code> is executed. We add the new <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> for our <code class="docutils literal notranslate"><span class="pre">feature_variability</span></code> with name <code class="docutils literal notranslate"><span class="pre">ReddishColor</span></code> right below our other both <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code>, which trigger the update of the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> according to the <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> named <code class="docutils literal notranslate"><span class="pre">BackgroundColor</span></code> and <code class="docutils literal notranslate"><span class="pre">PinkColor</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BackgroundColor</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkColor</span>
+<span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BeadsInView</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ReddishColor</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WormsInView</span>
+</span></pre></div>
+</div>
+</div>
+<p>Note that we also adjusted our already existing <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> for <code class="docutils literal notranslate"><span class="pre">PinkColor</span></code> by changing the <code class="docutils literal notranslate"><span class="pre">affected_set_name</span></code> to our newly created set <code class="docutils literal notranslate"><span class="pre">BeadsInView</span></code>. Executing the recipe at the current state outputs a rendered image with all <code class="docutils literal notranslate"><span class="pre">Beads</span></code> still having their fixed pink color, while our plasticine <code class="docutils literal notranslate"><span class="pre">Worms</span></code> show a reddish tint. Most importantly, all <code class="docutils literal notranslate"><span class="pre">Worms</span></code> have a <cite>different</cite>, unique (randomized) color, which was defined/restricted by the <code class="docutils literal notranslate"><span class="pre">feature_variability</span></code> named <code class="docutils literal notranslate"><span class="pre">ReddishColor</span></code>.</p>
+<img alt="Plasticine worms show various reddish colors" src="../_images/reddishWorms.png" />
+<p>As a last measure to conclude the current step of this tutorial: We’ll tune the materials! This can easily be done by adding the following five lines to our <code class="docutils literal notranslate"><span class="pre">blueprints</span></code> section.</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+<span class="hll">  <span class="nt">measurement_techniques</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">TopCamInAir</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cracks_subtle</span>
+</span>  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">potato</span>
+<span class="hll">      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">colored_subtle</span>
+</span>      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">15</span>
+    <span class="nt">Worm</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">worm_twisted</span>
+<span class="hll">      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">colored_subtle</span>
+</span>      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+</pre></div>
+</div>
+</div>
+<p>We defined the both materials <code class="docutils literal notranslate"><span class="pre">cracks_subtle</span></code> and <code class="docutils literal notranslate"><span class="pre">colored_subtle</span></code> for our background and for our particles, respectively. As the names suggest, those materials show only a subtle nuance of structure, but add more realism to the scene than the previous <code class="docutils literal notranslate"><span class="pre">plain</span></code> materials could do. Those more complex materials make use of procedurally generated textures and show little, but clear difference especially in the specular highlights, see rendered image.</p>
+<img alt="Use of complex materials with procedural textures" src="../_images/complexMaterials.png" />
+</div>
+<div class="section" id="step-4-clear-vision-in-fog">
+<h2>Step 4: Clear Vision in Fog<a class="headerlink" href="#step-4-clear-vision-in-fog" title="Permalink to this headline">¶</a></h2>
+<p>In this last step of our tutorial, we add that little salt and pepper to our scene. Namely, we want to add some turbidity to our vision: a homogeneous fog. When looking at our last rendered images: They all look sharp… very crisp. Nice, but not very realistic. In practice, there’s often at least some extent of blur in recorded images of particles by dust or the like (participating media) in the measurement volume. Our <code class="docutils literal notranslate"><span class="pre">measurement_technique</span></code> named <code class="docutils literal notranslate"><span class="pre">TopCamInAir</span></code> with its <code class="docutils literal notranslate"><span class="pre">geometry</span> <span class="pre">prototype</span></code> (defined in <code class="docutils literal notranslate"><span class="pre">measurement_technique_prototype_name</span></code>) named <code class="docutils literal notranslate"><span class="pre">plane_topCam_fog</span></code> already contains that property. We just have to turn it on! Let’s add another <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code>, which defines the feature <code class="docutils literal notranslate"><span class="pre">fog</span></code>. We’ll name it <code class="docutils literal notranslate"><span class="pre">MeasurementVolumeFog</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id15" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">BeadShape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">WormRotations</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">WormThickness</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">WormResolution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ReddishColor</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">MeasurementVolumeFog</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">fog</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+</span><span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.025</span>
+</span>    <span class="nt">CyclesSamples</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+</pre></div>
+</div>
+</div>
+<p>Again, we also need to add the corresponding <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> as a new <code class="docutils literal notranslate"><span class="pre">feature_generation_step</span></code>. We add it right in between the <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdates</span></code> for <code class="docutils literal notranslate"><span class="pre">ReddishColor</span></code> and <code class="docutils literal notranslate"><span class="pre">RenderingResolutionPercentage</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id16" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ReddishColor</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WormsInView</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolumeFog</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</pre></div>
+</div>
+</div>
+<p>The addition of this fog (technically: volume scatter) to our scene will result in a higher render time / higher number of needed samples for an output image with a satisfyingly low amount of noise. Therefore, you should always carefully consider if volume scattering is really needed for the concrete use case.</p>
+<img alt="Fog was added to the scene" src="../_images/AAG_25.png" />
+<p>Up to this point, we put quite a lot of effort into rendering an image that represents the synthesized image in an appearance similar to that taken by a real photo camera. Let’s recap our steps to increase the complexity of the scene, for a moment.</p>
+<p>First, we added color to the simple material <code class="docutils literal notranslate"><span class="pre">plain</span></code> and then introduced color variation in a specific range for one type of our particles. Afterwards, we increased the complexity by choosing new materials, which also contain a feature named <code class="docutils literal notranslate"><span class="pre">color</span></code>. Therefore we kept our currently chosen color for the particles, but just added a subtle texture with the new material. As a last step, we added a very low amount of volume scatter to simulate a fine fog.</p>
+<img alt="Increased complexity of the scene" src="../_images/compareComplexity.png" />
+<p>High resolution images (click to enlarge):</p>
+<a class="reference internal image-reference" href="../_images/hiRes_plainMat.png"><img alt="../_images/hiRes_plainMat.png" src="../_images/hiRes_plainMat.png" style="width: 19.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/hiRes_color.png"><img alt="../_images/hiRes_color.png" src="../_images/hiRes_color.png" style="width: 19.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/hiRes_colVary.png"><img alt="../_images/hiRes_colVary.png" src="../_images/hiRes_colVary.png" style="width: 19.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/hiRes_compMat_noFog.png"><img alt="../_images/hiRes_compMat_noFog.png" src="../_images/hiRes_compMat_noFog.png" style="width: 19.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/hiRes_fog0p025.png"><img alt="../_images/hiRes_fog0p025.png" src="../_images/hiRes_fog0p025.png" style="width: 19.5%;" /></a>
+<p>To conclude this tutorial, we want to have a look at another <code class="docutils literal notranslate"><span class="pre">rendering_mode</span></code> called <code class="docutils literal notranslate"><span class="pre">categorical</span></code>. Let’s first start by actually creating a <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code> list and adding our “normal” <code class="docutils literal notranslate"><span class="pre">rendering_step</span></code> to output the <code class="docutils literal notranslate"><span class="pre">real</span></code> image. Afterwards, we add two new <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code> with <code class="docutils literal notranslate"><span class="pre">rendering_mode:</span> <span class="pre">categorical</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">plasticine_plane.yaml</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesIndividually</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+      <span class="nt">subfolder</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">individual</span>
+</pre></div>
+</div>
+</div>
+<p>The first <code class="docutils literal notranslate"><span class="pre">categorical</span></code> step targets the function <code class="docutils literal notranslate"><span class="pre">RenderParticlesTogether</span></code> to render all particles on one image. So far, for our recently created images with <code class="docutils literal notranslate"><span class="pre">rendering_mode:</span> <span class="pre">real</span></code>, we used this function all the time. This function causes that areas of rear particles, where front particles overlap those, are occluded. In the second <code class="docutils literal notranslate"><span class="pre">categorical</span></code> step, we want to render each particle on one separate image while neglecting the existence of other particles. This will output all pixels of each specific particle, regardless of the existence of other particles, which would actually overlap those areas. However, in our example here, we do not have overlapping particles anyways, so the <code class="docutils literal notranslate"><span class="pre">RenderParticlesTogether</span></code> step is the most senseful here.</p>
+<img alt="All particles are categorically rendered together" src="../_images/AAG_32.png" />
+<p>Particles, which are each individually rendered on one image, are placed in the subfolder whose name we specified as <code class="docutils literal notranslate"><span class="pre">individual</span></code>. Six example images are shown here.</p>
+<a class="reference internal image-reference" href="../_images/indivSample1.png"><img alt="../_images/indivSample1.png" src="../_images/indivSample1.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/indivSample2.png"><img alt="../_images/indivSample2.png" src="../_images/indivSample2.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/indivSample3.png"><img alt="../_images/indivSample3.png" src="../_images/indivSample3.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/indivSample4.png"><img alt="../_images/indivSample4.png" src="../_images/indivSample4.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/indivSample5.png"><img alt="../_images/indivSample5.png" src="../_images/indivSample5.png" style="width: 32.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/indivSample6.png"><img alt="../_images/indivSample6.png" src="../_images/indivSample6.png" style="width: 32.5%;" /></a>
+<p>For this mode <code class="docutils literal notranslate"><span class="pre">categorical</span></code>, the earlier defined <code class="docutils literal notranslate"><span class="pre">CyclesSamples</span></code> are of no importance. We see no details of the photo-realistic appearance, for which we put quite a lot of effort into the creation of our recipe. However, this mode brings something very valuable: We exclusively see the plain and simple exact pixel coordinates, color-coded with their belonging to each particle. The location with exact boundary (i.e. shape) and therefore the two-dimensional size are unambiguously described for each single particle. A very valuable knowledge of the ground truth in our images, e.g. for generation of training data for neural networks.</p>
+<p>In the fourth line of the last code snipped we stated <code class="docutils literal notranslate"><span class="pre">do_save_features:</span> <span class="pre">True</span></code>. By this, the additional files <code class="docutils literal notranslate"><span class="pre">measurement_technique_features.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">particle_features.csv</span></code> are output in the corresponding subfolder of the <code class="docutils literal notranslate"><span class="pre">rendering_step</span></code>. The latter of the two files contains all features for all particles, including the <code class="docutils literal notranslate"><span class="pre">category_color</span></code> of each particle. Therefore, especially when using the <code class="docutils literal notranslate"><span class="pre">categorical</span></code> render mode, at least one of the <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code> should also output these files by setting <code class="docutils literal notranslate"><span class="pre">do_save_features:</span> <span class="pre">True</span></code>. So, further data sorting and assignability of each particle with its features to the color-coded location on the <code class="docutils literal notranslate"><span class="pre">categorical</span></code> image is made possible.</p>
+<p>As you can see, the term “rendering” is used in <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> in a more general context. While in the context of computer graphics, it often directly means the generation of an image. We rather define it in the context of <cite>translating</cite> features from our virtual reality (3D measurement volume) domain into an explicit format. This can be a numeric table, a photo-realistically rendered image, categorical images or also the full geometrical data of each particle, i.e. the mesh data.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials.html#basic-start">Basic Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials.html#advanced-topics">Advanced Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../tutorials.html">Tutorials</a><ul>
+      <li>Previous: <a href="tut_bs_colPearls_plane.html" title="previous chapter">Colored Pearls on Plane</a></li>
+      <li>Next: <a href="tut_at_chocBeans_table.html" title="next chapter">Chocolate Beans on Table</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tuts/tut_bs_plasticine_plane.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

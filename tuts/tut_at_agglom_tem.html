@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>TEM: Agglomeration, Metaballs &amp; STL export &#8212; synthPIC2 0.5dev documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Concepts" href="../concepts.html" />
+    <link rel="prev" title="SEM: More Rendering Modes &amp; Production Scale Use" href="tut_at_spheres_sem.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tem-agglomeration-metaballs-stl-export">
+<h1>TEM: Agglomeration, Metaballs &amp; STL export<a class="headerlink" href="#tem-agglomeration-metaballs-stl-export" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we will see how we can create an agglomerate from a set of particles, render it in the style of a transmission electron microscopy (TEM) image and export the resulting geometry as an STL file.</p>
+<p>Since this is an advanced tutorial, it assumes that you are already familiar with the basics of the toolbox. Also, we assume that you are familiar with the basics of agglomeration. A good summary can be found in Friedlander (2000) “Smoke, dust, and haze: Fundamentals of aerosol dynamics”, Chapter 8.</p>
+<div class="section" id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/AAG_0.png"><img alt="../_images/AAG_0.png" src="../_images/AAG_0.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_1.png"><img alt="../_images/AAG_1.png" src="../_images/AAG_1.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_2.png"><img alt="../_images/AAG_2.png" src="../_images/AAG_2.png" style="width: 23%;" /></a>
+</div>
+<div class="section" id="what-you-will-learn">
+<h2>What You Will Learn<a class="headerlink" href="#what-you-will-learn" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>How to create lifelike agglomerates.</p></li>
+<li><p>How to use the <code class="docutils literal notranslate"><span class="pre">AgglomerateParticles</span></code> feature generation step.</p></li>
+<li><p>How to simulate sintering using <a class="reference external" href="https://en.wikipedia.org/wiki/Metaballs">metaballs</a>.</p></li>
+<li><p>How to render images that resemble transmission electron microscopy (TEM) images.</p></li>
+<li><p>How to export sets of particles as STL files.</p></li>
+</ul>
+</div>
+<div class="section" id="recipe">
+<h2>Recipe<a class="headerlink" href="#recipe" title="Permalink to this headline">¶</a></h2>
+<p>The recipe for this tutorial can be found in <cite>recipes/agglom_tem.yaml</cite>:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">recipes/agglom_tem.yaml</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+
+<span class="nt">initial_runtime_state</span><span class="p">:</span>
+  <span class="nt">time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
+  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">SecondaryElectronMicroscope</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">transmission_electron_microscope</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">meta_ball_sphere</span>
+      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tem_amorphous</span>
+      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">ParticleDimension</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6</span>
+        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+    <span class="nt">ParticleDensity</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">density</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDensity</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.AgglomerateParticles</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">speed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+      <span class="nt">randomness</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+      <span class="nt">mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cluster-cluster</span>
+      <span class="nt">sintering_ratio</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.SaveState</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">state</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stl</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="step-1-simulating-transmission-electron-microscopy-tem">
+<h2>Step 1: Simulating Transmission Electron Microscopy (TEM)<a class="headerlink" href="#step-1-simulating-transmission-electron-microscopy-tem" title="Permalink to this headline">¶</a></h2>
+<p>To simulate TEM, we not only have to specify the <code class="docutils literal notranslate"><span class="pre">transmission_electron_microscope</span></code> measurement technique prototype, but also have to combine it with the <code class="docutils literal notranslate"><span class="pre">tem_amorphous</span></code> material prototype. Note that this material prototype is only suitable for the simulation of <cite>amorphous</cite> materials, i.e. it does not account for anisotropy and diffraction as you would encounter in crystalline materials.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">SecondaryElectronMicroscope</span><span class="p">:</span>
+<span class="hll">      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">transmission_electron_microscope</span>
+</span>  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">meta_ball_sphere</span>
+<span class="hll">      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tem_amorphous</span>
+</span>      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>To change the absorption of the <code class="docutils literal notranslate"><span class="pre">tem_amorphous</span></code> material, we can use its density feature:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="hll">    <span class="l l-Scalar l-Scalar-Plain">ParticleDensity</span><span class="p p-Indicator">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">density</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+</span><span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="hll">    <span class="l l-Scalar l-Scalar-Plain">- _target_</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">feature_variability_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDensity</span>
+</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">affected_set_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span></pre></div>
+</div>
+</div>
+<div class="section" id="step-2-simulate-agglomeration-and-sintering">
+<h2>Step 2: Simulate Agglomeration And Sintering<a class="headerlink" href="#step-2-simulate-agglomeration-and-sintering" title="Permalink to this headline">¶</a></h2>
+<p>To prepare for the agglomeration, we first create a number of primary particles using the <code class="docutils literal notranslate"><span class="pre">InvokeBlueprints</span></code> feature generation step with the <code class="docutils literal notranslate"><span class="pre">AllParticleBlueprints</span></code> set and scale them using the previously defined <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code> feature variability.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="nn">...</span>
+</pre></div>
+</div>
+<p>Ultimately, we trigger the agglomeration with the <code class="docutils literal notranslate"><span class="pre">AgglomerateParticles</span></code> feature generation step:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+<span class="hll">    <span class="l l-Scalar l-Scalar-Plain">- _target_</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.AgglomerateParticles</span>
+</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">affected_set_name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">speed</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">randomness</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">mode</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cluster-cluster</span>
+</span><span class="hll">      <span class="l l-Scalar l-Scalar-Plain">sintering_ratio</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</span><span class="nn">...</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">AgglomerateParticles</span></code> feature generation step operates on a set of particles, defined by the  <code class="docutils literal notranslate"><span class="pre">affected_set_name</span></code>. From this set, collision partners are selected and collided by simulating their movement through a simulation space with periodic boundaries. While the <code class="docutils literal notranslate"><span class="pre">speed</span></code> parameter controls the step size of the simulation and thereby its speed and accuracy (a lower speed results in a more precise collision detection), the <code class="docutils literal notranslate"><span class="pre">randomness</span></code> controls how random the walk of the collision partners through the simulation space is. <code class="docutils literal notranslate"><span class="pre">randomness:</span> <span class="pre">0</span></code> results in ballistic transport, whereas <code class="docutils literal notranslate"><span class="pre">randomness:</span> <span class="pre">1</span></code> results in diffusion-limited transport.</p>
+<p>The selection of collision partners is controlled by the <code class="docutils literal notranslate"><span class="pre">mode</span></code> parameter. For <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">particle-cluster</span></code>, one primary particle at a time is added to a central cluster in a random order. In contrast, for <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">cluster-cluster</span></code>, multiple clusters are grown in parallel, with the collision order being controlled by the inter-cluster collision probability, which depends on the relative collision frequency and therefore the cluster size. Common agglomeration modes can be simulated as follows:</p>
+<ul class="simple">
+<li><p>ballistic particle-cluster agglomeration: <code class="docutils literal notranslate"><span class="pre">randomness:</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">particle-cluster</span></code></p></li>
+<li><p>diffusion-limited particle-cluster agglomeration: <code class="docutils literal notranslate"><span class="pre">randomness:</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">particle-cluster</span></code></p></li>
+<li><p>ballistic cluster-cluster agglomeration: <code class="docutils literal notranslate"><span class="pre">randomness:</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">cluster-cluster</span></code></p></li>
+<li><p>diffusion-limited cluster-cluster agglomeration: <code class="docutils literal notranslate"><span class="pre">randomness:</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">mode:</span> <span class="pre">cluster-cluster</span></code></p></li>
+</ul>
+<p>Sintering can be simulated using the <code class="docutils literal notranslate"><span class="pre">sintering_ratio</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">AgglomerateParticles</span></code> feature generation step. It controls how much two colliding primary particles overlap after a collision, with <code class="docutils literal notranslate"><span class="pre">sintering_ratio:</span> <span class="pre">0</span></code> resulting in a point contact and <code class="docutils literal notranslate"><span class="pre">sintering_ratio:</span> <span class="pre">1</span></code> resulting in an alignment of the centers of gravity of the two colliding primary particles.</p>
+<p>To simulate the characteristic sintering <cite>necks</cite> between the primary particles, we use the <code class="docutils literal notranslate"><span class="pre">meta_ball_sphere</span></code> geometry prototype:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">SecondaryElectronMicroscope</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">transmission_electron_microscope</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+<span class="hll">      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">meta_ball_sphere</span>
+</span>      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tem_amorphous</span>
+      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
+<span class="nn">...</span>
+</pre></div>
+</div>
+<p>This prototype is very special, since unlike other geometry prototypes, it does not hold a mesh but a <cite>metaball object</cite>. To learn more about metaballs, you can watch the following video:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rumYWmWTkQQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><p>For now, it suffices to know that metaballs have a primitive shape (e.g. spherical, ellipsoid or cubic) and merge when they are close to each other:</p>
+<div class="figure align-default" id="id2" style="width: 30%">
+<img alt="Examples of metaballs." src="../_images/metaballs.png" />
+<p class="caption"><span class="caption-text">Examples of metaballs (source: <a class="reference external" href="https://en.wikipedia.org/wiki/Metaballs">Wikipedia</a>).</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>For the recipe at hand, the parameters yield the following geometry:</p>
+<div class="figure align-default" style="width: 70%">
+<img alt="Resulting geometry." src="../_images/AAG_0.png" />
+</div>
+</div>
+<div class="section" id="step-3-rendering-stl-export">
+<h2>Step 3: Rendering (STL Export)<a class="headerlink" href="#step-3-rendering-stl-export" title="Permalink to this headline">¶</a></h2>
+<p>Most recipes end with rendering steps that produce an image and some form of ground truth:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">...</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">...</span>
+  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.SaveState</span>
+      <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">state</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+</span><span class="hll">      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stl</span>
+</span></pre></div>
+</div>
+<p>We already know <code class="docutils literal notranslate"><span class="pre">rendering_mode:</span> <span class="pre">real</span></code>, which produces a lifelike image of our agglomerate:</p>
+<div class="figure align-default" id="id3" style="width: 70%">
+<img alt="Resulting &quot;real&quot; image." src="../_images/real.png" />
+<p class="caption"><span class="caption-text">Resulting “real” image.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>Unlike other recipes, this recipe does not produce a 2D representation of the ground truth, but saves a 3D model in form of an STL file, using <code class="docutils literal notranslate"><span class="pre">rendering_mode:</span> <span class="pre">stl</span></code>:</p>
+<div class="figure align-default" id="id4" style="width: 70%">
+<img alt="The resulting STL file, when being re-imported to Blender." src="../_images/AAG_2.png" />
+<p class="caption"><span class="caption-text">The resulting STL file, when being re-imported to Blender. Note that it no longer consists of metaballs, but has been converted into a triangulated mesh.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+<p>Just as other rendering modes, the STL rendering mode can be used with both <code class="docutils literal notranslate"><span class="pre">RenderParticlesTogether</span></code> and <code class="docutils literal notranslate"><span class="pre">RenderParticlesIndividually</span></code>.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorials.html#basic-start">Basic Start</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials.html#advanced-topics">Advanced Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../tutorials.html">Tutorials</a><ul>
+      <li>Previous: <a href="tut_at_spheres_sem.html" title="previous chapter">SEM: More Rendering Modes &amp; Production Scale Use</a></li>
+      <li>Next: <a href="../concepts.html" title="next chapter">Concepts</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tuts/tut_at_agglom_tem.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

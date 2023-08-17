@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Synthesized Beads &#8212; synthPIC2 0.5dev documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Colored Pearls on Plane" href="tut_bs_colPearls_plane.html" />
+    <link rel="prev" title="Tutorials" href="../tutorials.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="synthesized-beads">
+<span id="sec-tut-bs-beads"></span><h1>Synthesized Beads<a class="headerlink" href="#synthesized-beads" title="Permalink to this headline">¶</a></h1>
+<p>In this first tutorial, we will have a look at the general concept of synthesizing particle ensembles with <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>. As opposed to the minimum working example “Hello World” of the <a class="reference internal" href="../getting_started.html#sec-getstart"><span class="std std-ref">Getting Started</span></a> section, you will learn to know the process of working with a <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code>. The overall structure of such recipe with its main parts is roughly presented. The main goal of this brief tutorial is to get a first impression of working with <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> to produce synthesized particle data. A more in-depth description of the structure of a <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> is given in the <a class="reference internal" href="../concepts.html#sec-concept"><span class="std std-ref">Concepts</span></a> section.</p>
+<div class="section" id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../_images/AAG_03.png"><img alt="../_images/AAG_03.png" src="../_images/AAG_03.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_13.png"><img alt="../_images/AAG_13.png" src="../_images/AAG_13.png" style="width: 32%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_23.png"><img alt="../_images/AAG_23.png" src="../_images/AAG_23.png" style="width: 32%;" /></a>
+</div>
+<div class="section" id="what-we-will-learn">
+<h2>What We Will Learn<a class="headerlink" href="#what-we-will-learn" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The structure and creation of an executable recipe</p></li>
+<li><p>Understanding the content of a measurement technique prototype (=scene setup)</p></li>
+<li><p>Invoking blueprints, namely the measurement technique and particles</p></li>
+<li><p>Adapting parameters to manipulate the outcome</p></li>
+<li><p>Rendering our scene to visualize &amp; quantify results</p></li>
+</ul>
+</div>
+<div class="section" id="step-1-create-and-execute-recipe">
+<h2>Step 1: Create and Execute Recipe<a class="headerlink" href="#step-1-create-and-execute-recipe" title="Permalink to this headline">¶</a></h2>
+<p>The first thing we need, is our <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> for <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>, so our toolbox knows what actually needs to be done. Therefore, we create such a recipe called <code class="docutils literal notranslate"><span class="pre">beads.yaml</span></code> inside the <code class="docutils literal notranslate"><span class="pre">recipes</span></code> subfolder under our root folder of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>. Inside this file paste the following content.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">beads.yaml</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
+<span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="nt">initial_runtime_state</span><span class="p">:</span>
+  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="c1"># Defining blueprints</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">Camera</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="c1"># Procedural steps of synthetization chain</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+</pre></div>
+</div>
+</div>
+<p>What we did with this short snippet is giving <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> the minimum viable recipe to setup a scene and render it. We can call it by executing the following command inside our Docker container.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="n">recipes</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">beads</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="step-2-inspect-and-understand-scene">
+<h2>Step 2: Inspect and Understand Scene<a class="headerlink" href="#step-2-inspect-and-understand-scene" title="Permalink to this headline">¶</a></h2>
+<p>The resulting rendered scene can be found in the image file <code class="docutils literal notranslate"><span class="pre">output/beads/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/real/&lt;hash&gt;.png</span></code> under our root directory of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>.</p>
+<img alt="First rendered empty scene" src="../_images/firstEmptyScene.png" />
+<p>Fascinating, isn’t it? We got an empty image!</p>
+<p>What did we actually do? Let’s have a closer look at our recipe <code class="docutils literal notranslate"><span class="pre">beads.yaml</span></code>. After the first 6 lines of referencing the BaseRecipe and giving a freely selectable <code class="docutils literal notranslate"><span class="pre">seed</span></code> for reproducibility, we build the two major blocks of the recipe: <code class="docutils literal notranslate"><span class="pre">blueprints</span></code> and <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code>. Inside the <code class="docutils literal notranslate"><span class="pre">blueprints</span></code>, we define one measurement technique, which we call <code class="docutils literal notranslate"><span class="pre">Camera</span></code>. The following attribute <code class="docutils literal notranslate"><span class="pre">measurement_technique_prototype_name</span></code> refers to the <code class="docutils literal notranslate"><span class="pre">default.blend</span></code> file, which can be found inside <code class="docutils literal notranslate"><span class="pre">prototype_library/measurement_techniques</span></code> and which contains our scene setup for the measurement technique. When we open this file in <code class="docutils literal notranslate"><span class="pre">Blender</span></code>, we understand how the scene is built.</p>
+<img alt="Measurement technique default.blend opened in ``Blender``" src="../_images/blenderDefaultMT.png" />
+<p>There is one light source called <code class="docutils literal notranslate"><span class="pre">Light</span></code>, one camera object called <code class="docutils literal notranslate"><span class="pre">Camera</span></code> and one cube in the coordinate origin called <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code>, which is invisible in rendering (see crossed out camera symbol, right hand side). Going back to our recipe, we see that our <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code> defines to first execute a step for feature generation and afterwards a rendering step: First, we invoke the previously defined measurement technique blueprint by simply invoking all defined measurement techniques (we only have one) with the reference to the set <code class="docutils literal notranslate"><span class="pre">AllMeasurementTechniqueBlueprints</span></code>. Finally, we just capture the scene as seen by the <code class="docutils literal notranslate"><span class="pre">Camera</span></code> object in <code class="docutils literal notranslate"><span class="pre">Blender</span></code>: a photo of the coordinate origin, where the invisible <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code> cube sits.</p>
+</div>
+<div class="section" id="step-3-bring-in-particles">
+<h2>Step 3: Bring in Particles<a class="headerlink" href="#step-3-bring-in-particles" title="Permalink to this headline">¶</a></h2>
+<p>To make the scene more exciting, let’s bring in some particles! We do so, by adding another blueprint called <code class="docutils literal notranslate"><span class="pre">Sphere</span></code>. We refer to the <code class="docutils literal notranslate"><span class="pre">default</span></code> geometry prototype (which is a sphere) and want to have a count of 3 particles in total.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">  <span class="nt">particles</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">Sphere</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+</span><span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+</span></pre></div>
+</div>
+<p>Furthermore, we state a process condition to define the allowed locations for particle placement. <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code> can be seen as the physical boundary conditions of the system and are defined one the top-most level in the recipe, in between <code class="docutils literal notranslate"><span class="pre">blueprints</span></code> and <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code>. In our case, we want the particles to be placed inside the <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code> and therefore we restrict the particles’ feature <code class="docutils literal notranslate"><span class="pre">location</span></code> to the boundaries of the <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code>. Since we want every location to have the same probability, we choose a uniform distribution to draw a random number from.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Physical boundary conditions</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">ParticleLocation</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+</pre></div>
+</div>
+<p>Finally, we want to use our newly defined elements and therefore need to add two more steps to our <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code> under <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleLocation</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span></pre></div>
+</div>
+<p>The first new step invokes the three particles, which means to import the geometry as often as specified (here: three times) with original coordinates from their <code class="docutils literal notranslate"><span class="pre">.blend</span></code> file, the origin by default. Only afterwards, the particles are actually repositioned by easily triggering the update of the earlier defined feature: <code class="docutils literal notranslate"><span class="pre">ParticleLocation</span></code>. Note that we do not have to specify exactly, how the feature should behave. We just “trigger” the update. The reason for this is that we already defined the physical boundary condition inside <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code>. Our extended <code class="docutils literal notranslate"><span class="pre">beads.yaml</span></code> recipe should now look as follows.</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">beads.yaml</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
+<span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="nt">initial_runtime_state</span><span class="p">:</span>
+  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="c1"># Defining blueprints</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">Camera</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="hll">  <span class="nt">particles</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">Sphere</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+</span><span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+</span><span class="hll"><span class="c1"># Physical boundary conditions</span>
+</span><span class="hll"><span class="nt">process_conditions</span><span class="p">:</span>
+</span><span class="hll">  <span class="nt">feature_variabilities</span><span class="p">:</span>
+</span><span class="hll">    <span class="nt">ParticleLocation</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+</span><span class="c1"># Procedural steps of synthetization chain</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleLocation</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span>  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+</pre></div>
+</div>
+</div>
+<p>Executing the updated <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> produces the rendered image of our three particles.</p>
+<img alt="First three rendered particles" src="../_images/firstThreeParticles.png" />
+</div>
+<div class="section" id="step-4-pumping-up-the-scene">
+<h2>Step 4: Pumping up the Scene<a class="headerlink" href="#step-4-pumping-up-the-scene" title="Permalink to this headline">¶</a></h2>
+<p>Okay, that was a good start! As a next step, we add some more particles by simply increasing the number when defining the particle blueprint <code class="docutils literal notranslate"><span class="pre">Sphere</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Sphere</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+</span></pre></div>
+</div>
+<p>We add a new feature variability to scale the particles. They should only measure 60% of the diameter of their initial standard unit size as taken from the geometry prototype <code class="docutils literal notranslate"><span class="pre">default.blend</span></code> file. Another feature generation step will execute the procedural step of the <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code> to apply the resizing, i.e. triggering the update of the feature <code class="docutils literal notranslate"><span class="pre">dimensions</span></code> within its allowed feature variability <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="hll">    <span class="nt">ParticleDimension</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.6</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+</span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span></pre></div>
+</div>
+<p>We add one more feature generation step <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> to avoid particle intersection after the random positioning inside the <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code>. Additionally, we add the attribute <code class="docutils literal notranslate"><span class="pre">do_save_features</span></code> to the rendering step to obtain quantitative data of our synthesized beads. The final <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> looks as follows.</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">beads.yaml</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
+<span class="nt">defaults</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="nt">initial_runtime_state</span><span class="p">:</span>
+  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="c1"># Defining blueprints</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span>
+    <span class="nt">Camera</span><span class="p">:</span>
+      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Sphere</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+</span><span class="c1"># Physical boundary conditions</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">ParticleLocation</span><span class="p">:</span>
+      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
+      <span class="nt">variability</span><span class="p">:</span>
+        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+<span class="hll">    <span class="nt">ParticleDimension</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.6</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+</span><span class="c1"># Procedural steps of synthetization chain</span>
+<span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleLocation</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll">      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
+</span>  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+<span class="hll">      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</span></pre></div>
+</div>
+</div>
+<p>We execute the recipe one more time.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="n">recipes</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">beads</span>
+</pre></div>
+</div>
+<p>Now, we can open our resulting file <code class="docutils literal notranslate"><span class="pre">output/beads/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/real/&lt;hash&gt;.png</span></code> and look at a nice illustration of our first rendered particle ensemble.</p>
+<img alt="First rendered particle ensemble" src="../_images/firstParticleEnsemble.png" />
+<p>The accompanying file <code class="docutils literal notranslate"><span class="pre">particle_features.csv</span></code> in the same folder gives insights about the particles’ individual ID (hash), the name of the blueprint from which they were invoked, their dimension and exact position as well as further features of each particle.</p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials.html#basic-start">Basic Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials.html#advanced-topics">Advanced Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../tutorials.html">Tutorials</a><ul>
+      <li>Previous: <a href="../tutorials.html" title="previous chapter">Tutorials</a></li>
+      <li>Next: <a href="tut_bs_colPearls_plane.html" title="next chapter">Colored Pearls on Plane</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/tuts/tut_bs_beads.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
