@@ -109,19 +109,3 @@ We synthesized our first image, which can be found in the file ``output/hello_wo
 
 .. image:: _static/hello_world.png
     :alt: 'Hello World' example
-
-
-Compile Documentation
----------------------
-
-* Start the docker container: ::
-
-    docker-compose run app
-
-* Start ``sphinx-autobuild``, which will build the documentation, watch for changes and rebuild if necessary: ::
-
-    sphinx-autobuild docs/source docs/build/html --host 0.0.0.0
-
-* Visit http://localhost:8000/, to see the documentation.
-
-* Refer to the `sphinx tutorial <https://www.sphinx-doc.org/en/master/tutorial/index.html>`_ for more help.
