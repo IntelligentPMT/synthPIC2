@@ -692,47 +692,200 @@
 </div>
 <div class="section" id="step-3-playing-god-and-change-the-physics">
 <h2>Step 3: Playing God and Change the Physics<a class="headerlink" href="#step-3-playing-god-and-change-the-physics" title="Permalink to this headline">¶</a></h2>
-<p>–&gt; playing around with relaxcollision parameters</p>
-<p>these things:</p>
+<p>If you commented them out to see only the glass in the last step, comment them in again, the lines for <code class="docutils literal notranslate"><span class="pre">InvokeBlueprints</span></code> of our particles and the <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdates</span></code> for color.</p>
+<p>Now, you are free to change and play around with some parameters. You could try the following variations (see also subsequent images):</p>
 <ul class="simple">
-<li><p>with+without glass, old parameters relax collision</p></li>
-<li><p>with+without glass, new parameters relax collision</p></li>
-<li><p>show also with collision (object glass), but not with glass rendered! &gt; how would particles look in the same position, but if the glass wasn’t there / if there wouldn’t be the refraction of the glass, which distorts the particles appearance and eventually moves/changes the information of each particle (i.e. colored pixels) to different pixel locations in the final image</p></li>
-<li><p>let particles fall sideways… everything possible!</p></li>
-<li><p>more particles &amp; longer (hi-res!) simulation</p></li>
+<li><p>Simulate with and without glass (try different combinations of <code class="docutils literal notranslate"><span class="pre">ShowGlass</span></code> and/or <code class="docutils literal notranslate"><span class="pre">CollisionGlass</span></code>).</p></li>
+<li><p>Use our previous parameters of <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code>, try changing parameters of <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code>, e.g. play around with <code class="docutils literal notranslate"><span class="pre">damping</span></code>, <code class="docutils literal notranslate"><span class="pre">friction</span></code> and <code class="docutils literal notranslate"><span class="pre">restitution</span></code>. Try new parameters <code class="docutils literal notranslate"><span class="pre">mass</span></code>, <code class="docutils literal notranslate"><span class="pre">gravity</span></code>. (Hints: leave <code class="docutils literal notranslate"><span class="pre">dry_run</span></code> turned on and keep <code class="docutils literal notranslate"><span class="pre">SaveState</span></code> in <code class="docutils literal notranslate"><span class="pre">rendering_steps</span></code> to observe the effect. A smaller value for <code class="docutils literal notranslate"><span class="pre">num_frames</span></code> is advised. When doing large parameter variation experiments, multirun should be used, see next step.)</p></li>
+<li><p>Let the particles fall sideways… everything possible! Therefore, you would need to change the <code class="docutils literal notranslate"><span class="pre">gravity</span></code> vector – keep in mind: this should be input as a list.</p></li>
+<li><p>You could try more particles &amp; longer (<code class="docutils literal notranslate"><span class="pre">num_frames</span></code>) simulation time.</p></li>
 </ul>
-<p>A number of 500 particles looks quite appropriate, resulting in a completely filled glass and a few particles falling on the wooden table – not too many, just the right amount. Okay, after all this parameter variation, we seem to have found our final parametrization.</p>
-<video controls loop width="100%" poster="../_static/tuts/chocBeans_glassTable/500fA_wm_poster.png" src="../_static/tuts/chocBeans_glassTable/500_fullAni_wm.mp4"></video><p>Now, an example where we show highlighted code lines inside a block of code. To make the scene more exciting, let’s bring in some particles! We do so, by adding another blueprint called <code class="docutils literal notranslate"><span class="pre">Sphere</span></code>. We refer to the <code class="docutils literal notranslate"><span class="pre">default</span></code> geometry prototype (which is a sphere) and want to have a count of 3 particles in total.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
+<a class="reference internal image-reference" href="../_images/wGlass_wCollision.png"><img alt="../_images/wGlass_wCollision.png" src="../_images/wGlass_wCollision.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/AAG_01.png"><img alt="../_images/AAG_01.png" src="../_images/AAG_01.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/collisionOnly.png"><img alt="../_images/collisionOnly.png" src="../_images/collisionOnly.png" style="width: 24.5%;" /></a>
+<a class="reference internal image-reference" href="../_images/gravitySideways.png"><img alt="../_images/gravitySideways.png" src="../_images/gravitySideways.png" style="width: 24.5%;" /></a>
+<p>The example images show the behavior of our chocolate beans, when a glass is present and when there is no glass and the particles can freely distribute on the table. Furthermore, the third image shows how the particle appearance would look like if there would be a physical (<code class="docutils literal notranslate"><span class="pre">CollisionGlass</span></code>), but not a visual (<code class="docutils literal notranslate"><span class="pre">ShowGlass</span></code>) influence of the glass. This case is quite interesting: It demonstrates, how our particles would look like – placed in the same position, but if glass would be invisible. Meaning, if there wouldn’t be the refraction of the glass, which distorts the particles’ appearances and eventually moves/changes the information of each particle (i.e. colored pixels) to different pixel locations in the final image. If your use case would be, e.g. to measure the 2D projected area of those chocolate beans with a certain color in the final image, the influence of how strong the glass distorts this truth could be quantified. The last image shows the result if our particles would fall sideways, with a different <code class="docutils literal notranslate"><span class="pre">gravity</span></code> vector applied, see code snippet below.</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">chocBeans_glassTable.yaml</span><a class="headerlink" href="#id17" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+      <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+      <span class="nt">damping</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.07</span>
+      <span class="nt">friction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.999</span>
+      <span class="nt">restitution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+      <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+<span class="hll">      <span class="nt">gravity</span><span class="p">:</span>
+</span><span class="hll">        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">+5</span>
+</span><span class="hll">        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">-5</span>
+</span><span class="hll">        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+</span>      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+      <span class="nt">dry_run</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
+</div>
+<p>After some variation of our chocolate beans’ quantity, a number of 500 particles looks quite appropriate, resulting in a completely filled glass and a few particles falling on the wooden table – not too many, just the right amount. Also after tinkering around with the parameters of <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code>, we seem to have found our final parametrization, see video below (extended to <code class="docutils literal notranslate"><span class="pre">num_frames:</span> <span class="pre">600</span></code> as opposed to <code class="docutils literal notranslate"><span class="pre">num_frames:</span> <span class="pre">200</span></code> for our final renders) and subsequent code snippets.</p>
+<video controls loop width="100%" poster="../_static/tuts/chocBeans_glassTable/500fA_wm_poster.png" src="../_static/tuts/chocBeans_glassTable/500_fullAni_wm.mp4"></video><div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">s_SceneVariation.yaml</span><a class="headerlink" href="#id18" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining blueprints</span>
+<span class="nt">blueprints</span><span class="p">:</span>
   <span class="nt">measurement_techniques</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-<span class="hll">  <span class="nt">particles</span><span class="p">:</span>
-</span><span class="hll">    <span class="nt">Sphere</span><span class="p">:</span>
-</span><span class="hll">      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">default</span>
-</span><span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3</span>
+  <span class="nt">particles</span><span class="p">:</span>
+    <span class="nt">Bead</span><span class="p">:</span>
+      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ellipsoid</span>
+      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">colored_subtle</span>
+      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+<span class="hll">      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">500</span>
 </span></pre></div>
 </div>
-<p>Furthermore, we state a process condition to… And more text ;) …more text. more text &amp; even more text comes here.</p>
-<p>Here we have a code block with multiple highlighted lines of code inside a block.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-<span class="hll">    <span class="nt">ParticleDimension</span><span class="p">:</span>
-</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
-</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
-</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
-</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.6</span>
-</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-</span><span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-</span></pre></div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">chocBeans_glassTable.yaml</span><a class="headerlink" href="#id19" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+  <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll">  <span class="nt">mass</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0012</span>
+</span>  <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
+  <span class="nt">time_scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="hll">  <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+</span>  <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+<span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+  <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+  <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+  <span class="nt">damping</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.07</span>
+<span class="hll">  <span class="nt">friction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.4</span>
+</span><span class="hll">  <span class="nt">restitution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</span><span class="hll">  <span class="nt">mass</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0012</span>
+</span>  <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.001</span>
+  <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">200</span>
+  <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+  <span class="nt">dry_run</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="step-4-variation-in-series-production">
 <h2>Step 4: Variation in Series Production<a class="headerlink" href="#step-4-variation-in-series-production" title="Permalink to this headline">¶</a></h2>
-<p>TURN ON CATEGORICAL AGAIN</p>
-<p>With more text. …way more text. more text &amp; even more text comes here.</p>
+<p>In this last step of our tutorial, we want to go for the fully automated particle generation under (pseudo-)random parameter variation of the scene. We do so, by just simply varying the <code class="docutils literal notranslate"><span class="pre">initial_runtime_state.seed</span></code>.</p>
+<p>But first let’s comment in the categorical <code class="docutils literal notranslate"><span class="pre">render_steps</span></code> again.</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">chocBeans_glassTable.yaml</span><a class="headerlink" href="#id20" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">rendering_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.SaveState …</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
+      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+</span><span class="hll">      <span class="nt">output_file_name_prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">all_</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+</span><span class="hll">      <span class="nt">set_name_of_interest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkParticles</span>
+</span><span class="hll">      <span class="nt">output_file_name_prefix</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pink_</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesIndividually</span>
+</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">categorical</span>
+</span><span class="hll">      <span class="nt">set_name_of_interest</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkParticles</span>
+</span><span class="hll">      <span class="nt">subfolder</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pink</span>
+</span></pre></div>
+</div>
+</div>
+<p>Furthermore, we will add several new <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> to our <code class="docutils literal notranslate"><span class="pre">s_SceneVariation.yaml</span></code> file.</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">s_SceneVariation.yaml</span><a class="headerlink" href="#id21" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining blueprints</span>
+<span class="nt">blueprints</span><span class="p">:</span>
+  <span class="nt">measurement_techniques</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+  <span class="nt">particles</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="c1"># Physical boundary conditions</span>
+<span class="nt">process_conditions</span><span class="p">:</span>
+  <span class="nt">feature_variabilities</span><span class="p">:</span>
+    <span class="nt">CameraNearTable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">ShowGlass</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+    <span class="nt">CollisionGlass</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll">    <span class="nt">CameraRotation</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cam_rotation</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-0.0523598775598299</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.10471975511966</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span class="hll">    <span class="nt">CameraAltitude</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cam_altitude</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">-0.15707963267949</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.314159265358979</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span class="hll">    <span class="nt">CameraAzimuth</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cam_azimuth</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6.28318530717959</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span class="hll">    <span class="nt">GlassRotation</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">glass_rotation</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.698131700797732</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span class="hll">    <span class="nt">TableRotation</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">table_rotation</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">6.28318530717959</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span><span class="hll">    <span class="nt">WoodTexture</span><span class="p">:</span>
+</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">texture_seed</span>
+</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistributionNdHomogeneous</span>
+</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000</span>
+</span><span class="hll">        <span class="nt">num_dimensions</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+</span></pre></div>
+</div>
+</div>
+<p>…and we need to trigger those in our main recipe file <code class="docutils literal notranslate"><span class="pre">chocBeans_glassTable.yaml</span></code></p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">chocBeans_glassTable.yaml</span><a class="headerlink" href="#id22" title="Permalink to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
+  <span class="nt">feature_generation_steps</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+    <span class="l l-Scalar l-Scalar-Plain">⋮</span>
+    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BrownColor</span>
+      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Category8</span>
+<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CameraRotation</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CameraAltitude</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CameraAzimuth</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GlassRotation</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">TableRotation</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">WoodTexture</span>
+</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+    <span class="l l-Scalar l-Scalar-Plain">⋮</span>
+</pre></div>
+</div>
+</div>
+<p>These new feature variations will introduce random variations of the camera angle and the rotations of the glass, table and wood texture of the table. As a final measure we increase the <code class="docutils literal notranslate"><span class="pre">RenderingResolutionPercentage</span></code> and the <code class="docutils literal notranslate"><span class="pre">CyclesSamples</span></code> to get a high-resolution image as output.</p>
+<p>To call the execution we now execute our recipe as we normally do with the addition of the argument <code class="docutils literal notranslate"><span class="pre">multirun</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">run</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="n">recipes</span> <span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="n">chocBeans_glassTable</span> <span class="o">--</span><span class="n">multirun</span> <span class="n">initial_runtime_state</span><span class="o">.</span><span class="n">seed</span><span class="o">=</span><span class="s2">&quot;range(10)&quot;</span>
+</pre></div>
+</div>
+<p>The number in brackets behind <code class="docutils literal notranslate"><span class="pre">range</span></code> can be set to the desired number of output images. The images below show some example images of our fully automated series production of chocolate beans, whereas all captures are unique and randomized in various parameters.</p>
 <a class="reference internal image-reference" href="../_images/multi_seed3_real.png"><img alt="../_images/multi_seed3_real.png" src="../_images/multi_seed3_real.png" style="width: 16.0%;" /></a>
 <a class="reference internal image-reference" href="../_images/multi_seed9_real.png"><img alt="../_images/multi_seed9_real.png" src="../_images/multi_seed9_real.png" style="width: 16.0%;" /></a>
 <a class="reference internal image-reference" href="../_images/multi_seed11_real.png"><img alt="../_images/multi_seed11_real.png" src="../_images/multi_seed11_real.png" style="width: 16.0%;" /></a>
@@ -751,7 +904,6 @@
 <a class="reference internal image-reference" href="../_images/multi_seed13_pink.png"><img alt="../_images/multi_seed13_pink.png" src="../_images/multi_seed13_pink.png" style="width: 16.0%;" /></a>
 <a class="reference internal image-reference" href="../_images/multi_seed19_pink.png"><img alt="../_images/multi_seed19_pink.png" src="../_images/multi_seed19_pink.png" style="width: 16.0%;" /></a>
 <a class="reference internal image-reference" href="../_images/multi_seed20_pink.png"><img alt="../_images/multi_seed20_pink.png" src="../_images/multi_seed20_pink.png" style="width: 16.0%;" /></a>
-<p>With more text. …way more text. more text &amp; even more text comes here.</p>
 </div>
 </div>
 
@@ -818,7 +970,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>

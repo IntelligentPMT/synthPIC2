@@ -693,61 +693,219 @@ If we `would` turn off the particles for a second (just for this one render: com
 Step 3: Playing God and Change the Physics
 ------------------------------------------
 
---> playing around with relaxcollision parameters
+If you commented them out to see only the glass in the last step, comment them in again, the lines for ``InvokeBlueprints`` of our particles and the ``TriggerFeatureUpdates`` for color.
 
-these things:
+Now, you are free to change and play around with some parameters. You could try the following variations (see also subsequent images):
 
-* with+without glass, old parameters relax collision
-* with+without glass, new parameters relax collision
-* show also with collision (object glass), but not with glass rendered! > how would particles look in the same position, but if the glass wasn't there / if there wouldn't be the refraction of the glass, which distorts the particles appearance and eventually moves/changes the information of each particle (i.e. colored pixels) to different pixel locations in the final image
-* let particles fall sideways... everything possible!
-* more particles & longer (hi-res!) simulation
+* Simulate with and without glass (try different combinations of ``ShowGlass`` and/or ``CollisionGlass``).
+* Use our previous parameters of ``RelaxCollisions``, try changing parameters of ``RelaxCollisions``, e.g. play around with ``damping``, ``friction`` and ``restitution``. Try new parameters ``mass``, ``gravity``. (Hints: leave ``dry_run`` turned on and keep ``SaveState`` in ``rendering_steps`` to observe the effect. A smaller value for ``num_frames`` is advised. When doing large parameter variation experiments, multirun should be used, see next step.)
+* Let the particles fall sideways... everything possible! Therefore, you would need to change the ``gravity`` vector -- keep in mind: this should be input as a list.
+* You could try more particles & longer (``num_frames``) simulation time.
 
-A number of 500 particles looks quite appropriate, resulting in a completely filled glass and a few particles falling on the wooden table -- not too many, just the right amount. Okay, after all this parameter variation, we seem to have found our final parametrization.
+.. image:: ../_static/tuts/chocBeans_glassTable/wGlass_wCollision.png
+    :width: 24.5 %
+.. image:: ../_static/tuts/chocBeans_glassTable/AAG_0.png
+    :width: 24.5 %
+.. image:: ../_static/tuts/chocBeans_glassTable/collisionOnly.png
+    :width: 24.5 %
+.. image:: ../_static/tuts/chocBeans_glassTable/gravitySideways.png
+    :width: 24.5 %
+
+The example images show the behavior of our chocolate beans, when a glass is present and when there is no glass and the particles can freely distribute on the table. Furthermore, the third image shows how the particle appearance would look like if there would be a physical (``CollisionGlass``), but not a visual (``ShowGlass``) influence of the glass. This case is quite interesting: It demonstrates, how our particles would look like -- placed in the same position, but if glass would be invisible. Meaning, if there wouldn't be the refraction of the glass, which distorts the particles' appearances and eventually moves/changes the information of each particle (i.e. colored pixels) to different pixel locations in the final image. If your use case would be, e.g. to measure the 2D projected area of those chocolate beans with a certain color in the final image, the influence of how strong the glass distorts this truth could be quantified. The last image shows the result if our particles would fall sideways, with a different ``gravity`` vector applied, see code snippet below.
+
+.. code-block:: yaml
+    :caption: chocBeans_glassTable.yaml
+    :emphasize-lines: 9-12
+
+        - _target_: $builtins.RelaxCollisions …
+        - _target_: $builtins.RelaxCollisions
+          affected_set_name: AllParticles
+          use_gravity: True
+          damping: 0.07
+          friction: 0.999
+          restitution: 0.001
+          collision_margin: 0.001
+          gravity:
+            - +5
+            - -5
+            - 0
+          num_frames: 200
+          collision_shape: CONVEX_HULL
+          dry_run: True
+
+After some variation of our chocolate beans' quantity, a number of 500 particles looks quite appropriate, resulting in a completely filled glass and a few particles falling on the wooden table -- not too many, just the right amount. Also after tinkering around with the parameters of ``RelaxCollisions``, we seem to have found our final parametrization, see video below (extended to ``num_frames: 600`` as opposed to ``num_frames: 200`` for our final renders) and subsequent code snippets.
 
 .. raw:: html
 
     <video controls loop width="100%" poster="../_static/tuts/chocBeans_glassTable/500fA_wm_poster.png" src="../_static/tuts/chocBeans_glassTable/500_fullAni_wm.mp4"></video> 
 
-Now, an example where we show highlighted code lines inside a block of code. To make the scene more exciting, let's bring in some particles! We do so, by adding another blueprint called ``Sphere``. We refer to the ``default`` geometry prototype (which is a sphere) and want to have a count of 3 particles in total.
-
 .. code-block:: yaml
-    :emphasize-lines: 3-6
+    :caption: s_SceneVariation.yaml
+    :emphasize-lines: 9
 
+    # Defining blueprints
     blueprints:
       measurement_techniques: …
       particles:
-        Sphere:
-          geometry_prototype_name: default
-          number: 3
-
-Furthermore, we state a process condition to... And more text ;) ...more text. more text & even more text comes here.
-
-Here we have a code block with multiple highlighted lines of code inside a block.
+        Bead:
+          geometry_prototype_name: ellipsoid
+          material_prototype_name: colored_subtle
+          parent: MeasurementVolume
+          number: 500
 
 .. code-block:: yaml
-    :emphasize-lines: 3-8,11-13
+    :caption: chocBeans_glassTable.yaml
+    :emphasize-lines: 3,6,12-14
 
-    process_conditions:
-      feature_variabilities:
-        ParticleDimension:
-          feature_name: dimensions
-          variability:
-            _target_: $builtins.UniformDistribution3dHomogeneous
-            location: 0.6
-            scale: 0
-    synth_chain:
-      feature_generation_steps:
-        - _target_: $builtins.TriggerFeatureUpdate
-          feature_variability_name: ParticleDimension
-          affected_set_name: AllParticles
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      mass: 0.0012
+      num_frames: 5
+      time_scale: 10
+      collision_margin: 0.001
+      collision_shape: CONVEX_HULL
+    - _target_: $builtins.RelaxCollisions
+      affected_set_name: AllParticles
+      use_gravity: True
+      damping: 0.07
+      friction: 0.4
+      restitution: 0.1
+      mass: 0.0012
+      collision_margin: 0.001
+      num_frames: 200
+      collision_shape: CONVEX_HULL
+      dry_run: True
 
 Step 4: Variation in Series Production
 --------------------------------------
 
-TURN ON CATEGORICAL AGAIN
+In this last step of our tutorial, we want to go for the fully automated particle generation under (pseudo-)random parameter variation of the scene. We do so, by just simply varying the ``initial_runtime_state.seed``.
 
-With more text. ...way more text. more text & even more text comes here.
+But first let's comment in the categorical ``render_steps`` again.
+
+.. code-block:: yaml
+    :caption: chocBeans_glassTable.yaml
+    :emphasize-lines: 6-16
+
+      rendering_steps:
+        - _target_: $builtins.SaveState …
+        - _target_: $builtins.RenderParticlesTogether
+          rendering_mode: real
+          do_save_features: True
+        - _target_: $builtins.RenderParticlesTogether
+          rendering_mode: categorical
+          output_file_name_prefix: all_
+        - _target_: $builtins.RenderParticlesTogether
+          rendering_mode: categorical
+          set_name_of_interest: PinkParticles
+          output_file_name_prefix: pink_
+        - _target_: $builtins.RenderParticlesIndividually
+          rendering_mode: categorical
+          set_name_of_interest: PinkParticles
+          subfolder: pink 
+
+Furthermore, we will add several new ``feature_variabilities`` to our ``s_SceneVariation.yaml`` file.
+
+.. code-block:: yaml
+    :caption: s_SceneVariation.yaml
+    :emphasize-lines: 11-52
+
+    # Defining blueprints
+    blueprints:
+      measurement_techniques: …
+      particles: …
+    # Physical boundary conditions
+    process_conditions:
+      feature_variabilities:
+        CameraNearTable: …
+        ShowGlass: …
+        CollisionGlass: …
+        CameraRotation:
+          feature_name: cam_rotation
+          variability:
+            _target_: $builtins.UniformDistributionNdHomogeneous
+            location: -0.0523598775598299
+            scale: 0.10471975511966               
+            num_dimensions: 1
+        CameraAltitude:
+          feature_name: cam_altitude
+          variability:
+            _target_: $builtins.UniformDistributionNdHomogeneous
+            location: -0.15707963267949
+            scale: 0.314159265358979
+            num_dimensions: 1
+        CameraAzimuth:
+          feature_name: cam_azimuth
+          variability:
+            _target_: $builtins.UniformDistributionNdHomogeneous
+            location: 0.0
+            scale: 6.28318530717959
+            num_dimensions: 1
+        GlassRotation:
+          feature_name: glass_rotation
+          variability:
+            _target_: $builtins.UniformDistributionNdHomogeneous
+            location: 0.0
+            scale: 0.698131700797732
+            num_dimensions: 1
+        TableRotation:
+          feature_name: table_rotation
+          variability:
+            _target_: $builtins.UniformDistributionNdHomogeneous
+            location: 0.0
+            scale: 6.28318530717959
+            num_dimensions: 1
+        WoodTexture:
+          feature_name: texture_seed
+          variability:
+            _target_: $builtins.UniformDistributionNdHomogeneous
+            location: 0
+            scale: 1000
+            num_dimensions: 1
+
+...and we need to trigger those in our main recipe file ``chocBeans_glassTable.yaml``
+
+.. code-block:: yaml
+    :caption: chocBeans_glassTable.yaml
+    :emphasize-lines: 8-25
+
+    synth_chain:
+      feature_generation_steps:
+        - _target_: $builtins.InvokeBlueprints …
+        ⋮
+        - _target_: $builtins.TriggerFeatureUpdate
+          feature_variability_name: BrownColor
+          affected_set_name: Category8
+        - _target_: $builtins.TriggerFeatureUpdate
+          feature_variability_name: CameraRotation
+          affected_set_name: AllMeasurementTechniques
+        - _target_: $builtins.TriggerFeatureUpdate
+          feature_variability_name: CameraAltitude
+          affected_set_name: AllMeasurementTechniques
+        - _target_: $builtins.TriggerFeatureUpdate
+          feature_variability_name: CameraAzimuth
+          affected_set_name: AllMeasurementTechniques
+        - _target_: $builtins.TriggerFeatureUpdate
+          feature_variability_name: GlassRotation
+          affected_set_name: AllMeasurementTechniques
+        - _target_: $builtins.TriggerFeatureUpdate
+          feature_variability_name: TableRotation
+          affected_set_name: AllMeasurementTechniques
+        - _target_: $builtins.TriggerFeatureUpdate
+          feature_variability_name: WoodTexture
+          affected_set_name: AllMeasurementTechniques
+        - _target_: $builtins.RelaxCollisions …
+        ⋮
+
+These new feature variations will introduce random variations of the camera angle and the rotations of the glass, table and wood texture of the table. As a final measure we increase the ``RenderingResolutionPercentage`` and the ``CyclesSamples`` to get a high-resolution image as output.
+
+To call the execution we now execute our recipe as we normally do with the addition of the argument ``multirun``
+
+.. code-block:: python
+
+    python run.py --config-dir=recipes --config-name=chocBeans_glassTable --multirun initial_runtime_state.seed="range(10)"
+
+The number in brackets behind ``range`` can be set to the desired number of output images. The images below show some example images of our fully automated series production of chocolate beans, whereas all captures are unique and randomized in various parameters.
 
 .. image:: ../_static/tuts/chocBeans_glassTable/multi_seed3_real.png
     :width: 16.0 %
@@ -785,5 +943,3 @@ With more text. ...way more text. more text & even more text comes here.
     :width: 16.0 %
 .. image:: ../_static/tuts/chocBeans_glassTable/multi_seed20_pink.png
     :width: 16.0 %
-
-With more text. ...way more text. more text & even more text comes here.
