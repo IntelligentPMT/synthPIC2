@@ -30,7 +30,7 @@ class DemoRecipeTest(unittest.TestCase):
             overrides=[
                 "process_conditions.feature_variabilities.CyclesSamples.variability.value=1",    #pylint: disable=line-too-long
                 "blueprints.particles.Bead.number=1",
-                "synth_chain.feature_generation_steps.8.dry_run=False"
+                "+synth_chain.feature_generation_steps.23.dry_run=False"
             ])
 
     def test_colPearls_plane(self) -> None:    #pylint: disable=invalid-name
