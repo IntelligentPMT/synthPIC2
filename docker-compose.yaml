@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   app:
-    image: maxfrei750/synthpic2:v0.5dev
+    image: maxfrei750/synthpic2:v1.0
     volumes:
       - ./:/home/user/app
     tty: true

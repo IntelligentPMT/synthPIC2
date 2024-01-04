@@ -7,4 +7,4 @@ from .recipe import Recipe
 __all__ = ["execute_recipe", "Recipe", "PrototypeLibrary"]
 
 # Source of truth for synthpic2's version
-__version__ = "0.5dev"
+__version__ = "v1.0"

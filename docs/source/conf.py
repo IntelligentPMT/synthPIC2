@@ -22,7 +22,8 @@ sys.path.insert(0, PROJECT_ROOT)
 project = "synthPIC2"
 copyright = "2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu"    #pylint: disable=redefined-builtin
 author = "Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu"
-release = "0.5dev"
+release = "v1.0"
+version = release
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
