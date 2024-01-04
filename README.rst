@@ -11,6 +11,9 @@
 
 |
 
+.. image:: https://img.shields.io/badge/📚-Documentation-green
+   :alt: Documentation
+   :target: https://intelligentpmt.github.io/synthPIC2
 .. image:: https://img.shields.io/github/license/IntelligentPMT/synthPIC2.svg
    :alt: License: GPLv3
    :target: https://github.com/IntelligentPMT/synthPIC2/blob/main/LICENSE
@@ -107,3 +110,10 @@ We synthesized our first image, which can be found in the file ``output/hello_wo
 
 .. image:: _static/hello_world.png
     :alt: 'Hello World' example
+
+`Tutorials <https://intelligentpmt.github.io/synthPIC2/tutorials.html>`_
+------------------------------------------------------------------------
+
+`Documentation <https://intelligentpmt.github.io/synthPIC2>`_
+-------------------------------------------------------------
+
