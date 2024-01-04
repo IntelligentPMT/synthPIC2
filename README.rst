@@ -14,15 +14,17 @@
 .. image:: https://img.shields.io/badge/📚-Documentation-green
    :alt: Documentation
    :target: https://intelligentpmt.github.io/synthPIC2
-.. image:: https://img.shields.io/github/license/IntelligentPMT/synthPIC2.svg
-   :alt: License: GPLv3
-   :target: https://github.com/IntelligentPMT/synthPIC2/blob/main/LICENSE
 .. image:: https://img.shields.io/badge/dockerhub-maxfrei750/synthpic2-blue
    :alt: Platform: docker
    :target: https://hub.docker.com/r/maxfrei750/synthpic2
+.. image:: https://img.shields.io/docker/v/maxfrei750/synthpic2?color=purple
+   :alt: Version
 .. image:: https://img.shields.io/badge/blender-v3.3.2 LTS-e87d0d
    :alt: Blender: v3.3.2 LTS
    :target: https://www.blender.org/download/lts/3-3/#versions
+.. image:: https://img.shields.io/github/license/IntelligentPMT/synthPIC2.svg
+   :alt: License: GPLv3
+   :target: https://github.com/IntelligentPMT/synthPIC2/blob/main/LICENSE
 
 |
 
