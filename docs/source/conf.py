@@ -29,7 +29,7 @@ version = release
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "sphinx.ext.duration", "sphinx.ext.autodoc", "sphinx.ext.autosummary",
+    "sphinx.ext.duration", "autoapi.extension",
     "sphinx_copybutton"
 ]
 
@@ -42,7 +42,6 @@ exclude_patterns: List[str] = []
 html_theme = "alabaster"
 html_static_path = ["_static"]
 
-# -- Mock imports ------------------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_mock_imports
 
-autodoc_mock_imports = ["bpy", "hydra", "omegaconf", "wandb"]
+# -- Options for autoapi -----------------------------------------------------
+autoapi_dirs = ["../../synthpic2"]

@@ -28,7 +28,6 @@ Contents
    tutorials
    concepts
    dev_guides
-   references
 
 Indices and tables
 ==================
