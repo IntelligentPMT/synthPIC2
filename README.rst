@@ -14,11 +14,9 @@
 .. image:: https://img.shields.io/github/license/IntelligentPMT/synthPIC2.svg
    :alt: License: GPLv3
    :target: https://github.com/IntelligentPMT/synthPIC2/blob/main/LICENSE
-
 .. image:: https://img.shields.io/badge/dockerhub-maxfrei750/synthpic2-blue
    :alt: Platform: docker
    :target: https://hub.docker.com/r/maxfrei750/synthpic2
-
 .. image:: https://img.shields.io/badge/blender-v3.3.2 LTS-e87d0d
    :alt: Blender: v3.3.2 LTS
    :target: https://www.blender.org/download/lts/3-3/#versions
@@ -45,7 +43,7 @@ Setup / Installation
 
   **NOTE:** On Windows, GPU support in Docker requires Windows 10 Version 21H2 or higher and `WSL 2 <https://learn.microsoft.com/de-de/windows/wsl/install>`_.
 
-* Download a `release <https://github.com/maxfrei750/synthPIC2/releases>`_ of synthPIC2 and extract it.
+* Download the latest `release <https://github.com/IntelligentPMT/synthPIC2/releases/latest>`_ of synthPIC2 and extract it.
 * Copy `.env.example`, rename it to `.env` and adjust the required values.
 * Open a command line in the extracted folder.
 * Pull the docker image: ::
