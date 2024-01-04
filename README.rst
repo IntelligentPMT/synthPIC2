@@ -4,6 +4,13 @@
 
 |
 
+.. image:: _static/logo_ude.svg
+   :height: 80
+   :alt: University Duisburg-Essen Logo
+   :target: https://www.uni-due.de/nst/index_en.php
+
+|
+
 .. image:: https://img.shields.io/github/license/IntelligentPMT/synthPIC2.svg
    :alt: License: GPLv3
    :target: https://github.com/IntelligentPMT/synthPIC2/blob/main/LICENSE
