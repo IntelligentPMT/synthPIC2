@@ -1,3 +1,12 @@
 features:
   - name: color
     blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["RGB"].outputs[0].default_value
+  - name: noise_scale
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["Noise Texture"].inputs[2].default_value
+  - name: musgrave_offset
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["Musgrave Texture.001"].inputs[6].default_value
+  - name: displace_scale
+    blender_link: bpy.data.materials["MaterialPrototype"].node_tree.nodes["Displacement"].inputs[2].default_value
+
+
+

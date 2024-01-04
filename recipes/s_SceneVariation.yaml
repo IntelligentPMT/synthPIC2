@@ -15,7 +15,7 @@ blueprints:
 # Physical boundary conditions
 process_conditions:
   feature_variabilities:
-    CameraNearTable: # throw out after first comparison render!
+    CameraNearTable: # can be thrown out after first comparison render
       feature_name: cam_location_z
       variability:
         _target_: $builtins.Constant
@@ -30,3 +30,45 @@ process_conditions:
       variability:
         _target_: $builtins.Constant
         value: True
+    CameraRotation:
+      feature_name: cam_rotation
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: -0.0523598775598299
+        scale: 0.10471975511966               
+        num_dimensions: 1
+    CameraAltitude:
+      feature_name: cam_altitude
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: -0.15707963267949
+        scale: 0.314159265358979
+        num_dimensions: 1
+    CameraAzimuth:
+      feature_name: cam_azimuth
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.0
+        scale: 6.28318530717959
+        num_dimensions: 1
+    GlassRotation:
+      feature_name: glass_rotation
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.0
+        scale: 0.698131700797732
+        num_dimensions: 1
+    TableRotation:
+      feature_name: table_rotation
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0.0
+        scale: 6.28318530717959
+        num_dimensions: 1
+    WoodTexture:
+      feature_name: texture_seed
+      variability:
+        _target_: $builtins.UniformDistributionNdHomogeneous
+        location: 0
+        scale: 1000
+        num_dimensions: 1

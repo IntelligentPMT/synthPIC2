@@ -3,6 +3,8 @@ features:
     blender_link: bpy.data.objects["GeometryPrototype"].dimensions
   - name: location
     blender_link: bpy.data.objects["GeometryPrototype"].location
+  - name: location_x
+    blender_link: bpy.data.objects["GeometryPrototype"].location.x
   - name: location_z
     blender_link: bpy.data.objects["GeometryPrototype"].location.z
   - name: subdivisions
