@@ -117,3 +117,6 @@ We synthesized our first image, which can be found in the file ``output/hello_wo
 `Documentation <https://intelligentpmt.github.io/synthPIC2>`_
 -------------------------------------------------------------
 
+Acknowledgement
+---------------
+This work was supported by the `German Federal Ministry of Education and Research (BMBF) <https://www.bmbf.de/bmbf/en/>`_ under the grant “iPMT—Data Synthesis for Applications in Intelligent Particle Measurement Technology (01IS21065A)”.
