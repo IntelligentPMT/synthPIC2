@@ -1,0 +1,265 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps`
+===============================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps
+
+.. autoapi-nested-parse::
+
+   Module for SynthChainSteps.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   agglomeration/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   base/index.rst
+   distribute_in_measurement_volume/index.rst
+   invocation/index.rst
+   relax_collisions/index.rst
+   set_based_mixin/index.rst
+   state/index.rst
+   trigger_feature_update/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.AgglomerateParticles
+   synthpic2.recipe.synth_chain.feature_generation_steps.InvokeBlueprints
+   synthpic2.recipe.synth_chain.feature_generation_steps.RelaxCollisions
+   synthpic2.recipe.synth_chain.feature_generation_steps.LoadState
+   synthpic2.recipe.synth_chain.feature_generation_steps.TriggerFeatureUpdate
+   synthpic2.recipe.synth_chain.feature_generation_steps.DistributeInMeasurementVolume
+
+
+
+
+.. py:class:: AgglomerateParticles
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   FeatureGenerationStep to simulate gas phase agglomeration.
+
+   .. py:attribute:: mode
+      :type: str
+
+      
+
+   .. py:attribute:: randomness
+      :type: float
+
+      
+
+   .. py:attribute:: speed
+      :type: float
+
+      
+
+   .. py:attribute:: sintering_ratio
+      :type: float
+      :value: 0
+
+      
+
+   .. py:attribute:: primary_particle_number_variability
+      :type: Any
+
+      
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+
+.. py:class:: InvokeBlueprints
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   SynthChainStep to invoke a set of blueprints.
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+
+.. py:class:: RelaxCollisions
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   SynthChainStep to relax collisions between objects of a set, using Blenders
+   bullet physics engine.
+
+   .. py:attribute:: damping
+      :type: Optional[float]
+
+      
+
+   .. py:attribute:: angular_damping
+      :type: Optional[float]
+
+      
+
+   .. py:attribute:: linear_damping
+      :type: Optional[float]
+
+      
+
+   .. py:attribute:: friction
+      :type: float
+      :value: 1
+
+      
+
+   .. py:attribute:: restitution
+      :type: float
+      :value: 1
+
+      
+
+   .. py:attribute:: mass
+      :type: float
+      :value: 1.0
+
+      
+
+   .. py:attribute:: collision_shape
+      :type: str
+      :value: 'MESH'
+
+      
+
+   .. py:attribute:: mesh_source
+      :type: str
+      :value: 'FINAL'
+
+      
+
+   .. py:attribute:: num_frames
+      :type: int
+      :value: 100
+
+      
+
+   .. py:attribute:: use_gravity
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: gravity
+      :type: Tuple[float, float, float]
+      :value: (0, 0)
+
+      
+
+   .. py:attribute:: collision_margin
+      :type: float
+      :value: 1e-06
+
+      
+
+   .. py:attribute:: time_scale
+      :type: float
+      :value: 1.0
+
+      
+
+   .. py:attribute:: substeps_per_frame
+      :type: int
+      :value: 10
+
+      
+
+   .. py:attribute:: solver_iterations
+      :type: int
+      :value: 10
+
+      
+
+   .. py:attribute:: dry_run
+      :type: bool
+      :value: False
+
+      
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+
+.. py:class:: LoadState
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   Synth chain step to load a previously saved state.
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+
+.. py:class:: TriggerFeatureUpdate
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   SynthChainStep to update a feature of a set of objects according to a feature
+   variability.
+
+   .. py:attribute:: feature_variability_name
+      :type: str
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+
+.. py:class:: DistributeInMeasurementVolume
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   SynthChainStep to distribute particles in the measurement volume.
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+

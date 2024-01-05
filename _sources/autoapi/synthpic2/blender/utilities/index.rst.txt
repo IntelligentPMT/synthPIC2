@@ -1,0 +1,342 @@
+:py:mod:`synthpic2.blender.utilities`
+=====================================
+
+.. py:module:: synthpic2.blender.utilities
+
+.. autoapi-nested-parse::
+
+   Useful Blender functions that don't have their final place yet.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.blender.utilities._RenamingTracker
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.blender.utilities.duplicate_and_assign_material
+   synthpic2.blender.utilities.assign_material
+   synthpic2.blender.utilities.adapt_interface_iors
+   synthpic2.blender.utilities.render_to_file
+   synthpic2.blender.utilities.duplicate_and_link_object
+   synthpic2.blender.utilities.replace_object_material
+   synthpic2.blender.utilities.get_material
+   synthpic2.blender.utilities.add_object_to_collection
+   synthpic2.blender.utilities.get_object
+   synthpic2.blender.utilities.get_collection
+   synthpic2.blender.utilities.create_collection
+   synthpic2.blender.utilities.flip_face_normals_with_material_name
+   synthpic2.blender.utilities.replace_material
+   synthpic2.blender.utilities.create_emission_shader
+   synthpic2.blender.utilities.set_rigidity
+   synthpic2.blender.utilities.selected_only
+   synthpic2.blender.utilities.select_only
+   synthpic2.blender.utilities.delete
+   synthpic2.blender.utilities.convert_blender_object_to_blender_mesh
+   synthpic2.blender.utilities.convert_blender_object_to_trimesh
+   synthpic2.blender.utilities.set_parent
+   synthpic2.blender.utilities.update_dependency_graph
+   synthpic2.blender.utilities.hide_in_render
+   synthpic2.blender.utilities.show_in_render
+   synthpic2.blender.utilities.select
+   synthpic2.blender.utilities.deselect
+   synthpic2.blender.utilities.deselect_all
+   synthpic2.blender.utilities.activate
+   synthpic2.blender.utilities.export_selected_objects_as_stl
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.blender.utilities.set_context
+
+
+.. py:function:: duplicate_and_assign_material(object_: bpy.types.Object, material_name: str, suffix: str) -> Dict[str, synthpic2.custom_types.RenamingMap]
+
+   Copy a material with given `material_name` and assign it to a given `_object`.
+
+   Args:
+       object_ (bpy.types.Object): Blender object to assign the material to.
+       material_name (str): the name of the material
+       suffix (str): suffix that is appended to the name of the material
+
+
+.. py:function:: assign_material(object_: bpy.types.Object, material_name: str) -> None
+
+   Assign a material with given `material_name` and to a given `_object`.
+
+   Args:
+       object_ (bpy.types.Object): Blender object to assign the material to.
+       material_name (str): the name of the material
+
+
+.. py:function:: adapt_interface_iors(material_name_outside: str, material_name_inside: str) -> None
+
+   Calculate the effective index of refraction (IOR) for a refractive material
+   inside another refractive material, based on the vacuum IORs of both materials.
+
+   In Blender: The outside object "sees" blue normals, while the inside object "sees"
+   red normals.
+
+   Args:
+       material_name_outside (str): Name of the Blender material that is on the
+           outside.
+       material_name_inside (str): Name of the Blender material that is on the inside.
+
+   Raises:
+       ConventionError: Raised, if the outside material has multiple nodes with IORs.
+
+
+.. py:function:: render_to_file(output_path: synthpic2.custom_types.AnyPath) -> None
+
+   Renders an image to a file. The output root will be created, if necessary.
+
+   Args:
+       output_path (AnyPath): Path of the output image file.
+
+
+.. py:class:: _RenamingTracker(suffix: str)
+
+
+   Helper class to copy data blocks of blender objects and keep track of their
+   renaming.
+
+   .. py:attribute:: renaming_maps
+      :type: Dict[str, synthpic2.custom_types.RenamingMap]
+
+      
+
+   .. py:method:: copy(data_block: synthpic2.custom_types.BlenderDataBlock) -> synthpic2.custom_types.BlenderDataBlock
+
+
+
+.. py:function:: duplicate_and_link_object(object_: bpy.types.Object, duplicate_name_suffix: str, target_collection: bpy.types.Collection) -> Tuple[bpy.types.Object, Dict[str, synthpic2.custom_types.RenamingMap]]
+
+   Creates an independent duplicate of a blender object and links it to a
+       collection.
+
+   Args:
+       object_ (bpy.types.Object): object to be duplicated
+       duplicate_name_suffix (str): suffix for the name of the duplicate
+       target_collection (bpy.types.Collection): collection, to which the object will
+           be linked
+
+   Returns:
+       bpy.types.Object: duplicate
+       Dict[str, RenamingMap]: RenamingMap with information on how relevant data blocks
+           were renamed.
+
+
+.. py:function:: replace_object_material(object_: bpy.types.Object, old_material_name: str, new_material_name: str) -> None
+
+   Replace the material of an object (specified by its name) with a new material
+       (specified by its name).
+
+   Source:
+       https://blender.stackexchange.com/questions/53366/how-can-i-replace-a-material-from-python
+
+   Raises:
+       ValueError: Raised, if the object does not use a material named
+           `old_material_name`.
+
+   Args:
+       object_ (bpy.types.Object): blender object, whose material shall be replaced
+       old_material_name (str): name of the old material
+       new_material_name (str): name of the new material
+
+
+.. py:function:: get_material(material_name: str) -> bpy.types.Material
+
+   Returns a blender material with the specified name.
+
+   Args:
+       material_name (str): Name of the material to return.
+
+   Raises:
+       ValueError: Raised, if the material does not exist.
+
+   Returns:
+       bpy.types.Material: Blender material
+
+
+.. py:function:: add_object_to_collection(object_: bpy.types.Object, collection_name: str) -> None
+
+
+.. py:function:: get_object(object_name: str) -> bpy.types.Object
+
+   Returns a blender object with the specified name.
+
+   Args:
+       object_name (str): Name of the object to return.
+
+   Raises:
+       ValueError: Raised, if the object does not exist.
+
+   Returns:
+       bpy.types.Object: Blender object
+
+
+.. py:function:: get_collection(collection_name: str) -> bpy.types.Collection
+
+   Returns a blender collection with the specified name.
+
+   Args:
+       collection_name (str): Name of the collection to return.
+
+   Raises:
+       ValueError: Raised, if the collection does not exist.
+
+   Returns:
+       bpy.types.Collection: Blender collection
+
+
+.. py:function:: create_collection(collection_name: str, scene: Optional[bpy.types.Scene] = None) -> bpy.types.Collection
+
+   Create a collection with name `collection_name` and link it to the given scene.
+
+   Args:
+       collection_name (str): name of the new collection.
+       scene (Optional[bpy.types.Scene], optional): Scene that the collection is
+           linked to. Defaults to None, which means that the collection is linked to
+           the scene in context.
+
+   Returns:
+       bpy.types.Collection: the new collection
+
+
+.. py:function:: flip_face_normals_with_material_name(object_: bpy.types.Object, material_name: str) -> None
+
+   Flip normals of the object faces, if the faces use a certain material.
+
+   Args:
+       object_ (bpy.types.Object): [description]
+       material_name (str): Name of the material to identify faces to flip.
+
+
+.. py:function:: replace_material(object_: bpy.types.Object, old_material_name: str, new_material_name: str) -> None
+
+   Replace the material of an object with a new material (both identified by their
+       names).
+
+   Args:
+       object (bpy.types.Object): object for which we are replacing the material
+       old_material (str): the old material name
+       new_material (str): the new material name
+
+
+.. py:function:: create_emission_shader(color: Tuple[float, float, float, float] = (1, 1, 1, 1)) -> bpy.types.Material
+
+   Create an emission shader with a specified color and a strength of 1.
+
+   Taken from https://vividfax.github.io/2021/01/14/blender-materials.html
+
+   Args:
+       color (Tuple[float,float,float,float,], optional): 4-Tuple (RGBA) of floats
+           between 0 and 1. Defaults to (1,1,1,1).
+
+   Returns:
+       bpy.types.Material
+
+
+.. py:function:: set_rigidity(object_: bpy.types.Object, state: bool) -> None
+
+   Set the rigidity of a given object.
+
+   Args:
+       state (bool): new rigidity state
+
+
+.. py:function:: selected_only(object_: bpy.types.Object)
+
+   Temporarily select the given `object_`.
+
+   Args:
+       object_ (bpy.types.Object): Object to be temporarily selected.
+
+   Yields:
+       bpy.types.Object: The selected object.
+
+
+.. py:function:: select_only(object_: bpy.types.Object) -> None
+
+   Deselect all objects, select and activate the given `object_`.
+
+   Args:
+       object_ (bpy.types.Object): object to be selected and activated.
+
+
+.. py:function:: delete(object_: bpy.types.Object) -> None
+
+   Delete the `object_`.
+
+   Args:
+       object_ (bpy.types.Object): object to be deleted.
+
+
+.. py:function:: convert_blender_object_to_blender_mesh(object_: bpy.types.Object) -> bpy.types.Object
+
+   Convert a blender object to a blender mesh and restore the transformation and
+   parent/child relation of potential children.
+
+   Args:
+       object_ (bpy.types.Object): object to be converted.
+
+   Returns:
+       bpy.types.Object: converted mesh object.
+
+
+.. py:function:: convert_blender_object_to_trimesh(object_: bpy.types.Object) -> trimesh.Trimesh
+
+
+.. py:function:: set_parent(child: bpy.types.Object, parent: bpy.types.Object | None, keep_transform: bool = False) -> None
+
+
+.. py:function:: update_dependency_graph() -> None
+
+
+.. py:function:: hide_in_render(object_: bpy.types.Object) -> None
+
+
+.. py:function:: show_in_render(object_: bpy.types.Object) -> None
+
+
+.. py:function:: select(object_: bpy.types.Object) -> None
+
+
+.. py:function:: deselect(object_: bpy.types.Object) -> None
+
+
+.. py:function:: deselect_all() -> None
+
+
+.. py:function:: activate(object_: bpy.types.Object) -> None
+
+
+.. py:data:: set_context
+
+   
+
+.. py:function:: export_selected_objects_as_stl(output_path: synthpic2.custom_types.AnyPath) -> None
+
+   Exports selected objects of the current blender scene as stl file. The output
+       root will be created, if necessary.
+
+   Args:
+       output_path (AnyPath): Path of the output image file.
+
+

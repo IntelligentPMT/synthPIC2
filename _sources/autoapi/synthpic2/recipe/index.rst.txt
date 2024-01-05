@@ -1,0 +1,136 @@
+:py:mod:`synthpic2.recipe`
+==========================
+
+.. py:module:: synthpic2.recipe
+
+.. autoapi-nested-parse::
+
+   Module to create and handle image synthesis recipes.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   blueprints/index.rst
+   process_conditions/index.rst
+   prototypes/index.rst
+   registries/index.rst
+   synth_chain/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   recipe/index.rst
+   render_preparation_mixin/index.rst
+   store/index.rst
+   utilities/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.Recipe
+   synthpic2.recipe.SynthChain
+
+
+
+
+.. py:class:: Recipe
+
+
+   Definition of the structure of the Recipe class.
+
+   .. py:property:: md5
+      :type: str
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.Recipe'
+
+      
+
+   .. py:attribute:: _convert_
+      :type: str
+      :value: 'all'
+
+      
+
+   .. py:attribute:: defaults
+      :type: List[Any]
+
+      
+
+   .. py:attribute:: hydra
+      :type: Any
+
+      
+
+   .. py:attribute:: initial_runtime_state
+      :type: synthpic2.recipe.synth_chain.state.RuntimeState
+
+      
+
+   .. py:attribute:: blueprints
+      :type: Blueprints
+
+      
+
+   .. py:attribute:: process_conditions
+      :type: ProcessConditions
+
+      
+
+   .. py:attribute:: synth_chain
+      :type: synthpic2.recipe.synth_chain.SynthChain
+
+      
+
+   .. py:method:: execute() -> None
+
+
+
+.. py:class:: SynthChain
+
+
+   Class to orchestrate the feature generation and the rendering.
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.SynthChain'
+
+      
+
+   .. py:attribute:: blender_log_file_name
+      :type: str
+      :value: 'blender.log'
+
+      
+
+   .. py:attribute:: feature_generation_steps
+      :type: List
+
+      
+
+   .. py:attribute:: rendering_steps
+      :type: List
+
+      
+
+   .. py:method:: execute(initial_runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> None
+
+
+

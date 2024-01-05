@@ -1,21 +1,20 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <title>Getting Started &#8212; synthPIC2 0.5dev documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Getting Started &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <script src="_static/documentation_options.js?v=e160b93e"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tutorials" href="tutorials.html" />
@@ -36,15 +35,21 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="getting-started">
-<span id="sec-getstart"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+  <section id="getting-started">
+<span id="sec-getstart"></span><h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h1>
 <a class="reference internal image-reference" href="_images/logo.png"><img alt="synthPIC2 Logo" src="_images/logo.png" style="width: 200px;" /></a>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<a class="reference external image-reference" href="https://github.com/IntelligentPMT/synthPIC2/blob/main/LICENSE"><img alt="License: GPLv3" src="https://img.shields.io/github/license/IntelligentPMT/synthPIC2.svg" /></a>
+<a class="reference external image-reference" href="https://www.uni-due.de/nst/index_en.php"><img alt="University Duisburg-Essen Logo" height="80" src="_images/logo_ude.svg" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference external image-reference" href="https://intelligentpmt.github.io/synthPIC2"><img alt="Documentation" src="https://img.shields.io/badge/📚-Documentation-green" /></a>
 <a class="reference external image-reference" href="https://hub.docker.com/r/maxfrei750/synthpic2"><img alt="Platform: docker" src="https://img.shields.io/badge/dockerhub-maxfrei750/synthpic2-blue" /></a>
+<img alt="Version" src="https://img.shields.io/docker/v/maxfrei750/synthpic2?color=purple" />
 <a class="reference external image-reference" href="https://www.blender.org/download/lts/3-3/#versions"><img alt="Blender: v3.3.2 LTS" src="https://img.shields.io/badge/blender-v3.3.2LTS-e87d0d" /></a>
+<a class="reference external image-reference" href="https://github.com/IntelligentPMT/synthPIC2/blob/main/LICENSE"><img alt="License: GPLv3" src="https://img.shields.io/github/license/IntelligentPMT/synthPIC2.svg" /></a>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -57,13 +62,13 @@
       <img src="_static/tuts/chocBeans_glassTable/multi_seed19_cat.png" width="200">
       <img src="_static/tuts/plasticine_plane/AAG_3.png" width="200">
       <img src="_static/tuts/spheres_sem/categorical.png" width="200">
-</p><div class="section" id="setup-installation">
-<h2>Setup / Installation<a class="headerlink" href="#setup-installation" title="Permalink to this headline">¶</a></h2>
+</p><section id="setup-installation">
+<h2>Setup / Installation<a class="headerlink" href="#setup-installation" title="Link to this heading">¶</a></h2>
 <ul>
 <li><p>Install <a class="reference external" href="https://docs.docker.com/get-docker/">Docker</a>.</p>
 <p><strong>NOTE:</strong> On Windows, GPU support in Docker requires Windows 10 Version 21H2 or higher and <a class="reference external" href="https://learn.microsoft.com/de-de/windows/wsl/install">WSL 2</a>.</p>
 </li>
-<li><p>Download a <a class="reference external" href="https://github.com/maxfrei750/synthPIC2/releases">release</a> of synthPIC2 and extract it.</p></li>
+<li><p>Download the latest <a class="reference external" href="https://github.com/IntelligentPMT/synthPIC2/releases/latest">release</a> of synthPIC2 and extract it.</p></li>
 <li><p>Copy <cite>.env.example</cite>, rename it to <cite>.env</cite> and adjust the required values.</p></li>
 <li><p>Open a command line in the extracted folder.</p></li>
 <li><p>Pull the docker image:</p>
@@ -73,9 +78,9 @@
 </li>
 </ul>
 <p><strong>NOTE:</strong> VS Code users need to have <code class="docutils literal notranslate"><span class="pre">python&gt;=3.5</span></code> installed on their systems, for VS Code to interact correctly with the development container.</p>
-</div>
-<div class="section" id="first-steps">
-<h2>First Steps<a class="headerlink" href="#first-steps" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="first-steps">
+<h2>First Steps<a class="headerlink" href="#first-steps" title="Link to this heading">¶</a></h2>
 <p><strong>NOTE:</strong> On machines <em>without a GPU</em>, the <cite>docker-compose.yaml</cite> file needs to be modified by removing the section:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deploy</span><span class="p">:</span>
   <span class="n">resources</span><span class="p">:</span>
@@ -98,48 +103,41 @@
 <li><p>Wait for the renders to finish.</p></li>
 <li><p>Inspect the rendered images in the <cite>output/beads</cite> folder.</p></li>
 </ul>
-</div>
-<div class="section" id="minimal-example">
-<h2>Minimal Example<a class="headerlink" href="#minimal-example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="minimal-example">
+<h2>Minimal Example<a class="headerlink" href="#minimal-example" title="Link to this heading">¶</a></h2>
 <p>In this little example, we create our very first recipe file for image synthetization. Therefore, let’s create a new file and name it <code class="docutils literal notranslate"><span class="pre">hello_world.yaml</span></code>. We place this file inside the <code class="docutils literal notranslate"><span class="pre">recipes</span></code> subfolder under our root folder of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> and add our first three lines in the file.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">defaults</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">s_PrepareWorld</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">s_PrepareWorld</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_self_</span>
 </pre></div>
 </div>
 <p>In these three lines, we define two defaults, which will be merged into one single recipe in the given sequential order. The first prepares the scene for generating a synthesized image, which shows some text. The second default <code class="docutils literal notranslate"><span class="pre">_self_</span></code> will merge the content of this file. So as a next step, let’s now add some content: We add 5 more lines to our <code class="docutils literal notranslate"><span class="pre">hello_world.yaml</span></code> file.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-    <span class="nt">WriteText</span><span class="p">:</span>
-      <span class="nt">variability</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Hello World</span>
+<span class="w">  </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">WriteText</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hello World</span>
 </pre></div>
 </div>
 <p>In these lines, we just specified, that there is a feature, which is variable. This feature is called <code class="docutils literal notranslate"><span class="pre">WriteText</span></code>. As the variable part, we assign the string <code class="docutils literal notranslate"><span class="pre">'Hello</span> <span class="pre">World'</span></code> to it. In order to execute this recipe, we need to call the function <code class="docutils literal notranslate"><span class="pre">run.py</span></code> with the parameter <code class="docutils literal notranslate"><span class="pre">--config-name=hello_world</span></code>. The latter specifies the name of the recipe file, while the file extension <code class="docutils literal notranslate"><span class="pre">yaml</span></code> is excluded.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python run.py --config-dir<span class="o">=</span>recipes --config-name<span class="o">=</span>hello_world
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>run.py<span class="w"> </span>--config-dir<span class="o">=</span>recipes<span class="w"> </span>--config-name<span class="o">=</span>hello_world
 </pre></div>
 </div>
 <p>We synthesized our first image, which can be found in the file <code class="docutils literal notranslate"><span class="pre">output/hello_world/&lt;YYYY-MM-DD_hh-mm-ss&gt;/run0/real/&lt;hash&gt;.png</span></code> under our root directory of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>.</p>
 <img alt="'Hello World' example" src="_images/hello_world.png" />
-</div>
-<div class="section" id="compile-documentation">
-<h2>Compile Documentation<a class="headerlink" href="#compile-documentation" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li><p>Start the docker container:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">run</span> <span class="n">app</span>
-</pre></div>
-</div>
-</li>
-<li><p>Start <code class="docutils literal notranslate"><span class="pre">sphinx-autobuild</span></code>, which will build the documentation, watch for changes and rebuild if necessary:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">autobuild</span> <span class="n">docs</span><span class="o">/</span><span class="n">source</span> <span class="n">docs</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">html</span> <span class="o">--</span><span class="n">host</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
-</pre></div>
-</div>
-</li>
-<li><p>Visit <a class="reference external" href="http://localhost:8000/">http://localhost:8000/</a>, to see the documentation.</p></li>
-<li><p>Refer to the <a class="reference external" href="https://www.sphinx-doc.org/en/master/tutorial/index.html">sphinx tutorial</a> for more help.</p></li>
-</ul>
-</div>
-</div>
+</section>
+<section id="id1">
+<h2><a class="reference external" href="https://intelligentpmt.github.io/synthPIC2/tutorials.html">Tutorials</a><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+</section>
+<section id="id2">
+<h2><a class="reference external" href="https://intelligentpmt.github.io/synthPIC2">Documentation</a><a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+</section>
+<section id="acknowledgement">
+<h2>Acknowledgement<a class="headerlink" href="#acknowledgement" title="Link to this heading">¶</a></h2>
+<p>This work was supported by the <a class="reference external" href="https://www.bmbf.de/bmbf/en/">German Federal Ministry of Education and Research (BMBF)</a> under the grant “iPMT—Data Synthesis for Applications in Intelligent Particle Measurement Technology (01IS21065A)”.</p>
+</section>
+</section>
 
 
           </div>
@@ -163,13 +161,15 @@
 <li class="toctree-l2"><a class="reference internal" href="#setup-installation">Setup / Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#first-steps">First Steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#minimal-example">Minimal Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compile-documentation">Compile Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Tutorials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acknowledgement">Acknowledgement</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dev_guides.html">Developer Guides</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
 </ul>
 
 <div class="relations">
@@ -185,12 +185,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -207,8 +207,8 @@
       &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/getting_started.rst.txt"

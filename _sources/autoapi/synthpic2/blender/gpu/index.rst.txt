@@ -1,0 +1,63 @@
+:py:mod:`synthpic2.blender.gpu`
+===============================
+
+.. py:module:: synthpic2.blender.gpu
+
+.. autoapi-nested-parse::
+
+   Blender GPU class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.blender.gpu.Gpu
+
+
+
+
+.. py:class:: Gpu
+
+
+   Class to control Blenders access to GPU(s).
+
+   Use this class to enable gpu for rendering. It throws a warning if
+   gpu is not available.
+
+   Example:
+       >>> Gpu.enable()
+
+   .. py:method:: _make_available() -> None
+      :staticmethod:
+
+      Enable GPUs in the main settings of Blender, if available.
+
+
+   .. py:method:: enable() -> None
+      :classmethod:
+
+      Enable GPU for Cycles, if there is at least one available.
+
+
+   .. py:method:: disable() -> None
+      :staticmethod:
+
+      Disable GPU.
+
+
+   .. py:method:: _is_gpu_available() -> bool
+      :staticmethod:
+
+      Check, if a GPU is available.
+
+      Returns:
+          is_gpu_available: True, if a GPU is available.
+
+
+

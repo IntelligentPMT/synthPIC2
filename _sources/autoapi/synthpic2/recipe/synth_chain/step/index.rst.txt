@@ -1,0 +1,42 @@
+:py:mod:`synthpic2.recipe.synth_chain.step`
+===========================================
+
+.. py:module:: synthpic2.recipe.synth_chain.step
+
+.. autoapi-nested-parse::
+
+   Module for the SynthChainStep base class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.step.SynthChainStep
+
+
+
+
+.. py:class:: SynthChainStep
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+      :abstractmethod:
+
+      NotImplemented
+
+
+

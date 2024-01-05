@@ -1,0 +1,62 @@
+:py:mod:`synthpic2.errors`
+==========================
+
+.. py:module:: synthpic2.errors
+
+.. autoapi-nested-parse::
+
+   Custom exceptions.
+
+
+
+Module Contents
+---------------
+
+.. py:exception:: SynthPic2Error
+
+
+   Bases: :py:obj:`Exception`
+
+   Base class for other exceptions.
+
+
+.. py:exception:: ConventionError
+
+
+   Bases: :py:obj:`SynthPic2Error`
+
+   Thrown, when a SynthPic2 convention is violated.
+
+
+.. py:exception:: PrototypeNotFoundError(blend_file_path: synthpic2.custom_types.AnyPath, name_in_blend_file: str)
+
+
+   Bases: :py:obj:`SynthPic2Error`
+
+   Exception to raise when a prototype cannot be found in a blend file.
+
+
+.. py:exception:: PrototypeAlreadyExistsError(prototype_name: str)
+
+
+   Bases: :py:obj:`SynthPic2Error`
+
+   Thrown, when a prototype already exists.
+
+
+.. py:exception:: BlenderError
+
+
+   Bases: :py:obj:`SynthPic2Error`
+
+   Raised, when an action caused a Blender error.
+
+
+.. py:exception:: BlenderConventionError
+
+
+   Bases: :py:obj:`SynthPic2Error`
+
+   Raised, when an action violates a Blender convention.
+
+

@@ -1,0 +1,117 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomeration_simulation`
+======================================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomeration_simulation
+
+.. autoapi-nested-parse::
+
+   Module for cluster-cluster and particle-cluster agglomeration.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomeration_simulation.agglomeration
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomeration_simulation.particle_cluster_agglomeration
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomeration_simulation.cluster_cluster_agglomeration
+
+
+
+.. py:function:: agglomeration(primary_particles: list[synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate], mode: str, randomness: float, translation_speed: float, sintering_ratio: float = 0, rotation_speed: float = 0) -> synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate
+
+   Simulate agglomeration of particles.
+
+   Args:
+       primary_particles (list[Agglomerate]): List of primary particles (agglomerates
+           without children).
+       mode (str): Agglomeration mode
+           "cluster-cluster" or
+           "particle-cluster"
+       translation_speed (float): Relative translation step size, between two
+           collision checks.
+       randomness (float): Number between 0 and 1, to control the randomness of the
+           random walk:
+               0 = straight translation, constant rotation
+               1 = completely random walk, stochastic rotation
+       sintering_ratio (float, optional): Number between 0 and 1, to control how
+           close the centers of mass of the two touching primary particles will be
+           after the collision:
+               0 = particles will just barely touch after the collision
+               1 = centers of mass will be identical
+           Defaults to 0.
+       rotation_speed (float, optional): Sum of the rotation intervals in x-, y-
+           and z-direction between two collision checks, for both collision
+           partners, as fraction of 360 degrees.
+           Defaults to 0.
+
+   Raises:
+       ValueError: if an unknown agglomeration mode is specified
+
+   Returns:
+       Agglomerate: agglomerated primary particles
+
+
+.. py:function:: particle_cluster_agglomeration(primary_particles: list[synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate], translation_speed: float, randomness: float, sintering_ratio: float = 0, rotation_speed: float = 0) -> synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate
+
+   Simulate particle-cluster agglomeration of particles (i.e. one by one).
+
+   Args:
+       primary_particles (list[Agglomerate]): List of primary particles (agglomerates
+           without children).
+       translation_speed (float): Relative translation step size, between two
+           collision checks.
+       randomness (float): Number between 0 and 1, to control the randomness of the
+           random walk:
+               0 = straight translation, constant rotation
+               1 = completely random walk, stochastic rotation
+       sintering_ratio (float, optional): Number between 0 and 1, to control how
+           close the centers of mass of the two touching primary particles will be
+           after the collision:
+               0 = particles will just barely touch after the collision
+               1 = centers of mass will be identical
+           Defaults to 0.
+       rotation_speed (float, optional): Sum of the rotation intervals in x-, y-
+           and z-direction between two collision checks, for both collision
+           partners, as fraction of 360 degrees.
+           Defaults to 0.
+
+   Returns:
+       Agglomerate: agglomerated primary particles
+
+
+.. py:function:: cluster_cluster_agglomeration(primary_particles: list[synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate], translation_speed: float, randomness: float, sintering_ratio: float = 0, rotation_speed: float = 0) -> synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate
+
+   Simulate cluster-cluster agglomeration of particles (i.e. in form of a binary
+       tree).
+
+   Args:
+       primary_particles (list[Agglomerate]): List of primary particles (agglomerates
+           without children).
+       translation_speed (float): Relative translation step size, between two
+           collision checks.
+       randomness (float): Number between 0 and 1, to control the randomness of the
+           random walk:
+               0 = straight translation, constant rotation
+               1 = completely random walk, stochastic rotation
+       sintering_ratio (float, optional): Number between 0 and 1, to control how
+           close the centers of mass of the two touching primary particles will be
+           after the collision:
+               0 = particles will just barely touch after the collision
+               1 = centers of mass will be identical
+           Defaults to 0.
+       rotation_speed (float, optional): Sum of the rotation intervals in x-, y-
+           and z-direction between two collision checks, for both collision
+           partners, as fraction of 360 degrees.
+           Defaults to 0.
+
+   Returns:
+       Agglomerate: agglomerated primary particles
+
+

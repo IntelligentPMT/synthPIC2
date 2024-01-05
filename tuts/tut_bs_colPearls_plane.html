@@ -1,21 +1,21 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="../">
   <head>
     <meta charset="utf-8" />
-    <title>Colored Pearls on Plane &#8212; synthPIC2 0.5dev documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Colored Pearls on Plane &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <script src="../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Pearls &amp; Plasticine on Plane" href="tut_bs_plasticine_plane.html" />
@@ -36,17 +36,17 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="colored-pearls-on-plane">
-<h1>Colored Pearls on Plane<a class="headerlink" href="#colored-pearls-on-plane" title="Permalink to this headline">¶</a></h1>
+  <section id="colored-pearls-on-plane">
+<h1>Colored Pearls on Plane<a class="headerlink" href="#colored-pearls-on-plane" title="Link to this heading">¶</a></h1>
 <p>This second tutorial will teach you how to vary features, which were predefined in prototypes. We learn to color the scene and tune various attributes. Furthermore, a plugin will be used to achieve our goal of intentionally varying features in a certain way.</p>
-<div class="section" id="at-a-glance">
-<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Permalink to this headline">¶</a></h2>
+<section id="at-a-glance">
+<h2>At a Glance<a class="headerlink" href="#at-a-glance" title="Link to this heading">¶</a></h2>
 <a class="reference internal image-reference" href="../_images/AAG_04.png"><img alt="../_images/AAG_04.png" src="../_images/AAG_04.png" style="width: 32%;" /></a>
 <a class="reference internal image-reference" href="../_images/AAG_14.png"><img alt="../_images/AAG_14.png" src="../_images/AAG_14.png" style="width: 32%;" /></a>
 <a class="reference internal image-reference" href="../_images/AAG_24.png"><img alt="../_images/AAG_24.png" src="../_images/AAG_24.png" style="width: 32%;" /></a>
-</div>
-<div class="section" id="what-we-will-learn">
-<h2>What We Will Learn<a class="headerlink" href="#what-we-will-learn" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="what-we-will-learn">
+<h2>What We Will Learn<a class="headerlink" href="#what-we-will-learn" title="Link to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Create an interesting colorful scene</p></li>
 <li><p>Manipulate attributes via sets</p></li>
@@ -54,100 +54,100 @@
 <li><p>Advanced use of <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function</p></li>
 <li><p>Adapt render parameters</p></li>
 </ul>
-</div>
-<div class="section" id="step-1-recipe-creation-and-first-look">
-<h2>Step 1: Recipe Creation and First Look<a class="headerlink" href="#step-1-recipe-creation-and-first-look" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-1-recipe-creation-and-first-look">
+<h2>Step 1: Recipe Creation and First Look<a class="headerlink" href="#step-1-recipe-creation-and-first-look" title="Link to this heading">¶</a></h2>
 <p>We start by creating a recipe with name <code class="docutils literal notranslate"><span class="pre">colPearls_plane.yaml</span></code> in the <code class="docutils literal notranslate"><span class="pre">recipes</span></code> subfolder under our root folder of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>. Let’s add the main sections.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
 <span class="nt">defaults</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_self_</span>
 <span class="nt">initial_runtime_state</span><span class="p">:</span>
-  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="w">  </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">42</span>
 </pre></div>
 </div>
 </div>
 <p>These first lines of code will link the default recipes and give a seed to reproduce this exact run, i.e. this specific version of execution of the recipe whenever a random number is drawn.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining blueprints</span>
 <span class="nt">blueprints</span><span class="p">:</span>
-  <span class="nt">measurement_techniques</span><span class="p">:</span>
-    <span class="nt">TopCamInAir</span><span class="p">:</span>
-      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
-  <span class="nt">particles</span><span class="p">:</span>
-    <span class="nt">Bead</span><span class="p">:</span>
-      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
-      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+<span class="w">  </span><span class="nt">measurement_techniques</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">TopCamInAir</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">measurement_technique_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
+<span class="w">  </span><span class="nt">particles</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Bead</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">geometry_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphere</span>
+<span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
 </pre></div>
 </div>
 </div>
 <p>This time, our specified prototypes <code class="docutils literal notranslate"><span class="pre">plane_topCam_fog</span></code> and <code class="docutils literal notranslate"><span class="pre">sphere</span></code> are purposefully designed elements of the library rather than just importing the default prototypes. Default prototypes are usually meant to create a scene, which is not aimed at the investigation of specific features of certain particle types or measurement techniques. But rather to quickly create a recipe with often another scope than generating a desired look in an image by physically based rendering. This could be, e.g. the sole export of a procedurally generated geometry.</p>
 <p>In our example, we define two blueprints. One for the scene, i.e. the measurement technique, that uses a prototype with a camera from top, directed at a plane. The particle blueprint uses our prototype for a sphere. We want to invoke 40 particles in total.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Physical boundary conditions</span>
 <span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-    <span class="nt">InitialParticleLocation</span><span class="p">:</span>
-      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
-      <span class="nt">variability</span><span class="p">:</span>
-        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+<span class="w">  </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">InitialParticleLocation</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span>
+<span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
 <span class="c1"># Procedural steps of synthetization chain</span>
 <span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="w">  </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
 </pre></div>
 </div>
 </div>
 <p>We define just one <code class="docutils literal notranslate"><span class="pre">process</span> <span class="pre">condition</span></code> to distribute the particles inside the measurement volume. Our <code class="docutils literal notranslate"><span class="pre">synth</span> <span class="pre">chain</span></code> consists of three <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">generation</span> <span class="pre">steps</span></code>, which will first invoke the two defined prototypes and then trigger the update of the feature <code class="docutils literal notranslate"><span class="pre">InitialParticleLocation</span></code> to distribute all particles according to the definition in the <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code>.</p>
 <p>As a last step, we add a <code class="docutils literal notranslate"><span class="pre">rendering</span> <span class="pre">step</span></code> to our <code class="docutils literal notranslate"><span class="pre">synth</span> <span class="pre">chain</span></code> to output an image of the current scene. Our whole recipe file <code class="docutils literal notranslate"><span class="pre">colPearls_plane.yaml</span></code> looks now as follows.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
 <span class="nt">defaults</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_self_</span>
 <span class="nt">initial_runtime_state</span><span class="p">:</span>
-  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="w">  </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">42</span>
 <span class="c1"># Defining blueprints</span>
 <span class="nt">blueprints</span><span class="p">:</span>
-  <span class="nt">measurement_techniques</span><span class="p">:</span>
-    <span class="nt">TopCamInAir</span><span class="p">:</span>
-      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
-  <span class="nt">particles</span><span class="p">:</span>
-    <span class="nt">Bead</span><span class="p">:</span>
-      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
-      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+<span class="w">  </span><span class="nt">measurement_techniques</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">TopCamInAir</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">measurement_technique_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
+<span class="w">  </span><span class="nt">particles</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Bead</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">geometry_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphere</span>
+<span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
 <span class="c1"># Physical boundary conditions</span>
 <span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-    <span class="nt">InitialParticleLocation</span><span class="p">:</span>
-      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
-      <span class="nt">variability</span><span class="p">:</span>
-        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+<span class="w">  </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">InitialParticleLocation</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span>
+<span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
 <span class="c1"># Procedural steps of synthetization chain</span>
 <span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-<span class="hll">  <span class="nt">rendering_steps</span><span class="p">:</span>
-</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
-</span><span class="hll">      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
-</span><span class="hll">      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">  </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll"><span class="w">  </span><span class="nt">rendering_steps</span><span class="p">:</span>
+</span><span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">rendering_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">real</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">do_save_features</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
 </span></pre></div>
 </div>
 </div>
@@ -159,89 +159,89 @@
 <img alt="First rendering of the scene" src="../_images/firstLook40Particles.png" />
 <p>Ultimately, we want to add two more entries to the <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code> and two more entries to the <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code>. Thus, we achieve a fast rendering by reducing the resolution of the final image and by specifying just a small number of <code class="docutils literal notranslate"><span class="pre">64</span></code> render samples, i.e. the number of paths to trace for each pixel.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initializing and seeding</span>
 <span class="nt">defaults</span><span class="p">:</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
-  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">_self_</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BaseRecipe</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">_self_</span>
 <span class="nt">initial_runtime_state</span><span class="p">:</span>
-  <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<span class="w">  </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">42</span>
 <span class="c1"># Defining blueprints</span>
 <span class="nt">blueprints</span><span class="p">:</span>
-  <span class="nt">measurement_techniques</span><span class="p">:</span>
-    <span class="nt">TopCamInAir</span><span class="p">:</span>
-      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
-  <span class="nt">particles</span><span class="p">:</span>
-    <span class="nt">Bead</span><span class="p">:</span>
-      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
-      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+<span class="w">  </span><span class="nt">measurement_techniques</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">TopCamInAir</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">measurement_technique_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
+<span class="w">  </span><span class="nt">particles</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Bead</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">geometry_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphere</span>
+<span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
 <span class="c1"># Physical boundary conditions</span>
 <span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-    <span class="nt">InitialParticleLocation</span><span class="p">:</span>
-      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">location</span>
-      <span class="nt">variability</span><span class="p">:</span>
-        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
-<span class="hll">    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span>
-</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">resolution_percentage</span>
-</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
-</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
-</span><span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">25</span>
-</span><span class="hll">    <span class="nt">CyclesSamples</span><span class="p">:</span>
-</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cycles_samples</span>
-</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
-</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
-</span><span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">64</span>
+<span class="w">  </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">InitialParticleLocation</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span>
+<span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.UniformlyRandomLocationInMeasurementVolume</span>
+<span class="hll"><span class="w">    </span><span class="nt">RenderingResolutionPercentage</span><span class="p">:</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resolution_percentage</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">CyclesSamples</span><span class="p">:</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cycles_samples</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">64</span>
 </span><span class="c1"># Procedural steps of synthetization chain</span>
 <span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
-</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CyclesSamples</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
-</span>  <span class="nt">rendering_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
-      <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
-      <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<span class="w">  </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniqueBlueprints</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CyclesSamples</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="w">  </span><span class="nt">rendering_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+<span class="w">      </span><span class="nt">rendering_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">real</span>
+<span class="w">      </span><span class="nt">do_save_features</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="step-2-add-background-and-enlarge-particles">
-<h2>Step 2: Add Background and Enlarge Particles<a class="headerlink" href="#step-2-add-background-and-enlarge-particles" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-2-add-background-and-enlarge-particles">
+<h2>Step 2: Add Background and Enlarge Particles<a class="headerlink" href="#step-2-add-background-and-enlarge-particles" title="Link to this heading">¶</a></h2>
 <p>Those particles are quite small at the moment and seem to be lost in space. Therefore, let’s first specify the simple <code class="docutils literal notranslate"><span class="pre">plain</span></code> material for the background.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
-  <span class="nt">measurement_techniques</span><span class="p">:</span>
-    <span class="nt">TopCamInAir</span><span class="p">:</span>
-      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
-<span class="hll">      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plain</span>
+<span class="w">  </span><span class="nt">measurement_techniques</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">TopCamInAir</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">measurement_technique_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
+<span class="hll"><span class="w">      </span><span class="nt">background_material_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plain</span>
 </span></pre></div>
 </div>
 </div>
 <p>In order to specify the particle size, we add the feature <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code> to the <code class="docutils literal notranslate"><span class="pre">feature_variabilities</span></code> to specify that we want to vary this specific feature. As also already made use of in the first tutorial <a class="reference internal" href="tut_bs_beads.html#sec-tut-bs-beads"><span class="std std-ref">Synthesized Beads</span></a>, we pick the function <code class="docutils literal notranslate"><span class="pre">UniformDistribution3dHomogeneous</span></code> again, which is one of the <code class="docutils literal notranslate"><span class="pre">built-in</span></code> functions of <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code>. Let’s add the block directly below the definition of <code class="docutils literal notranslate"><span class="pre">InitialParticleLocation</span></code> and before the definition of <code class="docutils literal notranslate"><span class="pre">RenderingResolutionPercentage</span></code></p>
 <div class="literal-block-wrapper docutils container" id="id7">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id7" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id7" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-<span class="hll">    <span class="nt">ParticleDimension</span><span class="p">:</span>
-</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
-</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
-</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
-</span><span class="hll">        <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.3</span>
-</span><span class="hll">        <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1.4</span>
-</span>    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="w">  </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">InitialParticleLocation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll"><span class="w">    </span><span class="nt">ParticleDimension</span><span class="p">:</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.3</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.4</span>
+</span><span class="w">    </span><span class="nt">RenderingResolutionPercentage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
 </pre></div>
 </div>
 </div>
@@ -252,20 +252,20 @@
 <p>This simple linear equation, written as a function <span class="math notranslate nohighlight">\(y=f(x)\)</span> with the two constants <span class="math notranslate nohighlight">\(C_\text{sc}\)</span> for scale and <span class="math notranslate nohighlight">\(C_\text{loc}\)</span> for location, calculates the output value <span class="math notranslate nohighlight">\(y\)</span> based on a random number <span class="math notranslate nohighlight">\(x\in [0,1)\)</span>. In other words, our dimension will result in a value somewhere in the range <span class="math notranslate nohighlight">\(3.3\dots 4.7\)</span> assuming the parameters defined above. The whole function <code class="docutils literal notranslate"><span class="pre">UniformDistribution3dHomogeneous</span></code> returns a three-dimensional tuple with that calculated value <span class="math notranslate nohighlight">\(y\)</span> in each dimension. We will use those for our three dimensions in space. We do so by specifying that the prototype feature with name <code class="docutils literal notranslate"><span class="pre">dimensions</span></code> shall be affected by that function when we defined the <code class="docutils literal notranslate"><span class="pre">feature</span> <span class="pre">variability</span></code>, which we called <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code>.</p>
 <p>We need to add one more entry in the <code class="docutils literal notranslate"><span class="pre">synth_chain</span></code> under <code class="docutils literal notranslate"><span class="pre">feature_generation_steps</span></code> for the definition of the particle dimension to take effect.</p>
 <div class="literal-block-wrapper docutils container" id="id8">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id8" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id8" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+<span class="w">  </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">InitialParticleLocation</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
 </pre></div>
 </div>
 </div>
@@ -273,43 +273,43 @@
 <img alt="Adapted size of particles with background in scene" src="../_images/backgroundDimensionGray.png" />
 <p>As a last measure, we complete our both <code class="docutils literal notranslate"><span class="pre">blueprints</span></code> by defining the materials and the parent of our particle blueprint <code class="docutils literal notranslate"><span class="pre">Bead</span></code>. We set the materials for measurement volume and for the particle blueprint and we define that the parent of the particle ensemble should be the <code class="docutils literal notranslate"><span class="pre">MeasurementVolume</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="id9">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id9" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id9" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
-  <span class="nt">measurement_techniques</span><span class="p">:</span>
-    <span class="nt">TopCamInAir</span><span class="p">:</span>
-      <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
-<span class="hll">      <span class="nt">measurement_volume_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">vacuum</span>
-</span>      <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plain</span>
-  <span class="nt">particles</span><span class="p">:</span>
-    <span class="nt">Bead</span><span class="p">:</span>
-      <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
-<span class="hll">      <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">plain</span>
-</span><span class="hll">      <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
-</span>      <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">40</span>
+<span class="w">  </span><span class="nt">measurement_techniques</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">TopCamInAir</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">measurement_technique_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plane_topCam_fog</span>
+<span class="hll"><span class="w">      </span><span class="nt">measurement_volume_material_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vacuum</span>
+</span><span class="w">      </span><span class="nt">background_material_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plain</span>
+<span class="w">  </span><span class="nt">particles</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">Bead</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">geometry_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphere</span>
+<span class="hll"><span class="w">      </span><span class="nt">material_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plain</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+</span><span class="w">      </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="step-3-relax-and-fall">
-<h2>Step 3: Relax and Fall<a class="headerlink" href="#step-3-relax-and-fall" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-3-relax-and-fall">
+<h2>Step 3: Relax and Fall<a class="headerlink" href="#step-3-relax-and-fall" title="Link to this heading">¶</a></h2>
 <p>This section is about an advanced use of our <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function. First, we will use it in the same way as we did in the <a class="reference internal" href="tut_bs_beads.html#sec-tut-bs-beads"><span class="std std-ref">Synthesized Beads</span></a> tutorial. But this time, we add the additional parameter <code class="docutils literal notranslate"><span class="pre">num_frames</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="id10">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id10" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id10" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-</span><span class="hll">      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
-</span><span class="hll">      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
-</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+<span class="w">  </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">num_frames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">collision_shape</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
+</span><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RenderingResolutionPercentage</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
 </pre></div>
 </div>
 </div>
@@ -318,27 +318,27 @@
 <a class="reference internal image-reference" href="../_images/bgRelax.png"><img alt="../_images/bgRelax.png" src="../_images/bgRelax.png" style="width: 49%;" /></a>
 <p>To be more exact, those particles moved, which were intersecting each other and which were touching the boundary of our small little world, i.e. the measurement volume. We can do even more with the <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> function. Let’s add another <cite>additional</cite> <code class="docutils literal notranslate"><span class="pre">feature_generation_step</span></code> after our recent call of the function <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> and let’s call it another time with some more parameters.</p>
 <div class="literal-block-wrapper docutils container" id="id11">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id11" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id11" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
-      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
-      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
-</span><span class="hll">      <span class="nt">use_gravity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
-</span><span class="hll">      <span class="nt">damping</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.07</span>
-</span><span class="hll">      <span class="nt">friction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.4</span>
-</span><span class="hll">      <span class="nt">restitution</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
-</span><span class="hll">      <span class="nt">collision_margin</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.5</span>
-</span><span class="hll">      <span class="nt">num_frames</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">150</span>
-</span><span class="hll">      <span class="nt">collision_shape</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
-</span>    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+<span class="w">  </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+<span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="w">      </span><span class="nt">num_frames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">      </span><span class="nt">collision_shape</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">SPHERE</span>
+<span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">use_gravity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">damping</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.07</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">friction</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.4</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">restitution</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">collision_margin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">num_frames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">150</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">collision_shape</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CONVEX_HULL</span>
+</span><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
 </pre></div>
 </div>
 </div>
@@ -347,32 +347,32 @@
 <a class="reference internal image-reference" href="../_images/bgAfterFall.png"><img alt="../_images/bgAfterFall.png" src="../_images/bgAfterFall.png" style="width: 49%;" /></a>
 <p>An important parameter for the collision is the shape, which is used during calculation. Since, we intentionally want the particles to <cite>not</cite> overlap each other on the final image – even more: we do want to leave a gap between them – we define a quite high <code class="docutils literal notranslate"><span class="pre">collision_margin</span></code> of <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and define the <code class="docutils literal notranslate"><span class="pre">collision_shape</span></code> as <code class="docutils literal notranslate"><span class="pre">CONVEX_HULL</span></code>. After execution of the recipe, the rendered image shows our neatly behaving particles, which rest on the plane and respect each other’s space – as a result of our <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> functions.</p>
 <img alt="Rendered scene with no intersection of particles, which rest on a plane" src="../_images/AAG_14.png" />
-</div>
-<div class="section" id="step-4-you-promised-color">
-<h2>Step 4: You Promised Color!<a class="headerlink" href="#step-4-you-promised-color" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="step-4-you-promised-color">
+<h2>Step 4: You Promised Color!<a class="headerlink" href="#step-4-you-promised-color" title="Link to this heading">¶</a></h2>
 <p>Still dreary gray particles… one thing is missing, right? In this last section of this tutorial, we are using a plugin to set an attribute, namely the <cite>color</cite>.</p>
 <p>As opposed to the functions we called before, a plugin lays outside of the main <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> toolbox and therefore provides a very handy mechanism to add functionality without touching the main sources of the toolbox. Thus, a plugin offers a way more modular approach to extend the toolbox and favors quick sharing. Feel free to use this mechanism for testing / trial’n’error of functions as easily portable, separate package.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">synthPIC2</span></code> deploy version comes with one plugin, called <cite>official</cite>. It contains a few functions for <code class="docutils literal notranslate"><span class="pre">process_conditions</span></code> and is mainly intended for educational purpose of demonstrating the plugin mechanism.</p>
 <div class="literal-block-wrapper docutils container" id="id12">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id12" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id12" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-    <span class="nt">ParticleDimension</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-    <span class="nt">CyclesSamples</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-<span class="hll">    <span class="nt">BackgroundColor</span><span class="p">:</span>
-</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
-</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
-</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
-</span><span class="hll">        <span class="nt">hue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.15</span>
-</span><span class="hll">        <span class="nt">saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.35</span>
-</span><span class="hll">    <span class="nt">PinkColor</span><span class="p">:</span>
-</span><span class="hll">      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">color</span>
-</span><span class="hll">      <span class="nt">variability</span><span class="p">:</span>
-</span><span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
-</span><span class="hll">        <span class="nt">hue</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.95</span>
-</span><span class="hll">        <span class="nt">saturation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.85</span>
+<span class="w">  </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">InitialParticleLocation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="w">    </span><span class="nt">ParticleDimension</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="w">    </span><span class="nt">RenderingResolutionPercentage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="w">    </span><span class="nt">CyclesSamples</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="hll"><span class="w">    </span><span class="nt">BackgroundColor</span><span class="p">:</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.15</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">saturation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.35</span>
+</span><span class="hll"><span class="w">    </span><span class="nt">PinkColor</span><span class="p">:</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">color</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$plugins.official.ConstantHsvColorAsRgb</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">hue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.95</span>
+</span><span class="hll"><span class="w">        </span><span class="nt">saturation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.85</span>
 </span></pre></div>
 </div>
 </div>
@@ -382,45 +382,45 @@
 <img alt="Two colors in HSV representation" src="../_images/hsv_2col.png" />
 <p>Our recent code snippet added the two feature variabilities, which each tell the feature <code class="docutils literal notranslate"><span class="pre">color</span></code> to be restricted to a specific color when triggered. Now, we need to add the corresponding triggers to update the feature. Let’s add those right below our <code class="docutils literal notranslate"><span class="pre">RelaxCollisions</span></code> functions.</p>
 <div class="literal-block-wrapper docutils container" id="id13">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id13" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id13" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
-  <span class="nt">feature_generation_steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
-    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
-<span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">BackgroundColor</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
-</span><span class="hll">    <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-</span><span class="hll">      <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PinkColor</span>
-</span><span class="hll">      <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<span class="w">  </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RelaxCollisions …</span>
+<span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BackgroundColor</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllMeasurementTechniques</span>
+</span><span class="hll"><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PinkColor</span>
+</span><span class="hll"><span class="w">      </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
 </span></pre></div>
 </div>
 </div>
 <p>As mentioned earlier, both defined feature variabilities – <code class="docutils literal notranslate"><span class="pre">BackgroundColor</span></code> and <code class="docutils literal notranslate"><span class="pre">PinkColor</span></code> – reference the same feature <code class="docutils literal notranslate"><span class="pre">color</span></code> of the <code class="docutils literal notranslate"><span class="pre">material</span> <span class="pre">prototype</span></code>. They both define to restrict the <code class="docutils literal notranslate"><span class="pre">color</span></code> in different ways, i.e. they specify different colors. However, we want to give different objects in our scene only one of the both colors and we want to concretely specify which object should get which color.</p>
 <p>To concretely specify which member of our scene shall be affected when a feature update is triggered, we specify these single objects or multiple objects, i.e. a group of objects, in <code class="docutils literal notranslate"><span class="pre">sets</span></code>. Since we only want to differentiate between our particles and the background, which is part of the measurement technique, we simply use the both predefined standard sets <code class="docutils literal notranslate"><span class="pre">AllParticles</span></code> and <code class="docutils literal notranslate"><span class="pre">AllMeasurementTechniques</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="id14">
-<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id14" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-text">colPearls_plane.yaml</span><a class="headerlink" href="#id14" title="Link to this code">¶</a></div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_variabilities</span><span class="p">:</span>
-    <span class="nt">InitialParticleLocation</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-    <span class="nt">ParticleDimension</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-    <span class="nt">RenderingResolutionPercentage</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">…</span>
-    <span class="nt">CyclesSamples</span><span class="p">:</span>
-      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cycles_samples</span>
-      <span class="nt">variability</span><span class="p">:</span>
-        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
-<span class="hll">        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2048</span>
+<span class="w">  </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">InitialParticleLocation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="w">    </span><span class="nt">ParticleDimension</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="w">    </span><span class="nt">RenderingResolutionPercentage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">…</span>
+<span class="w">    </span><span class="nt">CyclesSamples</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cycles_samples</span>
+<span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+<span class="hll"><span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2048</span>
 </span></pre></div>
 </div>
 </div>
 <p>As a last measure, we increased our render samples to get a nice and crisp image from our final rendering where every pixel’s color results from <code class="docutils literal notranslate"><span class="pre">2048</span></code> traced paths.</p>
 <img alt="Final rendering of the scene" src="../_images/AAG_24.png" />
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -448,7 +448,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../concepts.html">Concepts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dev_guides.html">Developer Guides</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
 </ul>
 
 <div class="relations">
@@ -466,12 +466,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -488,8 +488,8 @@
       &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="../_sources/tuts/tut_bs_colPearls_plane.rst.txt"

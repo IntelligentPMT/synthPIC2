@@ -1,0 +1,337 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate`
+=========================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate
+
+.. autoapi-nested-parse::
+
+   Module for the Agglomerate classes.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.TAgglomerate
+
+
+.. py:data:: TAgglomerate
+
+   
+
+.. py:class:: Agglomerate
+
+
+   Class to represent agglomerates.
+
+   .. py:property:: children
+      :type: list[Agglomerate]
+
+      List of children of this agglomerate.
+
+      Returns:
+          list[Agglomerate]: List of children of this Agglomerate.
+
+
+   .. py:property:: mesh
+      :type: trimesh.Trimesh
+
+      Retrieves the concatenated mesh of all descendants, i.e. primary particles.
+
+      Returns:
+          trimesh.Trimesh: Concatenated mesh of all primary particles
+
+
+   .. py:property:: num_children
+      :type: int
+
+      Number of children.
+
+      Returns:
+          int: Number of children.
+
+
+   .. py:property:: all_descendants
+      :type: list[TAgglomerate]
+
+      List of all descendants (primary particles) of the agglomerate, i.e. itself,
+          its children, its children's children, etc.
+
+      Returns:
+          list[Agglomerate]: List of all descendants of the agglomerate.
+
+
+   .. py:property:: num_descendants
+      :type: int
+
+      Number of descendants of the agglomerate.
+
+      Returns:
+          int: Number of descendants of the Agglomerate.
+
+
+   .. py:property:: centroid
+      :type: numpy.ndarray
+
+      Centroid of the agglomerate (including all descendants).
+
+      Returns:
+          np.ndarray: Centroid of the Agglomerate.
+
+
+   .. py:property:: centroid_primary_particle
+      :type: numpy.ndarray
+
+      Centroid of the agglomerates ultimate primary particle, i.e. disregarding its
+          children.
+
+      Returns:
+          np.ndarray: Centroid of the agglomerates ultimate primary particle
+
+
+   .. py:property:: mass
+      :type: float
+
+      Mass of the agglomerate (including all descendants).
+
+      Returns:
+          float: Mass of the agglomerate
+
+
+   .. py:property:: radius_gyration
+      :type: float
+
+      Radius of gyration of an agglomerate (including its descendants).
+
+      If the agglomerate has no descendants, then the radius of gyration is determined
+      by random sampling of mass points. Else, the centers of mass and the masses of
+      the descendants are used.
+
+      Returns:
+          float: Radius of gyration.
+
+
+   .. py:attribute:: mesh_primary_particle
+      :type: trimesh.Trimesh
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: _children
+      :type: list[Agglomerate]
+
+      
+
+   .. py:attribute:: parent
+      :type: Optional[Agglomerate]
+
+      
+
+   .. py:method:: __post_init__() -> None
+
+
+   .. py:method:: get_descendant(descendant_name: str) -> Agglomerate
+
+      Retrieves a descendant with the given name.
+
+      Args:
+          descendant_name (str): name of the descendant to retrieve
+
+      Raises:
+          IndexError: if no such descendant exists
+
+      Returns:
+          Agglomerate: descendant with the given name
+
+
+   .. py:method:: add_child(child: Agglomerate) -> None
+
+      Add a child to the agglomerate.
+
+      Args:
+          child (Agglomerate): new child
+
+
+   .. py:method:: export(path: str) -> None
+
+      Export the mesh of the agglomerate (including its descendants) as an stl
+          file.
+
+      Args:
+          path (str): Path to the output stl file.
+
+
+   .. py:method:: plot() -> None
+
+      Plot the mesh of the agglomerate (including its descendants).
+
+
+   .. py:method:: bounding_box() -> synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.bounding_box.BoundingBox
+
+      Bounding box of the Agglomerate (including all descendants).
+
+      Returns:
+          BoundingBox: _description_
+
+
+   .. py:method:: center_mass() -> numpy.ndarray
+
+      Center of mass of the agglomerate (including all descendants).
+
+      Returns:
+          np.ndarray: Center of mass.
+
+
+   .. py:method:: is_overlapping(agglomerate_other: Agglomerate) -> bool
+
+      Check if two agglomerates (including their descendants) overlap.
+
+
+   .. py:method:: get_collision_partners(agglomerate_other: Agglomerate) -> tuple[Agglomerate, Agglomerate]
+
+      Get overlapping primary particles for a pair of overlapping agglomerates.
+
+      Returns:
+          tuple[Agglomerate, Agglomerate]: Pair of overlapping primary particles.
+
+
+   .. py:method:: from_blender(blender_object: bpy.types.Object) -> Agglomerate
+      :classmethod:
+
+      Create an Agglomerate from a blender object, by converting it to a trimesh.
+          The name is adopted.
+
+      Returns:
+          Agglomerate: Agglomerate
+
+
+   .. py:method:: to_blender() -> None
+
+      Transfer the transformations of the primary particles of an Agglomerate to
+      the corresponding blender objects.
+
+
+   .. py:method:: radius_gyration_primary_particle() -> float
+
+      Radius of gyration of a primary particle with arbitrary shape. Calculated
+          from randomly sampled mass points in the mesh.
+
+      Returns:
+          float: Radius of gyration of a primary particle with arbitrary shape.
+
+
+   .. py:method:: _calculate_radius_gyration(center_mass: numpy.ndarray, mass_points: numpy.ndarray, masses: numpy.ndarray) -> float
+      :staticmethod:
+
+      Calculate the radius of gyration of a cloud of mass points.
+
+      Based on: https://www.engineeringtoolbox.com/moment-inertia-torque-d_913.html
+
+      Args:
+          center_mass (np.ndarray): Center of mass of the cloud.
+          mass_points (np.ndarray): Mass points.
+          masses (np.ndarray): Masses of the points.
+
+      Returns:
+          float: Radius of gyration.
+
+
+   .. py:method:: apply_periodic_boundaries(space_bounding_box: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.bounding_box.BoundingBox) -> None
+
+      Apply periodic boundaries of a box-shaped simulation space to the
+          agglomerate, by translating it, if it is outside of the simulation space.
+
+      Args:
+          space_bounding_box (BoundingBox): Bounding box of the simulation space.
+
+
+   .. py:method:: translate(translation_vector: numpy.ndarray | list | tuple, do_reverse: bool = False) -> None
+
+      Translate the agglomerate (including all the descendants).
+
+      Args:
+          translation_vector (np.ndarray | list | tuple): Translation vector
+          do_reverse (bool, optional): If true, applies the inverse translation.
+              Defaults to False.
+
+
+   .. py:method:: rotate_around_center_mass(rotation_vector_deg: numpy.ndarray | list | tuple, do_reverse: bool = False) -> None
+
+      Rotate the agglomerate (including all descendants) around its center of mass,
+          according to the specified angles.
+
+      Args:
+          rotation_vector_deg (np.ndarray | list | tuple): Rotation angles in degree,
+              in x-, y- and z- direction.
+          do_reverse (bool, optional): If true, applies the inverse rotation.
+              Defaults to False.
+
+
+   .. py:method:: transform(transform: numpy.ndarray, do_update_center_mass: bool = True) -> None
+
+      Transform the agglomerate (including all descendants).
+
+      Args:
+          transform (np.ndarray): Transformation matrix (4x4).
+          do_update_center_mass (bool, optional): If true, then update the centers of
+              mass of all descendants. Defaults to True.
+
+
+   .. py:method:: delete_attributes(*attribute_names: str) -> None
+
+      Delete a list of attributes. Used to reset cached properties.
+
+
+   .. py:method:: initialize_collision(agglomerate_other: Agglomerate) -> None
+
+      Initialize a collision by randomly rotating the collision partners and
+          placing them into each others proximity, so that their bounding boxes touch.
+
+      Args:
+          agglomerate_other (Agglomerate): Collision partner.
+
+
+   .. py:method:: collide(agglomerate_other: Agglomerate, translation_speed: float, randomness: float, sintering_ratio: float = 0, rotation_speed: float = 0) -> None
+
+      Collide the agglomerate with another agglomerate.
+
+      Args:
+          agglomerate_other (Agglomerate): Collision partner.
+          translation_speed (float): Relative translation step size, between two
+              collision checks.
+          randomness (float): Number between 0 and 1, to control the randomness of the
+              random walk:
+                  0 = straight translation, constant rotation
+                  1 = completely random walk, stochastic rotation
+          sintering_ratio (float, optional): Number between 0 and 1, to control how
+              close the centers of mass of the two touching primary particles will be
+              after the collision:
+                  0 = particles will just barely touch after the collision
+                  1 = centers of mass will be identical
+              Defaults to 0.
+          rotation_speed (float, optional): Sum of the rotation intervals in x-, y-
+              and z-direction between two collision checks, for both collision
+              partners, as fraction of 360 degrees.
+              Defaults to 0.
+
+
+

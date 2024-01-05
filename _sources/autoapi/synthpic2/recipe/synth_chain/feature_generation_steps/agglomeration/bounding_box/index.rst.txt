@@ -1,0 +1,86 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.bounding_box`
+==========================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.bounding_box
+
+.. autoapi-nested-parse::
+
+   Module for the BoundingBox class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.bounding_box.BoundingBox
+
+
+
+
+.. py:class:: BoundingBox
+
+
+   Class to represent bounding boxes.
+
+   .. py:property:: mesh
+      :type: trimesh.Trimesh
+
+      Mesh of the bounding box.
+
+      Returns:
+          trimesh.Trimesh: mesh of the bounding box
+
+
+   .. py:property:: centroid
+      :type: numpy.ndarray
+
+      Centroid of the bounding box.
+
+      Returns:
+          np.ndarray: centroid
+
+
+   .. py:attribute:: extents
+      :type: numpy.ndarray
+
+      
+
+   .. py:attribute:: location
+      :type: numpy.ndarray
+
+      
+
+   .. py:method:: enlarge(other_bounding_box: BoundingBox) -> None
+
+      Enlarge the bounding box, so that it has a margin as big as another bounding
+          box.
+
+      Args:
+          other_bounding_box (BoundingBox): enlarged bounding box
+
+
+   .. py:method:: get_random_boundingbox_face() -> numpy.ndarray
+
+      Get a random bounding box face (area weighted), specified by its face normal.
+
+      Returns:
+          np.ndarray: Normal vector of the randomly selected bounding box face.
+
+
+   .. py:method:: get_random_point_boundingbox_face(desired_face_normal: numpy.ndarray) -> numpy.ndarray
+
+      Get a random point on the face (specified by a face normal) of a boundingbox.
+
+      Args:
+          desired_face_normal (np.ndarray): Normal vector of the desired face.
+
+      Returns:
+          np.ndarray: Coordinates of the random point.
+
+
+

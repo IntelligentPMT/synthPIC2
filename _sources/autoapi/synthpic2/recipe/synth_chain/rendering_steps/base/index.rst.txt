@@ -1,0 +1,33 @@
+:py:mod:`synthpic2.recipe.synth_chain.rendering_steps.base`
+===========================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.rendering_steps.base
+
+.. autoapi-nested-parse::
+
+   Module for the `FeatureGenerationStep` base class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep
+
+
+
+
+.. py:class:: RenderingStep
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.step.SynthChainStep`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+

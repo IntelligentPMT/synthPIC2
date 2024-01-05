@@ -1,0 +1,29 @@
+:py:mod:`synthpic2.recipe.store`
+================================
+
+.. py:module:: synthpic2.recipe.store
+
+.. autoapi-nested-parse::
+
+   Hydra config store, to allow accessing structured configs.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.store.populate
+
+
+
+.. py:function:: populate() -> None
+
+   Register configs.
+
+

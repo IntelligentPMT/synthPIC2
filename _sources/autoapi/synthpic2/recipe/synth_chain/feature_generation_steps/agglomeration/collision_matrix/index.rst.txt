@@ -1,0 +1,79 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.collision_matrix`
+==============================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.collision_matrix
+
+.. autoapi-nested-parse::
+
+   Module for the class CollisionMatrix.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.collision_matrix.CollisionMatrix
+
+
+
+
+.. py:class:: CollisionMatrix(agglomerates: list[synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate])
+
+
+   Class to represent a collision matrix.
+
+   .. py:property:: normalized_content
+      :type: numpy.ndarray
+
+
+   .. py:property:: num_collision_partners
+      :type: int
+
+
+   .. py:method:: calculate_content() -> None
+
+      Calculate the content of the collision matrix.
+
+
+   .. py:method:: _calculate_collision_frequency(collision_partner_a: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate, collision_partner_b: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate) -> float
+      :staticmethod:
+
+
+   .. py:method:: pick_collision_pair() -> tuple[synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate, synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate]
+
+      Pick a pair for the next collision, based on an acceptance–rejection
+          strategy.
+
+      Source:
+          Wei, Kruis (2013) - A GPU-based parallelized Monte-Carlo method for particle
+                              coagulation using an acceptance–rejection strategy
+
+      Returns:
+          tuple[Agglomerate, Agglomerate]: A pair of agglomerates for the next
+              collision.
+
+
+   .. py:method:: update_collision_partner(collision_partner_update: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate) -> None
+
+      Update the collision frequency of a collision partner, after it has changed
+          due to a collision.
+
+      Args:
+          collision_partner_update (Agglomerate): Collision partner to update.
+
+
+   .. py:method:: remove_collision_partner(collision_partner: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate.Agglomerate) -> None
+
+      Remove a collision partner from the matrix, after it has been used for a
+          collision.
+
+      Args:
+          collision_partner (Agglomerate): Collision partner to be removed.
+
+
+

@@ -1,0 +1,248 @@
+:py:mod:`synthpic2.recipe.process_conditions.feature_criteria`
+==============================================================
+
+.. py:module:: synthpic2.recipe.process_conditions.feature_criteria
+
+.. autoapi-nested-parse::
+
+   Home of Criterion classes to construct sets from.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.feature_criteria.BaseCriterion
+   synthpic2.recipe.process_conditions.feature_criteria.FeatureCriterion
+   synthpic2.recipe.process_conditions.feature_criteria.IsEqualTo
+   synthpic2.recipe.process_conditions.feature_criteria.IsSmallerThan
+   synthpic2.recipe.process_conditions.feature_criteria.IsGreaterThan
+   synthpic2.recipe.process_conditions.feature_criteria.ContainsString
+   synthpic2.recipe.process_conditions.feature_criteria._IsType
+   synthpic2.recipe.process_conditions.feature_criteria.AlwaysTrue
+   synthpic2.recipe.process_conditions.feature_criteria.IsUltimateParent
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.feature_criteria.register_premade_feature_criteria
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.feature_criteria.FeatureOwner
+
+
+.. py:data:: FeatureOwner
+
+   
+
+.. py:class:: BaseCriterion
+
+
+   Bases: :py:obj:`synthpic2.recipe.registries.self_registering_attrs_mixin.SelfRegisteringAttrsMixin`
+
+   Mixin for attrs classes, so that they register themselves in a predefined
+   registry, after they have been initialized.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:method:: __call__(object_: FeatureOwner) -> bool
+      :abstractmethod:
+
+
+
+.. py:class:: FeatureCriterion
+
+
+   Bases: :py:obj:`BaseCriterion`
+
+   Criterion, to check if a certain `Feature` of an object has an
+      `expected_value`.
+
+   The `Feature` is looked up based on the specified `feature_name`. If the object
+   does not have the `feature` at all, then the `default_return_value` will be
+   returned.
+
+   .. py:attribute:: feature_name
+      :type: str
+
+      
+
+   .. py:attribute:: default_return_value
+      :type: bool
+
+      
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.precess_conditions.criteria.FeatureCriterion'
+
+      
+
+   .. py:method:: __call__(object_: FeatureOwner) -> bool
+
+
+   .. py:method:: check(feature: synthpic2.recipe.prototypes.feature.Feature) -> bool
+      :abstractmethod:
+
+
+
+.. py:class:: IsEqualTo
+
+
+   Bases: :py:obj:`FeatureCriterion`
+
+   Criterion, to check if a certain `Feature` of an object has an
+      `expected_value`.
+
+   The `Feature` is looked up based on the specified `feature_name`. If the object
+   does not have the `feature` at all, then the `default_return_value` will be
+   returned.
+
+   .. py:attribute:: comparand
+      :type: Any
+
+      
+
+   .. py:method:: check(feature: synthpic2.recipe.prototypes.feature.Feature) -> bool
+
+
+
+.. py:class:: IsSmallerThan
+
+
+   Bases: :py:obj:`FeatureCriterion`
+
+   Criterion, to check if a certain `Feature` of an object has an
+      `expected_value`.
+
+   The `Feature` is looked up based on the specified `feature_name`. If the object
+   does not have the `feature` at all, then the `default_return_value` will be
+   returned.
+
+   .. py:attribute:: comparand
+      :type: Any
+
+      
+
+   .. py:method:: check(feature: synthpic2.recipe.prototypes.feature.Feature) -> bool
+
+
+
+.. py:class:: IsGreaterThan
+
+
+   Bases: :py:obj:`FeatureCriterion`
+
+   Criterion, to check if a certain `Feature` of an object has an
+      `expected_value`.
+
+   The `Feature` is looked up based on the specified `feature_name`. If the object
+   does not have the `feature` at all, then the `default_return_value` will be
+   returned.
+
+   .. py:attribute:: comparand
+      :type: Any
+
+      
+
+   .. py:method:: check(feature: synthpic2.recipe.prototypes.feature.Feature) -> bool
+
+
+
+.. py:class:: ContainsString
+
+
+   Bases: :py:obj:`FeatureCriterion`
+
+   Criterion, to check if a certain `Feature` of an object has an
+      `expected_value`.
+
+   The `Feature` is looked up based on the specified `feature_name`. If the object
+   does not have the `feature` at all, then the `default_return_value` will be
+   returned.
+
+   .. py:attribute:: search_string
+      :type: str
+
+      
+
+   .. py:method:: check(feature: synthpic2.recipe.prototypes.feature.Feature) -> bool
+
+
+
+.. py:class:: _IsType
+
+
+   Bases: :py:obj:`BaseCriterion`
+
+   Criterion, to check if an object is of a certain type.
+
+   .. py:attribute:: type
+      :type: Type
+
+      
+
+   .. py:method:: __call__(object_: FeatureOwner) -> bool
+
+
+
+.. py:class:: AlwaysTrue
+
+
+   Bases: :py:obj:`BaseCriterion`
+
+   Criterion that is always true.
+
+   .. py:attribute:: name
+      :type: str
+      :value: 'AlwaysTrue'
+
+      
+
+   .. py:method:: __call__(object_: FeatureOwner) -> bool
+
+
+
+.. py:class:: IsUltimateParent
+
+
+   Bases: :py:obj:`BaseCriterion`
+
+   Criterion that is true, if the object is a particle and does not have a parent
+   object.
+
+   .. py:attribute:: name
+      :type: str
+      :value: 'IsUltimateParent'
+
+      
+
+   .. py:method:: __call__(object_: FeatureOwner) -> bool
+
+
+
+.. py:function:: register_premade_feature_criteria() -> None
+
+

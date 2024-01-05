@@ -1,0 +1,163 @@
+:py:mod:`synthpic2.recipe.recipe`
+=================================
+
+.. py:module:: synthpic2.recipe.recipe
+
+.. autoapi-nested-parse::
+
+   Definition of the structure of the image synthesis Recipe class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.recipe.Blueprints
+   synthpic2.recipe.recipe.ProcessConditions
+   synthpic2.recipe.recipe.Recipe
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.recipe.HELP_TEMPLATE
+
+
+.. py:class:: Blueprints
+
+
+   .. py:attribute:: _convert_
+      :type: str
+      :value: 'all'
+
+      
+
+   .. py:attribute:: measurement_techniques
+      :type: Dict[str, synthpic2.recipe.blueprints.blueprints.MeasurementTechniqueBlueprint]
+
+      
+
+   .. py:attribute:: particles
+      :type: Optional[Dict[str, synthpic2.recipe.blueprints.blueprints.ParticleBlueprint]]
+
+      
+
+
+.. py:class:: ProcessConditions
+
+
+   .. py:attribute:: _convert_
+      :type: str
+      :value: 'all'
+
+      
+
+   .. py:attribute:: feature_criteria
+      :type: Optional[Dict[str, Any]]
+
+      
+
+   .. py:attribute:: sets
+      :type: Optional[Dict[str, synthpic2.recipe.process_conditions.sets.Set]]
+
+      
+
+   .. py:attribute:: feature_variabilities
+      :type: Optional[Dict[str, synthpic2.recipe.process_conditions.feature_variability.FeatureVariability]]
+
+      
+
+
+.. py:data:: HELP_TEMPLATE
+   :value: Multiline-String
+
+    .. raw:: html
+
+        <details><summary>Show Value</summary>
+
+    .. code-block:: python
+
+        """
+        ${hydra.help.header}
+        
+        == Config ==
+        
+        Override anything in the config (foo.bar=value)
+        
+        
+        $CONFIG
+        
+        
+        ${hydra.help.footer}
+        """
+
+    .. raw:: html
+
+        </details>
+
+   
+
+.. py:class:: Recipe
+
+
+   Definition of the structure of the Recipe class.
+
+   .. py:property:: md5
+      :type: str
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.Recipe'
+
+      
+
+   .. py:attribute:: _convert_
+      :type: str
+      :value: 'all'
+
+      
+
+   .. py:attribute:: defaults
+      :type: List[Any]
+
+      
+
+   .. py:attribute:: hydra
+      :type: Any
+
+      
+
+   .. py:attribute:: initial_runtime_state
+      :type: synthpic2.recipe.synth_chain.state.RuntimeState
+
+      
+
+   .. py:attribute:: blueprints
+      :type: Blueprints
+
+      
+
+   .. py:attribute:: process_conditions
+      :type: ProcessConditions
+
+      
+
+   .. py:attribute:: synth_chain
+      :type: synthpic2.recipe.synth_chain.SynthChain
+
+      
+
+   .. py:method:: execute() -> None
+
+
+

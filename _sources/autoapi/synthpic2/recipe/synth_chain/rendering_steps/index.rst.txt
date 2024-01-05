@@ -1,0 +1,77 @@
+:py:mod:`synthpic2.recipe.synth_chain.rendering_steps`
+======================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.rendering_steps
+
+.. autoapi-nested-parse::
+
+   Module for SynthChainSteps.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   base/index.rst
+   rendering/index.rst
+   state/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.rendering_steps.RenderParticlesIndividually
+   synthpic2.recipe.synth_chain.rendering_steps.RenderParticlesTogether
+   synthpic2.recipe.synth_chain.rendering_steps.SaveState
+
+
+
+
+.. py:class:: RenderParticlesIndividually
+
+
+   Bases: :py:obj:`DiscreteRenderingStep`
+
+   Class to render a whole set of particles into a single image.
+
+   .. py:method:: render() -> None
+
+
+
+.. py:class:: RenderParticlesTogether
+
+
+   Bases: :py:obj:`DiscreteRenderingStep`
+
+   Class to render a whole set of particles into a single image.
+
+   .. py:method:: render() -> None
+
+
+
+.. py:class:: SaveState
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.rendering_steps.rendering.ParametricRenderingStep`
+
+   Synth chain step to save a state to disk.
+
+   .. py:attribute:: name
+      :type: Optional[str]
+
+      
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+

@@ -1,0 +1,64 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.utilities`
+=======================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.utilities
+
+.. autoapi-nested-parse::
+
+   Module for agglomeration utilities.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.utilities.validate_3d_vector
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.utilities.sample_random_mass_points_in_mesh
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.utilities.normalize_vector
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.utilities.get_random_direction
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.utilities.flatten_list
+
+
+
+.. py:function:: validate_3d_vector(vector: numpy.ndarray | list | tuple) -> numpy.ndarray
+
+   Validate 3d vector.
+
+   Args:
+       vector (np.ndarray | list | tuple): vector in different data types
+
+   Raises:
+       ValueError: If vector has not exactly 3 elements.
+
+   Returns:
+       np.ndarray: vector as numpy array
+
+
+.. py:function:: sample_random_mass_points_in_mesh(mesh: trimesh.Trimesh, count: int) -> tuple[numpy.ndarray, numpy.ndarray]
+
+   Sample random points inside of a mesh. The specified `count` is not matched
+       exactly.
+
+   Args:
+       mesh (trimesh.Trimesh): Mesh to sample from.
+       count (int): Approximate number of points
+
+   Returns:
+       tuple[np.ndarray, np.ndarray]: Number of points and associated weights.
+
+
+.. py:function:: normalize_vector(vector: numpy.ndarray) -> numpy.ndarray
+
+
+.. py:function:: get_random_direction() -> numpy.ndarray
+
+
+.. py:function:: flatten_list(l: list[list]) -> list
+
+

@@ -1,0 +1,38 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin`
+===============================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin
+
+.. autoapi-nested-parse::
+
+   Module for the SetBasedMixin.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin
+
+
+
+
+.. py:class:: SetBasedMixin
+
+
+   Mixin for synth chain steps that operate on sets.
+
+   .. py:attribute:: affected_set_name
+      :type: str
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+

@@ -1,0 +1,49 @@
+:py:mod:`synthpic2.utilities`
+=============================
+
+.. py:module:: synthpic2.utilities
+
+.. autoapi-nested-parse::
+
+   Module for synthpic2 utilities.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.utilities.seed_everything
+   synthpic2.utilities.get_object_md5
+   synthpic2.utilities.get_unique_reproducible_random_colors
+   synthpic2.utilities.get_hydra_output_root
+
+
+
+.. py:function:: seed_everything(seed: int = 42) -> None
+
+   Set seeds of `numpy.random` and `python.random`.
+
+   Args:
+       seed (int, optional): Random seed. Defaults to 42.
+
+
+.. py:function:: get_object_md5(obj: Any) -> str
+
+
+.. py:function:: get_unique_reproducible_random_colors(num_colors: int, alpha: float = 1) -> List[Tuple[float, float, float, float]]
+
+
+.. py:function:: get_hydra_output_root() -> pathlib.Path
+
+   Get the output root path from Hydra.
+
+   Returns:
+       pathlib.Path: Output root path.
+
+

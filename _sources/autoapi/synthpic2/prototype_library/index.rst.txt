@@ -1,0 +1,42 @@
+:py:mod:`synthpic2.prototype_library`
+=====================================
+
+.. py:module:: synthpic2.prototype_library
+
+.. autoapi-nested-parse::
+
+   Module for the prototype library.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.prototype_library.PrototypeLibrary
+
+
+
+
+.. py:class:: PrototypeLibrary
+
+
+   A library to load prototypes.
+
+   .. py:attribute:: root
+
+      
+
+   .. py:method:: load() -> None
+      :classmethod:
+
+
+   .. py:method:: load_prototypes(subfolder_name: str, prototype_type: Type[synthpic2.recipe.prototypes.prototypes._Prototype]) -> None
+      :classmethod:
+
+
+

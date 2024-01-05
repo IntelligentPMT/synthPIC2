@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <script src="../../../../../../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../../../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin" href="../set_based_mixin/index.html" />
+    <link rel="prev" title="synthpic2.recipe.synth_chain.feature_generation_steps.invocation" href="../invocation/index.html" />
+   
+  <link rel="stylesheet" href="../../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions">
+<span id="synthpic2-recipe-synth-chain-feature-generation-steps-relax-collisions"></span><h1><a class="reference internal" href="#module-synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions" title="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions</span></code></a><a class="headerlink" href="#module-synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions" title="Link to this heading">¶</a></h1>
+<p>Module for RelaxCollisions synth chain step.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions" title="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RelaxCollisions</span></code></a></p></td>
+<td><p>SynthChainStep to relax collisions between objects of a set, using Blenders</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._convert_to_mesh_recursively" title="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._convert_to_mesh_recursively"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_convert_to_mesh_recursively</span></code></a>(→ None)</p></td>
+<td><p>Recursively iterate through a tree of blender objects, and starting from</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._apply_transforms_recursively" title="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._apply_transforms_recursively"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_apply_transforms_recursively</span></code></a>(→ None)</p></td>
+<td><p>Recursively apply a transform to a Blender object and all its children.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._convert_to_mesh_recursively">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.</span></span><span class="sig-name descname"><span class="pre">_convert_to_mesh_recursively</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blender_object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._convert_to_mesh_recursively" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively iterate through a tree of blender objects, and starting from
+the leaves and working up to the root, convert the objects to meshes. Unfortunately,
+this breaks parent/child relations, so we have an option to restore them _and_ it
+also breaks the references to blender objects, so we set the context object to the
+ultimate parent.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>blender_object (bpy.types.Object): Blender object (potentially with children) to</dt><dd><p>convert to mesh.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.</span></span><span class="sig-name descname"><span class="pre">RelaxCollisions</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../set_based_mixin/index.html#synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin" title="synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin</span></code></a>, <a class="reference internal" href="../base/index.html#synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep" title="synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep</span></code></a></p>
+<p>SynthChainStep to relax collisions between objects of a set, using Blenders
+bullet physics engine.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.damping">
+<span class="sig-name descname"><span class="pre">damping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.damping" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.angular_damping">
+<span class="sig-name descname"><span class="pre">angular_damping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.angular_damping" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.linear_damping">
+<span class="sig-name descname"><span class="pre">linear_damping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.linear_damping" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.friction">
+<span class="sig-name descname"><span class="pre">friction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.friction" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.restitution">
+<span class="sig-name descname"><span class="pre">restitution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.restitution" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.mass">
+<span class="sig-name descname"><span class="pre">mass</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.mass" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.collision_shape">
+<span class="sig-name descname"><span class="pre">collision_shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MESH'</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.collision_shape" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.mesh_source">
+<span class="sig-name descname"><span class="pre">mesh_source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'FINAL'</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.mesh_source" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.num_frames">
+<span class="sig-name descname"><span class="pre">num_frames</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">100</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.num_frames" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.use_gravity">
+<span class="sig-name descname"><span class="pre">use_gravity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.use_gravity" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.gravity">
+<span class="sig-name descname"><span class="pre">gravity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(0,</span> <span class="pre">0)</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.gravity" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.collision_margin">
+<span class="sig-name descname"><span class="pre">collision_margin</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-06</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.collision_margin" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.time_scale">
+<span class="sig-name descname"><span class="pre">time_scale</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.0</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.time_scale" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.substeps_per_frame">
+<span class="sig-name descname"><span class="pre">substeps_per_frame</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.substeps_per_frame" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.solver_iterations">
+<span class="sig-name descname"><span class="pre">solver_iterations</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.solver_iterations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.dry_run">
+<span class="sig-name descname"><span class="pre">dry_run</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.dry_run" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runtime_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../state/index.html#synthpic2.recipe.synth_chain.state.RuntimeState" title="synthpic2.recipe.synth_chain.state.RuntimeState"><span class="pre">synthpic2.recipe.synth_chain.state.RuntimeState</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../state/index.html#synthpic2.recipe.synth_chain.state.RuntimeState" title="synthpic2.recipe.synth_chain.state.RuntimeState"><span class="pre">synthpic2.recipe.synth_chain.state.RuntimeState</span></a></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.RelaxCollisions.__call__" title="Link to this definition">¶</a></dt>
+<dd><p>NotImplemented</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._apply_transforms_recursively">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions.</span></span><span class="sig-name descname"><span class="pre">_apply_transforms_recursively</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">blender_object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">mathutils.Matrix</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.feature_generation_steps.relax_collisions._apply_transforms_recursively" title="Link to this definition">¶</a></dt>
+<dd><p>Recursively apply a transform to a Blender object and all its children.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>blender_object (bpy.types.Object): Blender object to apply the transform to.
+transform (np.ndarray): Transform to apply.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../../index.html">API Reference</a><ul>
+  <li><a href="../../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a><ul>
+  <li><a href="../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe</span></code></a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps</span></code></a><ul>
+      <li>Previous: <a href="../invocation/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.invocation</span></code></a></li>
+      <li>Next: <a href="../set_based_mixin/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../../../../../_sources/autoapi/synthpic2/recipe/synth_chain/feature_generation_steps/relax_collisions/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

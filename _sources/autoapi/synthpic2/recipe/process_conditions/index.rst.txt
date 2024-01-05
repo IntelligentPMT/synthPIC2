@@ -1,0 +1,73 @@
+:py:mod:`synthpic2.recipe.process_conditions`
+=============================================
+
+.. py:module:: synthpic2.recipe.process_conditions
+
+.. autoapi-nested-parse::
+
+   Module for the process conditions.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   boolean_expression_parsing/index.rst
+   feature_criteria/index.rst
+   feature_variability/index.rst
+   sets/index.rst
+   variabilities/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.FeatureVariability
+
+
+
+
+.. py:class:: FeatureVariability
+
+
+   Bases: :py:obj:`synthpic2.recipe.registries.self_registering_attrs_mixin.SelfRegisteringAttrsMixin`
+
+   Class to combine a feature (specified by its name) with a Variability.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.registries.Registry
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.process_conditions.feature_variability.FeatureVariability'
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: feature_name
+      :type: str
+
+      
+
+   .. py:attribute:: variability
+      :type: Any
+
+      
+
+   .. py:method:: update_feature(object_: Union[synthpic2.recipe.blueprints.Particle, synthpic2.recipe.blueprints.MeasurementTechnique]) -> None
+
+
+

@@ -1,0 +1,27 @@
+:py:mod:`synthpic2.custom_types`
+================================
+
+.. py:module:: synthpic2.custom_types
+
+.. autoapi-nested-parse::
+
+   Custom type definitions.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: AnyPath
+
+   
+
+.. py:data:: RenamingMap
+
+   
+
+.. py:data:: BlenderDataBlock
+   :type: TypeAlias
+
+   
+

@@ -1,0 +1,37 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.distribute_in_measurement_volume`
+================================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.distribute_in_measurement_volume
+
+.. autoapi-nested-parse::
+
+   Module for the DistributeInMeasurementVolume class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.distribute_in_measurement_volume.DistributeInMeasurementVolume
+
+
+
+
+.. py:class:: DistributeInMeasurementVolume
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   SynthChainStep to distribute particles in the measurement volume.
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+

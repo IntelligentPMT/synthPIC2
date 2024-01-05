@@ -1,0 +1,67 @@
+:py:mod:`synthpic2.recipe.utilities`
+====================================
+
+.. py:module:: synthpic2.recipe.utilities
+
+.. autoapi-nested-parse::
+
+   Module for recipe utilities.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.utilities.parse_recipe
+   synthpic2.recipe.utilities.parse_plugin_namespaces
+   synthpic2.recipe.utilities.parse_builtin_namespaces
+   synthpic2.recipe.utilities.infer_names
+   synthpic2.recipe.utilities._infer_item_names_from_keys
+
+
+
+.. py:function:: parse_recipe(recipe: synthpic2.recipe.recipe.Recipe) -> None
+
+   Parse builtin namespace placeholder in recipe and infer item names from
+       dictionary keys.
+
+   Args:
+       recipe (Recipe): Recipe to parse.
+
+
+.. py:function:: parse_plugin_namespaces(recipe: synthpic2.recipe.recipe.Recipe) -> None
+
+   Parse plugin namespace placeholder in recipe.
+
+   Uses the following regex: https://regex101.com/r/gVHrlX/1
+
+   Args:
+       recipe (Recipe): Recipe to parse.
+
+
+.. py:function:: parse_builtin_namespaces(recipe: synthpic2.recipe.recipe.Recipe) -> None
+
+   Parse builtin namespace placeholder in recipe.
+
+   Args:
+       recipe (Recipe): Recipe to parse.
+
+
+.. py:function:: infer_names(recipe: synthpic2.recipe.recipe.Recipe) -> None
+
+   Iterate certain nodes of the recipe and set the name attribute of the node items
+   to the key that was used for the item in the recipe.
+
+   Args:
+       recipe (Recipe): Recipe to parse.
+
+
+.. py:function:: _infer_item_names_from_keys(node: omegaconf.DictConfig) -> None
+
+

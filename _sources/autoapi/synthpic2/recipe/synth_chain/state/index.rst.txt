@@ -1,0 +1,90 @@
+:py:mod:`synthpic2.recipe.synth_chain.state`
+============================================
+
+.. py:module:: synthpic2.recipe.synth_chain.state
+
+.. autoapi-nested-parse::
+
+   Module for the State class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.state.RuntimeState
+   synthpic2.recipe.synth_chain.state.State
+
+
+
+
+.. py:class:: RuntimeState
+
+
+   Class to store and control the state of the runtime.
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.synth_chain.state.RuntimeState'
+
+      
+
+   .. py:attribute:: time
+      :type: float
+      :value: 0.0
+
+      
+
+   .. py:attribute:: seed
+      :type: int
+
+      
+
+
+.. py:class:: State
+
+
+   Bases: :py:obj:`synthpic2.recipe.registries.SelfRegisteringAttrsMixin`
+
+   Class to handle blender states.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: runtime_state
+      :type: RuntimeState
+
+      
+
+   .. py:attribute:: name
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: file_root
+      :type: Optional[synthpic2.custom_types.AnyPath]
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: save_to_disk() -> None
+
+
+   .. py:method:: load_from_disk() -> None
+
+
+   .. py:method:: delete() -> None
+
+
+   .. py:method:: unregister() -> None
+
+
+

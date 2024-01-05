@@ -1,0 +1,51 @@
+:py:mod:`synthpic2.engine`
+==========================
+
+.. py:module:: synthpic2.engine
+
+.. autoapi-nested-parse::
+
+   Engine to execute recipes.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.engine.setup_run
+   synthpic2.engine.setup_blender
+   synthpic2.engine.clean_up_previous_run
+   synthpic2.engine.execute_recipe
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.engine.ORIGINAL_SYS_PATH
+
+
+.. py:data:: ORIGINAL_SYS_PATH
+
+   
+
+.. py:function:: setup_run() -> None
+
+
+.. py:function:: setup_blender() -> None
+
+
+.. py:function:: clean_up_previous_run() -> None
+
+
+.. py:function:: execute_recipe(recipe: synthpic2.recipe.Recipe) -> None
+
+

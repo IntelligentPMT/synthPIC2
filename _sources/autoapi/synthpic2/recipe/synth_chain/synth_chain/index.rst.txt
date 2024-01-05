@@ -1,0 +1,55 @@
+:py:mod:`synthpic2.recipe.synth_chain.synth_chain`
+==================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.synth_chain
+
+.. autoapi-nested-parse::
+
+   Module for the SynthChain class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.synth_chain.SynthChain
+
+
+
+
+.. py:class:: SynthChain
+
+
+   Class to orchestrate the feature generation and the rendering.
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.SynthChain'
+
+      
+
+   .. py:attribute:: blender_log_file_name
+      :type: str
+      :value: 'blender.log'
+
+      
+
+   .. py:attribute:: feature_generation_steps
+      :type: List
+
+      
+
+   .. py:attribute:: rendering_steps
+      :type: List
+
+      
+
+   .. py:method:: execute(initial_runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> None
+
+
+

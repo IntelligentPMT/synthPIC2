@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>synthpic2.recipe.prototypes &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <script src="../../../../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="synthpic2.recipe.prototypes.feature" href="feature/index.html" />
+    <link rel="prev" title="synthpic2.recipe.process_conditions.variabilities" href="../process_conditions/variabilities/index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-synthpic2.recipe.prototypes">
+<span id="synthpic2-recipe-prototypes"></span><h1><a class="reference internal" href="#module-synthpic2.recipe.prototypes" title="synthpic2.recipe.prototypes"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.prototypes</span></code></a><a class="headerlink" href="#module-synthpic2.recipe.prototypes" title="Link to this heading">¶</a></h1>
+<p>Prototype module.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="feature/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.prototypes.feature</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="prototypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.prototypes.prototypes</span></code></a></li>
+</ul>
+</div>
+</section>
+<section id="package-contents">
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.prototypes.Feature" title="synthpic2.recipe.prototypes.Feature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Feature</span></code></a></p></td>
+<td><p>This class allows to get and set feature values. These features can either be</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.recipe.prototypes.GeometryPrototype" title="synthpic2.recipe.prototypes.GeometryPrototype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeometryPrototype</span></code></a></p></td>
+<td><p>Prototype for particle geometry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.prototypes.MaterialPrototype" title="synthpic2.recipe.prototypes.MaterialPrototype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MaterialPrototype</span></code></a></p></td>
+<td><p>Prototype definition for a material.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype" title="synthpic2.recipe.prototypes.MeasurementTechniquePrototype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MeasurementTechniquePrototype</span></code></a></p></td>
+<td><p>Prototype definition for a measurement technique.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.prototypes.</span></span><span class="sig-name descname"><span class="pre">Feature</span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature" title="Link to this definition">¶</a></dt>
+<dd><p>This class allows to get and set feature values. These features can either be
+custom-defined, or link to a property of a Blender object.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature.value" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature.name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature.blender_link">
+<span class="sig-name descname"><span class="pre">blender_link</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature.blender_link" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._target_">
+<span class="sig-name descname"><span class="pre">_target_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'synthpic2.recipe.prototypes.Feature'</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._target_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._value">
+<span class="sig-name descname"><span class="pre">_value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._value" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature.__post_init__" title="Link to this definition">¶</a></dt>
+<dd><p>Gets called after the init routine.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._validate_blender_link">
+<span class="sig-name descname"><span class="pre">_validate_blender_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._validate_blender_link" title="Link to this definition">¶</a></dt>
+<dd><p>Validate the <cite>blender_link</cite> property.</p>
+<dl class="simple">
+<dt>Raises:</dt><dd><p>ValueError: raised if the <cite>blender_link</cite> property is invalid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._sanitize_blender_link">
+<span class="sig-name descname"><span class="pre">_sanitize_blender_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._sanitize_blender_link" title="Link to this definition">¶</a></dt>
+<dd><p>Sanitize the <cite>blender_link</cite> property.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._parse_blender_link">
+<span class="sig-name descname"><span class="pre">_parse_blender_link</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">InterfaceType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">KeyType</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._parse_blender_link" title="Link to this definition">¶</a></dt>
+<dd><p>Extract the attributes from blender_link and assign it to value.</p>
+<p><a class="reference external" href="https://regex101.com/r/k5ClC9/1">https://regex101.com/r/k5ClC9/1</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._get_node_value">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_get_node_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InterfaceType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KeyType</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._get_node_value" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._set_node_value">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_set_node_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">InterfaceType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">KeyType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._set_node_value" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature._parse_node_interface_and_key">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_parse_node_interface_and_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regex_match</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">re.Match</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">InterfaceType</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature._parse_node_interface_and_key" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.Feature.update_blender_link">
+<span class="sig-name descname"><span class="pre">update_blender_link</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">renaming_maps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">synthpic2.custom_types.RenamingMap</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.Feature.update_blender_link" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.GeometryPrototype">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.prototypes.</span></span><span class="sig-name descname"><span class="pre">GeometryPrototype</span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.GeometryPrototype" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">_AppendablePrototype</span></code></p>
+<p>Prototype for particle geometry.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.GeometryPrototype._registry">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_registry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../registries/index.html#synthpic2.recipe.registries.Registry" title="synthpic2.recipe.registries.Registry"><span class="pre">synthpic2.recipe.registries.Registry</span></a></em><a class="headerlink" href="#synthpic2.recipe.prototypes.GeometryPrototype._registry" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.GeometryPrototype._target_">
+<span class="sig-name descname"><span class="pre">_target_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'synthpic2.recipe.prototypes.GeometryPrototype'</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.GeometryPrototype._target_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.GeometryPrototype.name_in_blend_file">
+<span class="sig-name descname"><span class="pre">name_in_blend_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'GeometryPrototype'</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.GeometryPrototype.name_in_blend_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.GeometryPrototype.__attrs_post_init__">
+<span class="sig-name descname"><span class="pre">__attrs_post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.GeometryPrototype.__attrs_post_init__" title="Link to this definition">¶</a></dt>
+<dd><p>Define attributes that are not accessible via Hydra.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.GeometryPrototype.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.GeometryPrototype.append" title="Link to this definition">¶</a></dt>
+<dd><p>Append a GeometryPrototype, store it in the ‘GeometryPrototypes’ collection
+and hide said collection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MaterialPrototype">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.prototypes.</span></span><span class="sig-name descname"><span class="pre">MaterialPrototype</span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MaterialPrototype" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">_AppendablePrototype</span></code></p>
+<p>Prototype definition for a material.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MaterialPrototype._registry">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_registry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../registries/index.html#synthpic2.recipe.registries.Registry" title="synthpic2.recipe.registries.Registry"><span class="pre">synthpic2.recipe.registries.Registry</span></a></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MaterialPrototype._registry" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MaterialPrototype._target_">
+<span class="sig-name descname"><span class="pre">_target_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'synthpic2.recipe.prototypes.MaterialPrototype'</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MaterialPrototype._target_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MaterialPrototype.name_in_blend_file">
+<span class="sig-name descname"><span class="pre">name_in_blend_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MaterialPrototype'</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MaterialPrototype.name_in_blend_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MaterialPrototype.__attrs_post_init__">
+<span class="sig-name descname"><span class="pre">__attrs_post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MaterialPrototype.__attrs_post_init__" title="Link to this definition">¶</a></dt>
+<dd><p>Define attributes that are not accessible via Hydra.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.prototypes.</span></span><span class="sig-name descname"><span class="pre">MeasurementTechniquePrototype</span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">_Prototype</span></code>, <a class="reference internal" href="../render_preparation_mixin/index.html#synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin" title="synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin</span></code></a></p>
+<p>Prototype definition for a measurement technique.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._registry">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_registry</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../registries/index.html#synthpic2.recipe.registries.Registry" title="synthpic2.recipe.registries.Registry"><span class="pre">synthpic2.recipe.registries.Registry</span></a></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._registry" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._target_">
+<span class="sig-name descname"><span class="pre">_target_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'synthpic2.recipe.prototypes.MeasurementTechniquePrototype'</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._target_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype.measurement_volume_object_name">
+<span class="sig-name descname"><span class="pre">measurement_volume_object_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'MeasurementVolume'</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype.measurement_volume_object_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype.background_object_name">
+<span class="sig-name descname"><span class="pre">background_object_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype.background_object_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype.hideable_object_names">
+<span class="sig-name descname"><span class="pre">hideable_object_names</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype.hideable_object_names" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype.__attrs_post_init__">
+<span class="sig-name descname"><span class="pre">__attrs_post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype.__attrs_post_init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._add_render_features">
+<span class="sig-name descname"><span class="pre">_add_render_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._add_render_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype.initialize" title="Link to this definition">¶</a></dt>
+<dd><p>Open the blend file that is associated with the prototype.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype.setup_after_invocation">
+<span class="sig-name descname"><span class="pre">setup_after_invocation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype.setup_after_invocation" title="Link to this definition">¶</a></dt>
+<dd><p>Setup steps to be executed after the <cite>MeasurementTechniquePrototype</cite> has been
+invoked as part of a <cite>MeasurementTechniqueBlueprint</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._fix_common_user_errors">
+<span class="sig-name descname"><span class="pre">_fix_common_user_errors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._fix_common_user_errors" title="Link to this definition">¶</a></dt>
+<dd><p>Fix common user errors, such as no active object or measurement technique
+being in edit mode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._validate">
+<span class="sig-name descname"><span class="pre">_validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._validate" title="Link to this definition">¶</a></dt>
+<dd><p>Validate that the specified blend file sticks to the conventions of
+synthPIC2.</p>
+<dl class="simple">
+<dt>Raises:</dt><dd><dl class="simple">
+<dt>ConventionError: if there is no scene named ‘Scene’ in the measurement</dt><dd><p>technique prototype</p>
+</dd>
+<dt>ConventionError: if there is no collection named ‘MeasurementTechnique’ in</dt><dd><p>the measurement technique prototype</p>
+</dd>
+<dt>ConventionError: if there is no camera in the measurement technique</dt><dd><p>prototype</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_categorical_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_categorical_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_categorical_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._hide_hideable_objects">
+<span class="sig-name descname"><span class="pre">_hide_hideable_objects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._hide_hideable_objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_real_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_real_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_real_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_stylized_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_stylized_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_stylized_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_stylized_xray_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_stylized_xray_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_stylized_xray_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_normal_map_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_normal_map_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_normal_map_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_depth_map_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_depth_map_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.prototypes.MeasurementTechniquePrototype._prepare_depth_map_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">API Reference</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe</span></code></a><ul>
+      <li>Previous: <a href="../process_conditions/variabilities/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.process_conditions.variabilities</span></code></a></li>
+      <li>Next: <a href="feature/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.prototypes.feature</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/synthpic2/recipe/prototypes/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

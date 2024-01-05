@@ -1,0 +1,42 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.state`
+=====================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.state
+
+.. autoapi-nested-parse::
+
+   Module for State handling steps.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.state.LoadState
+
+
+
+
+.. py:class:: LoadState
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   Synth chain step to load a previously saved state.
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+

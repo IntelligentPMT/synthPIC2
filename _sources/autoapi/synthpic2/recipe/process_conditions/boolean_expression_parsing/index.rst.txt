@@ -1,0 +1,178 @@
+:py:mod:`synthpic2.recipe.process_conditions.boolean_expression_parsing`
+========================================================================
+
+.. py:module:: synthpic2.recipe.process_conditions.boolean_expression_parsing
+
+.. autoapi-nested-parse::
+
+   Module for parsing of boolean expressions as strings.
+
+   Based on: https://github.com/pyparsing/pyparsing/blob/master/examples/simpleBool.py
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.BoolOperand
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.BoolNot
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.BoolBinOp
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.BoolAnd
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.BoolOr
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.parse_boolean_string
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.TRUE
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.FALSE
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.NOT
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.AND
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.OR
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.boolOperand
+   synthpic2.recipe.process_conditions.boolean_expression_parsing.boolExpr
+
+
+.. py:class:: BoolOperand(t: pyparsing.ParseResults)
+
+
+   Class to parse boolean operands.
+
+   .. py:attribute:: __repr__
+
+      
+
+   .. py:method:: __bool__() -> bool
+
+
+   .. py:method:: __str__() -> str
+
+      Return str(self).
+
+
+
+.. py:class:: BoolNot(t: pyparsing.ParseResults)
+
+
+   Class to parse `not`.
+
+   .. py:attribute:: __repr__
+
+      
+
+   .. py:method:: __bool__() -> bool
+
+
+   .. py:method:: __str__() -> str
+
+      Return str(self).
+
+
+
+.. py:class:: BoolBinOp(t: pyparsing.ParseResults)
+
+
+   Base class to parse binary operations.
+
+   .. py:attribute:: repr_symbol
+      :type: str
+      :value: ''
+
+      
+
+   .. py:attribute:: eval_fn
+      :type: Callable[[Iterable[bool]], bool]
+
+      
+
+   .. py:method:: __str__() -> str
+
+      Return str(self).
+
+
+   .. py:method:: __bool__() -> bool
+
+
+
+.. py:class:: BoolAnd(t: pyparsing.ParseResults)
+
+
+   Bases: :py:obj:`BoolBinOp`
+
+   Base class to parse binary operations.
+
+   .. py:attribute:: repr_symbol
+      :value: '&'
+
+      
+
+   .. py:attribute:: eval_fn
+
+      
+
+
+.. py:class:: BoolOr(t: pyparsing.ParseResults)
+
+
+   Bases: :py:obj:`BoolBinOp`
+
+   Base class to parse binary operations.
+
+   .. py:attribute:: repr_symbol
+      :value: '|'
+
+      
+
+   .. py:attribute:: eval_fn
+
+      
+
+
+.. py:data:: TRUE
+
+   
+
+.. py:data:: FALSE
+
+   
+
+.. py:data:: NOT
+
+   
+
+.. py:data:: AND
+
+   
+
+.. py:data:: OR
+
+   
+
+.. py:data:: boolOperand
+
+   
+
+.. py:data:: boolExpr
+
+   
+
+.. py:function:: parse_boolean_string(string: str) -> bool
+
+

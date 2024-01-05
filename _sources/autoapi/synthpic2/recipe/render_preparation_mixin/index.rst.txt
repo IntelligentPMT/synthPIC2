@@ -1,0 +1,56 @@
+:py:mod:`synthpic2.recipe.render_preparation_mixin`
+===================================================
+
+.. py:module:: synthpic2.recipe.render_preparation_mixin
+
+.. autoapi-nested-parse::
+
+   Module for the RenderPreparationMixin class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin
+
+
+
+
+.. py:class:: RenderPreparationMixin
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   A mixin for classes to equip them with methods to prepare the rendering.
+
+   .. py:method:: prepare_for_render(rendering_mode: str) -> None
+
+
+   .. py:method:: _prepare_real_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_categorical_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_stylized_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_stylized_xray_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_normal_map_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_depth_map_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_stl_rendering_mode() -> None
+
+
+

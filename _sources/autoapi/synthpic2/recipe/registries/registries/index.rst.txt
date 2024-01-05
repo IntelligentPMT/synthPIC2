@@ -1,0 +1,94 @@
+:py:mod:`synthpic2.recipe.registries.registries`
+================================================
+
+.. py:module:: synthpic2.recipe.registries.registries
+
+.. autoapi-nested-parse::
+
+   Module that holds all the registries required by synthPIC2.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.registries.clear_all_registries
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.registries.MEASUREMENT_TECHNIQUE_PROTOTYPE_REGISTRY
+   synthpic2.recipe.registries.registries.MATERIAL_PROTOTYPE_REGISTRY
+   synthpic2.recipe.registries.registries.GEOMETRY_PROTOTYPE_REGISTRY
+   synthpic2.recipe.registries.registries.PARTICLE_BLUEPRINT_REGISTRY
+   synthpic2.recipe.registries.registries.MEASUREMENT_TECHNIQUE_BLUEPRINT_REGISTRY
+   synthpic2.recipe.registries.registries.PARTICLE_REGISTRY
+   synthpic2.recipe.registries.registries.MEASUREMENT_TECHNIQUE_REGISTRY
+   synthpic2.recipe.registries.registries.FEATURE_VARIABILITY_REGISTRY
+   synthpic2.recipe.registries.registries.CRITERION_REGISTRY
+   synthpic2.recipe.registries.registries.SET_REGISTRY
+   synthpic2.recipe.registries.registries.STATE_REGISTRY
+   synthpic2.recipe.registries.registries.REGISTRIES
+
+
+.. py:data:: MEASUREMENT_TECHNIQUE_PROTOTYPE_REGISTRY
+
+   
+
+.. py:data:: MATERIAL_PROTOTYPE_REGISTRY
+
+   
+
+.. py:data:: GEOMETRY_PROTOTYPE_REGISTRY
+
+   
+
+.. py:data:: PARTICLE_BLUEPRINT_REGISTRY
+
+   
+
+.. py:data:: MEASUREMENT_TECHNIQUE_BLUEPRINT_REGISTRY
+
+   
+
+.. py:data:: PARTICLE_REGISTRY
+
+   
+
+.. py:data:: MEASUREMENT_TECHNIQUE_REGISTRY
+
+   
+
+.. py:data:: FEATURE_VARIABILITY_REGISTRY
+
+   
+
+.. py:data:: CRITERION_REGISTRY
+
+   
+
+.. py:data:: SET_REGISTRY
+
+   
+
+.. py:data:: STATE_REGISTRY
+
+   
+
+.. py:data:: REGISTRIES
+
+   
+
+.. py:function:: clear_all_registries() -> None
+
+

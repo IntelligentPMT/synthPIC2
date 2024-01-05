@@ -1,0 +1,189 @@
+:py:mod:`synthpic2.recipe.registries`
+=====================================
+
+.. py:module:: synthpic2.recipe.registries
+
+.. autoapi-nested-parse::
+
+   Module for registries and Registry class, used to register recipe components.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   measurement_technique_registry/index.rst
+   registries/index.rst
+   registry/index.rst
+   self_registering_attrs_mixin/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.Registry
+   synthpic2.recipe.registries.SelfRegisteringAttrsMixin
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.clear_all_registries
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.CRITERION_REGISTRY
+   synthpic2.recipe.registries.FEATURE_VARIABILITY_REGISTRY
+   synthpic2.recipe.registries.GEOMETRY_PROTOTYPE_REGISTRY
+   synthpic2.recipe.registries.MATERIAL_PROTOTYPE_REGISTRY
+   synthpic2.recipe.registries.MEASUREMENT_TECHNIQUE_BLUEPRINT_REGISTRY
+   synthpic2.recipe.registries.MEASUREMENT_TECHNIQUE_PROTOTYPE_REGISTRY
+   synthpic2.recipe.registries.MEASUREMENT_TECHNIQUE_REGISTRY
+   synthpic2.recipe.registries.PARTICLE_BLUEPRINT_REGISTRY
+   synthpic2.recipe.registries.PARTICLE_REGISTRY
+   synthpic2.recipe.registries.REGISTRIES
+   synthpic2.recipe.registries.SET_REGISTRY
+   synthpic2.recipe.registries.STATE_REGISTRY
+
+
+.. py:function:: clear_all_registries() -> None
+
+
+.. py:data:: CRITERION_REGISTRY
+
+   
+
+.. py:data:: FEATURE_VARIABILITY_REGISTRY
+
+   
+
+.. py:data:: GEOMETRY_PROTOTYPE_REGISTRY
+
+   
+
+.. py:data:: MATERIAL_PROTOTYPE_REGISTRY
+
+   
+
+.. py:data:: MEASUREMENT_TECHNIQUE_BLUEPRINT_REGISTRY
+
+   
+
+.. py:data:: MEASUREMENT_TECHNIQUE_PROTOTYPE_REGISTRY
+
+   
+
+.. py:data:: MEASUREMENT_TECHNIQUE_REGISTRY
+
+   
+
+.. py:data:: PARTICLE_BLUEPRINT_REGISTRY
+
+   
+
+.. py:data:: PARTICLE_REGISTRY
+
+   
+
+.. py:data:: REGISTRIES
+
+   
+
+.. py:data:: SET_REGISTRY
+
+   
+
+.. py:data:: STATE_REGISTRY
+
+   
+
+.. py:class:: Registry(name: Optional[str] = None)
+
+
+   Registry for objects.
+
+   .. py:method:: clear() -> None
+
+
+   .. py:method:: register(item: Any) -> None
+
+      Register a new item.
+
+      Args:
+          item (Any): item to be registered
+
+
+   .. py:method:: validate(item: Any) -> None
+
+      Validate a new item.
+
+      Args:
+          item (Any): item to be validated
+
+
+   .. py:method:: query(name: Optional[Index], strict: bool = False) -> Any
+
+      Return an item with a given name from the registry.
+
+      Args:
+          name (Index): name or integer index of the desired item, optional
+          strict (bool): if True, then an error will be raised if the item is not
+              found in the registry
+
+      Returns:
+          Optional[_Prototype]: Item or `None`, if the item does not exist in the
+              registry.
+
+
+   .. py:method:: delete_item(index: Index) -> None
+
+
+   .. py:method:: __iter__() -> Iterator
+
+
+   .. py:method:: __next__() -> Any
+
+
+   .. py:method:: __getitem__(index: Optional[Index]) -> Any
+
+
+   .. py:method:: __len__() -> int
+
+
+   .. py:method:: __contains__(name: str) -> bool
+
+
+
+.. py:class:: SelfRegisteringAttrsMixin
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Mixin for attrs classes, so that they register themselves in a predefined
+   registry, after they have been initialized.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.registry.Registry
+      :abstractmethod:
+
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+

@@ -1,0 +1,21 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration`
+=============================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   agglomerate/index.rst
+   agglomerate_particles/index.rst
+   agglomeration_simulation/index.rst
+   bounding_box/index.rst
+   collision_matrix/index.rst
+   custom_collision_manager/index.rst
+   utilities/index.rst
+
+

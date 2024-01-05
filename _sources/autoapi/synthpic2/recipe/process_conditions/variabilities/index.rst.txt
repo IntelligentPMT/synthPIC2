@@ -1,0 +1,163 @@
+:py:mod:`synthpic2.recipe.process_conditions.variabilities`
+===========================================================
+
+.. py:module:: synthpic2.recipe.process_conditions.variabilities
+
+.. autoapi-nested-parse::
+
+   Module for the Variability class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.variabilities.Variability
+   synthpic2.recipe.process_conditions.variabilities.UniformlyRandomLocationInMeasurementVolume
+   synthpic2.recipe.process_conditions.variabilities.UniformDistribution3dHomogeneous
+   synthpic2.recipe.process_conditions.variabilities.UniformDistributionNdHomogeneous
+   synthpic2.recipe.process_conditions.variabilities.LogNormal3dHomogeneous
+   synthpic2.recipe.process_conditions.variabilities.Constant
+
+
+
+
+.. py:class:: Variability
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Variability class.
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: __call__() -> Any
+      :abstractmethod:
+
+
+   .. py:method:: _parse_attributes() -> None
+
+      Parse string attributes that include a set.
+
+
+
+.. py:class:: UniformlyRandomLocationInMeasurementVolume
+
+
+   Bases: :py:obj:`Variability`
+
+   Return a uniformly random coordinate location inside the MeasurementVolume.
+
+   .. py:method:: __call__() -> Tuple[float, float, float]
+
+
+
+.. py:class:: UniformDistribution3dHomogeneous
+
+
+   Bases: :py:obj:`Variability`
+
+   Return a uniform distribution of 3-tuples, each with identical elements.
+
+   .. py:attribute:: location
+      :type: float
+
+      
+
+   .. py:attribute:: scale
+      :type: float
+
+      
+
+   .. py:method:: __call__() -> tuple[float, float, float]
+
+
+
+.. py:class:: UniformDistributionNdHomogeneous
+
+
+   Bases: :py:obj:`Variability`
+
+   Return a uniform distribution of n-tuples, each with identical elements. If n=1,
+   returns a float.
+
+   .. py:attribute:: location
+      :type: float
+
+      
+
+   .. py:attribute:: scale
+      :type: float
+
+      
+
+   .. py:attribute:: num_dimensions
+      :type: int
+      :value: 1
+
+      
+
+   .. py:method:: __call__() -> float | tuple[float, Ellipsis]
+
+
+
+.. py:class:: LogNormal3dHomogeneous
+
+
+   Bases: :py:obj:`Variability`
+
+   Return a log-normal distribution of 3-tuples, each with identical elements.
+
+   # pylint: disable=line-too-long
+   see https://numpy.org/doc/stable/reference/random/generated/numpy.random.lognormal.html
+
+   mean = log(geometric_mean)
+   sigma = log(geometric_standard_deviation)
+
+
+   .. py:attribute:: geometric_mean
+      :type: float
+
+      
+
+   .. py:attribute:: geometric_standard_deviation
+      :type: float
+
+      
+
+   .. py:attribute:: min
+      :type: float
+
+      
+
+   .. py:attribute:: max
+      :type: float
+
+      
+
+   .. py:method:: __call__() -> Tuple[float, float, float]
+
+
+
+.. py:class:: Constant
+
+
+   Bases: :py:obj:`Variability`
+
+   Return a constant.
+
+   .. py:attribute:: value
+      :type: Any
+
+      
+
+   .. py:method:: __call__() -> Any
+
+
+

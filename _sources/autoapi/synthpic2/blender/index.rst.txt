@@ -1,0 +1,93 @@
+:py:mod:`synthpic2.blender`
+===========================
+
+.. py:module:: synthpic2.blender
+
+.. autoapi-nested-parse::
+
+   Blender module.
+
+   - Communication with bpy-module
+   - Rendering features
+   - Generic functionalities with bpy-module
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   gpu/index.rst
+   utilities/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.blender.Gpu
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.blender.render_to_file
+
+
+
+.. py:class:: Gpu
+
+
+   Class to control Blenders access to GPU(s).
+
+   Use this class to enable gpu for rendering. It throws a warning if
+   gpu is not available.
+
+   Example:
+       >>> Gpu.enable()
+
+   .. py:method:: _make_available() -> None
+      :staticmethod:
+
+      Enable GPUs in the main settings of Blender, if available.
+
+
+   .. py:method:: enable() -> None
+      :classmethod:
+
+      Enable GPU for Cycles, if there is at least one available.
+
+
+   .. py:method:: disable() -> None
+      :staticmethod:
+
+      Disable GPU.
+
+
+   .. py:method:: _is_gpu_available() -> bool
+      :staticmethod:
+
+      Check, if a GPU is available.
+
+      Returns:
+          is_gpu_available: True, if a GPU is available.
+
+
+
+.. py:function:: render_to_file(output_path: synthpic2.custom_types.AnyPath) -> None
+
+   Renders an image to a file. The output root will be created, if necessary.
+
+   Args:
+       output_path (AnyPath): Path of the output image file.
+
+

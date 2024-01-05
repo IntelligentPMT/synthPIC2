@@ -1,0 +1,96 @@
+:py:mod:`synthpic2.recipe.prototypes.feature`
+=============================================
+
+.. py:module:: synthpic2.recipe.prototypes.feature
+
+.. autoapi-nested-parse::
+
+   Home of the Feature class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.prototypes.feature.Feature
+
+
+
+
+.. py:class:: Feature
+
+
+   This class allows to get and set feature values. These features can either be
+   custom-defined, or link to a property of a Blender object.
+
+   .. py:property:: value
+      :type: Any
+
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: blender_link
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: _target_
+      :type: Optional[str]
+      :value: 'synthpic2.recipe.prototypes.Feature'
+
+      
+
+   .. py:attribute:: _value
+      :type: Optional[Any]
+
+      
+
+   .. py:method:: __post_init__() -> None
+
+      Gets called after the init routine.
+
+
+   .. py:method:: _validate_blender_link() -> None
+
+      Validate the `blender_link` property.
+
+      Raises:
+          ValueError: raised if the `blender_link` property is invalid
+
+
+   .. py:method:: _sanitize_blender_link() -> None
+
+      Sanitize the `blender_link` property.
+
+
+   .. py:method:: _parse_blender_link() -> tuple[Any, InterfaceType, KeyType]
+
+      Extract the attributes from blender_link and assign it to value.
+
+      https://regex101.com/r/k5ClC9/1
+
+
+   .. py:method:: _get_node_value(node: Any, interface: InterfaceType, key: KeyType) -> Any
+      :staticmethod:
+
+
+   .. py:method:: _set_node_value(node: Any, interface: InterfaceType, key: KeyType, value: Any) -> None
+      :staticmethod:
+
+
+   .. py:method:: _parse_node_interface_and_key(regex_match: re.Match) -> tuple[InterfaceType, int | str]
+      :staticmethod:
+
+
+   .. py:method:: update_blender_link(renaming_maps: Dict[str, synthpic2.custom_types.RenamingMap]) -> None
+
+
+

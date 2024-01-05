@@ -1,0 +1,93 @@
+:py:mod:`synthpic2.recipe.registries.registry`
+==============================================
+
+.. py:module:: synthpic2.recipe.registries.registry
+
+.. autoapi-nested-parse::
+
+   Registry for recipe components.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.registry.Registry
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.registry.Index
+
+
+.. py:data:: Index
+
+   
+
+.. py:class:: Registry(name: Optional[str] = None)
+
+
+   Registry for objects.
+
+   .. py:method:: clear() -> None
+
+
+   .. py:method:: register(item: Any) -> None
+
+      Register a new item.
+
+      Args:
+          item (Any): item to be registered
+
+
+   .. py:method:: validate(item: Any) -> None
+
+      Validate a new item.
+
+      Args:
+          item (Any): item to be validated
+
+
+   .. py:method:: query(name: Optional[Index], strict: bool = False) -> Any
+
+      Return an item with a given name from the registry.
+
+      Args:
+          name (Index): name or integer index of the desired item, optional
+          strict (bool): if True, then an error will be raised if the item is not
+              found in the registry
+
+      Returns:
+          Optional[_Prototype]: Item or `None`, if the item does not exist in the
+              registry.
+
+
+   .. py:method:: delete_item(index: Index) -> None
+
+
+   .. py:method:: __iter__() -> Iterator
+
+
+   .. py:method:: __next__() -> Any
+
+
+   .. py:method:: __getitem__(index: Optional[Index]) -> Any
+
+
+   .. py:method:: __len__() -> int
+
+
+   .. py:method:: __contains__(name: str) -> bool
+
+
+

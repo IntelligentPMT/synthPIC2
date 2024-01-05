@@ -1,0 +1,269 @@
+:py:mod:`synthpic2.recipe.synth_chain.rendering_steps.rendering`
+================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.rendering_steps.rendering
+
+.. autoapi-nested-parse::
+
+   Module for SynthChainSteps.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer
+   synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene
+   synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles
+   synthpic2.recipe.synth_chain.rendering_steps.rendering.ParametricRenderingStep
+   synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep
+   synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesIndividually
+   synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesTogether
+
+
+
+
+.. py:class:: _Renderer
+
+
+   Bases: :py:obj:`synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin`
+
+   Class to control the rendering method (e.g. image or stl).
+
+   .. py:method:: select(object_: bpy.types.Object) -> None
+      :staticmethod:
+
+
+   .. py:method:: deselect(object_: bpy.types.Object) -> None
+      :staticmethod:
+
+
+   .. py:method:: render_image_to_file(output_path: synthpic2.custom_types.AnyPath) -> None
+      :staticmethod:
+
+
+   .. py:method:: export_stl_to_file(output_path: synthpic2.custom_types.AnyPath) -> None
+      :staticmethod:
+
+
+   .. py:method:: hide_in_render(object_: bpy.types.Object) -> None
+      :staticmethod:
+
+
+   .. py:method:: show_in_render(object_: bpy.types.Object) -> None
+      :staticmethod:
+
+
+   .. py:method:: _prepare_stl_rendering_mode() -> None
+
+
+
+.. py:class:: _Scene
+
+
+   Bases: :py:obj:`synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin`
+
+   Class to control the preparation of the scene (i.e. everything but the particles)
+   for the different rendering steps.
+
+   .. py:method:: _prepare_real_rendering_mode() -> None
+      :staticmethod:
+
+
+   .. py:method:: _prepare_stl_rendering_mode() -> None
+      :staticmethod:
+
+
+   .. py:method:: _prepare_stylized_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_stylized_xray_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_normal_map_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_depth_map_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_categorical_rendering_mode() -> None
+      :staticmethod:
+
+
+   .. py:method:: _setup_accurate_colors() -> None
+      :staticmethod:
+
+
+   .. py:method:: _disable_depth_of_field() -> None
+      :staticmethod:
+
+
+   .. py:method:: _disable_world() -> None
+      :staticmethod:
+
+
+   .. py:method:: _disable_emission() -> None
+      :staticmethod:
+
+
+   .. py:method:: _disable_lights() -> None
+      :staticmethod:
+
+
+   .. py:method:: _disable_compositing() -> None
+      :staticmethod:
+
+
+   .. py:method:: _delete_compositing_nodes() -> None
+      :staticmethod:
+
+
+
+.. py:class:: _Particles
+
+
+   Bases: :py:obj:`synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin`
+
+   Class to control the preparation of the particles for the different rendering
+   steps.
+
+   .. py:attribute:: set_of_interest
+      :type: synthpic2.recipe.process_conditions.sets.Set
+
+      
+
+   .. py:attribute:: set_overlapping
+      :type: synthpic2.recipe.process_conditions.sets.Set
+
+      
+
+   .. py:method:: prepare_for_render(rendering_mode: str) -> None
+
+
+   .. py:method:: _prepare_categorical_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_real_rendering_mode() -> None
+
+
+
+.. py:class:: ParametricRenderingStep
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep`
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+.. py:class:: DiscreteRenderingStep
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep`
+
+   Prepare and render the current scene.
+
+   .. py:attribute:: rendering_mode
+      :type: str
+
+      
+
+   .. py:attribute:: output_file_name_prefix
+      :type: str
+      :value: ''
+
+      
+
+   .. py:attribute:: set_name_of_interest
+      :type: str
+      :value: 'AllParticles'
+
+      
+
+   .. py:attribute:: set_name_overlapping
+      :type: Optional[str]
+      :value: 'Empty'
+
+      
+
+   .. py:attribute:: subfolder
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: do_save_features
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: do_save_state
+      :type: bool
+      :value: False
+
+      
+
+   .. py:attribute:: image_file_extension
+      :type: str
+      :value: 'png'
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: save_features() -> None
+
+
+   .. py:method:: save_particle_features() -> None
+
+
+   .. py:method:: save_measurement_technique_features() -> None
+
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+   .. py:method:: save_set_info() -> None
+
+
+   .. py:method:: _save_particle_set_associations() -> None
+
+
+   .. py:method:: _save_set_hashes() -> None
+
+
+   .. py:method:: render() -> None
+      :abstractmethod:
+
+
+
+.. py:class:: RenderParticlesIndividually
+
+
+   Bases: :py:obj:`DiscreteRenderingStep`
+
+   Class to render a whole set of particles into a single image.
+
+   .. py:method:: render() -> None
+
+
+
+.. py:class:: RenderParticlesTogether
+
+
+   Bases: :py:obj:`DiscreteRenderingStep`
+
+   Class to render a whole set of particles into a single image.
+
+   .. py:method:: render() -> None
+
+
+

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>synthpic2.blender.utilities &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <script src="../../../../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="synthpic2.recipe" href="../../recipe/index.html" />
+    <link rel="prev" title="synthpic2.blender.gpu" href="../gpu/index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-synthpic2.blender.utilities">
+<span id="synthpic2-blender-utilities"></span><h1><a class="reference internal" href="#module-synthpic2.blender.utilities" title="synthpic2.blender.utilities"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.blender.utilities</span></code></a><a class="headerlink" href="#module-synthpic2.blender.utilities" title="Link to this heading">¶</a></h1>
+<p>Useful Blender functions that don’t have their final place yet.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities._RenamingTracker" title="synthpic2.blender.utilities._RenamingTracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_RenamingTracker</span></code></a></p></td>
+<td><p>Helper class to copy data blocks of blender objects and keep track of their</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.duplicate_and_assign_material" title="synthpic2.blender.utilities.duplicate_and_assign_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">duplicate_and_assign_material</span></code></a>(→ Dict[str, ...)</p></td>
+<td><p>Copy a material with given <cite>material_name</cite> and assign it to a given <cite>_object</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.assign_material" title="synthpic2.blender.utilities.assign_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">assign_material</span></code></a>(→ None)</p></td>
+<td><p>Assign a material with given <cite>material_name</cite> and to a given <cite>_object</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.adapt_interface_iors" title="synthpic2.blender.utilities.adapt_interface_iors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adapt_interface_iors</span></code></a>(→ None)</p></td>
+<td><p>Calculate the effective index of refraction (IOR) for a refractive material</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.render_to_file" title="synthpic2.blender.utilities.render_to_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render_to_file</span></code></a>(→ None)</p></td>
+<td><p>Renders an image to a file. The output root will be created, if necessary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.duplicate_and_link_object" title="synthpic2.blender.utilities.duplicate_and_link_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">duplicate_and_link_object</span></code></a>(→ Tuple[bpy.types.Object, ...)</p></td>
+<td><p>Creates an independent duplicate of a blender object and links it to a</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.replace_object_material" title="synthpic2.blender.utilities.replace_object_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_object_material</span></code></a>(→ None)</p></td>
+<td><p>Replace the material of an object (specified by its name) with a new material</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.get_material" title="synthpic2.blender.utilities.get_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_material</span></code></a>(→ bpy.types.Material)</p></td>
+<td><p>Returns a blender material with the specified name.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.add_object_to_collection" title="synthpic2.blender.utilities.add_object_to_collection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_object_to_collection</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.get_object" title="synthpic2.blender.utilities.get_object"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_object</span></code></a>(→ bpy.types.Object)</p></td>
+<td><p>Returns a blender object with the specified name.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.get_collection" title="synthpic2.blender.utilities.get_collection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_collection</span></code></a>(→ bpy.types.Collection)</p></td>
+<td><p>Returns a blender collection with the specified name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.create_collection" title="synthpic2.blender.utilities.create_collection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_collection</span></code></a>(→ bpy.types.Collection)</p></td>
+<td><p>Create a collection with name <cite>collection_name</cite> and link it to the given scene.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.flip_face_normals_with_material_name" title="synthpic2.blender.utilities.flip_face_normals_with_material_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flip_face_normals_with_material_name</span></code></a>(→ None)</p></td>
+<td><p>Flip normals of the object faces, if the faces use a certain material.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.replace_material" title="synthpic2.blender.utilities.replace_material"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_material</span></code></a>(→ None)</p></td>
+<td><p>Replace the material of an object with a new material (both identified by their</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.create_emission_shader" title="synthpic2.blender.utilities.create_emission_shader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_emission_shader</span></code></a>() → bpy.types.Material)</p></td>
+<td><p>Create an emission shader with a specified color and a strength of 1.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.set_rigidity" title="synthpic2.blender.utilities.set_rigidity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_rigidity</span></code></a>(→ None)</p></td>
+<td><p>Set the rigidity of a given object.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.selected_only" title="synthpic2.blender.utilities.selected_only"><code class="xref py py-obj docutils literal notranslate"><span class="pre">selected_only</span></code></a>(object_)</p></td>
+<td><p>Temporarily select the given <cite>object_</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.select_only" title="synthpic2.blender.utilities.select_only"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select_only</span></code></a>(→ None)</p></td>
+<td><p>Deselect all objects, select and activate the given <cite>object_</cite>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.delete" title="synthpic2.blender.utilities.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>(→ None)</p></td>
+<td><p>Delete the <cite>object_</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.convert_blender_object_to_blender_mesh" title="synthpic2.blender.utilities.convert_blender_object_to_blender_mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_blender_object_to_blender_mesh</span></code></a>(→ bpy.types.Object)</p></td>
+<td><p>Convert a blender object to a blender mesh and restore the transformation and</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.convert_blender_object_to_trimesh" title="synthpic2.blender.utilities.convert_blender_object_to_trimesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_blender_object_to_trimesh</span></code></a>(→ trimesh.Trimesh)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.set_parent" title="synthpic2.blender.utilities.set_parent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_parent</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.update_dependency_graph" title="synthpic2.blender.utilities.update_dependency_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_dependency_graph</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.hide_in_render" title="synthpic2.blender.utilities.hide_in_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hide_in_render</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.show_in_render" title="synthpic2.blender.utilities.show_in_render"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_in_render</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.select" title="synthpic2.blender.utilities.select"><code class="xref py py-obj docutils literal notranslate"><span class="pre">select</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.deselect" title="synthpic2.blender.utilities.deselect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deselect</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.deselect_all" title="synthpic2.blender.utilities.deselect_all"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deselect_all</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.activate" title="synthpic2.blender.utilities.activate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">activate</span></code></a>(→ None)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.export_selected_objects_as_stl" title="synthpic2.blender.utilities.export_selected_objects_as_stl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_selected_objects_as_stl</span></code></a>(→ None)</p></td>
+<td><p>Exports selected objects of the current blender scene as stl file. The output</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.blender.utilities.set_context" title="synthpic2.blender.utilities.set_context"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_context</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.duplicate_and_assign_material">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">duplicate_and_assign_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">synthpic2.custom_types.RenamingMap</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.duplicate_and_assign_material" title="Link to this definition">¶</a></dt>
+<dd><p>Copy a material with given <cite>material_name</cite> and assign it to a given <cite>_object</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><a href="#id1"><span class="problematic" id="id2">object_</span></a> (bpy.types.Object): Blender object to assign the material to.
+material_name (str): the name of the material
+suffix (str): suffix that is appended to the name of the material</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.assign_material">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">assign_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.assign_material" title="Link to this definition">¶</a></dt>
+<dd><p>Assign a material with given <cite>material_name</cite> and to a given <cite>_object</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><a href="#id3"><span class="problematic" id="id4">object_</span></a> (bpy.types.Object): Blender object to assign the material to.
+material_name (str): the name of the material</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.adapt_interface_iors">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">adapt_interface_iors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name_outside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_name_inside</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.adapt_interface_iors" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the effective index of refraction (IOR) for a refractive material
+inside another refractive material, based on the vacuum IORs of both materials.</p>
+<p>In Blender: The outside object “sees” blue normals, while the inside object “sees”
+red normals.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>material_name_outside (str): Name of the Blender material that is on the</dt><dd><p>outside.</p>
+</dd>
+</dl>
+<p>material_name_inside (str): Name of the Blender material that is on the inside.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ConventionError: Raised, if the outside material has multiple nodes with IORs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.render_to_file">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">render_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">synthpic2.custom_types.AnyPath</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.render_to_file" title="Link to this definition">¶</a></dt>
+<dd><p>Renders an image to a file. The output root will be created, if necessary.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>output_path (AnyPath): Path of the output image file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities._RenamingTracker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">_RenamingTracker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthpic2.blender.utilities._RenamingTracker" title="Link to this definition">¶</a></dt>
+<dd><p>Helper class to copy data blocks of blender objects and keep track of their
+renaming.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities._RenamingTracker.renaming_maps">
+<span class="sig-name descname"><span class="pre">renaming_maps</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">synthpic2.custom_types.RenamingMap</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#synthpic2.blender.utilities._RenamingTracker.renaming_maps" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities._RenamingTracker.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">synthpic2.custom_types.BlenderDataBlock</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">synthpic2.custom_types.BlenderDataBlock</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities._RenamingTracker.copy" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.duplicate_and_link_object">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">duplicate_and_link_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">duplicate_name_suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_collection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Collection</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">bpy.types.Object</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">synthpic2.custom_types.RenamingMap</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.duplicate_and_link_object" title="Link to this definition">¶</a></dt>
+<dd><dl>
+<dt>Creates an independent duplicate of a blender object and links it to a</dt><dd><p>collection.</p>
+</dd>
+<dt>Args:</dt><dd><p><a href="#id5"><span class="problematic" id="id6">object_</span></a> (bpy.types.Object): object to be duplicated
+duplicate_name_suffix (str): suffix for the name of the duplicate
+target_collection (bpy.types.Collection): collection, to which the object will</p>
+<blockquote>
+<div><p>be linked</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>bpy.types.Object: duplicate
+Dict[str, RenamingMap]: RenamingMap with information on how relevant data blocks</p>
+<blockquote>
+<div><p>were renamed.</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.replace_object_material">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">replace_object_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.replace_object_material" title="Link to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Replace the material of an object (specified by its name) with a new material</dt><dd><p>(specified by its name).</p>
+</dd>
+<dt>Source:</dt><dd><p><a class="reference external" href="https://blender.stackexchange.com/questions/53366/how-can-i-replace-a-material-from-python">https://blender.stackexchange.com/questions/53366/how-can-i-replace-a-material-from-python</a></p>
+</dd>
+<dt>Raises:</dt><dd><dl class="simple">
+<dt>ValueError: Raised, if the object does not use a material named</dt><dd><p><cite>old_material_name</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt>Args:</dt><dd><p><a href="#id7"><span class="problematic" id="id8">object_</span></a> (bpy.types.Object): blender object, whose material shall be replaced
+old_material_name (str): name of the old material
+new_material_name (str): name of the new material</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.get_material">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">get_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bpy.types.Material</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.get_material" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a blender material with the specified name.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>material_name (str): Name of the material to return.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: Raised, if the material does not exist.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bpy.types.Material: Blender material</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.add_object_to_collection">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">add_object_to_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.add_object_to_collection" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.get_object">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">get_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bpy.types.Object</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.get_object" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a blender object with the specified name.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>object_name (str): Name of the object to return.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: Raised, if the object does not exist.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bpy.types.Object: Blender object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.get_collection">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">get_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bpy.types.Collection</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.get_collection" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a blender collection with the specified name.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>collection_name (str): Name of the collection to return.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: Raised, if the collection does not exist.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bpy.types.Collection: Blender collection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.create_collection">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">create_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scene</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Scene</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bpy.types.Collection</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.create_collection" title="Link to this definition">¶</a></dt>
+<dd><p>Create a collection with name <cite>collection_name</cite> and link it to the given scene.</p>
+<dl>
+<dt>Args:</dt><dd><p>collection_name (str): name of the new collection.
+scene (Optional[bpy.types.Scene], optional): Scene that the collection is</p>
+<blockquote>
+<div><p>linked to. Defaults to None, which means that the collection is linked to
+the scene in context.</p>
+</div></blockquote>
+</dd>
+<dt>Returns:</dt><dd><p>bpy.types.Collection: the new collection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.flip_face_normals_with_material_name">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">flip_face_normals_with_material_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.flip_face_normals_with_material_name" title="Link to this definition">¶</a></dt>
+<dd><p>Flip normals of the object faces, if the faces use a certain material.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><a href="#id9"><span class="problematic" id="id10">object_</span></a> (bpy.types.Object): [description]
+material_name (str): Name of the material to identify faces to flip.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.replace_material">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">replace_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_material_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.replace_material" title="Link to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Replace the material of an object with a new material (both identified by their</dt><dd><p>names).</p>
+</dd>
+<dt>Args:</dt><dd><p>object (bpy.types.Object): object for which we are replacing the material
+old_material (str): the old material name
+new_material (str): the new material name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.create_emission_shader">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">create_emission_shader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">1)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bpy.types.Material</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.create_emission_shader" title="Link to this definition">¶</a></dt>
+<dd><p>Create an emission shader with a specified color and a strength of 1.</p>
+<p>Taken from <a class="reference external" href="https://vividfax.github.io/2021/01/14/blender-materials.html">https://vividfax.github.io/2021/01/14/blender-materials.html</a></p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>color (Tuple[float,float,float,float,], optional): 4-Tuple (RGBA) of floats</dt><dd><p>between 0 and 1. Defaults to (1,1,1,1).</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>bpy.types.Material</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.set_rigidity">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">set_rigidity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.set_rigidity" title="Link to this definition">¶</a></dt>
+<dd><p>Set the rigidity of a given object.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>state (bool): new rigidity state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.selected_only">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">selected_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#synthpic2.blender.utilities.selected_only" title="Link to this definition">¶</a></dt>
+<dd><p>Temporarily select the given <cite>object_</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><a href="#id11"><span class="problematic" id="id12">object_</span></a> (bpy.types.Object): Object to be temporarily selected.</p>
+</dd>
+<dt>Yields:</dt><dd><p>bpy.types.Object: The selected object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.select_only">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">select_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.select_only" title="Link to this definition">¶</a></dt>
+<dd><p>Deselect all objects, select and activate the given <cite>object_</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><a href="#id13"><span class="problematic" id="id14">object_</span></a> (bpy.types.Object): object to be selected and activated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.delete">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.delete" title="Link to this definition">¶</a></dt>
+<dd><p>Delete the <cite>object_</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><a href="#id15"><span class="problematic" id="id16">object_</span></a> (bpy.types.Object): object to be deleted.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.convert_blender_object_to_blender_mesh">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">convert_blender_object_to_blender_mesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bpy.types.Object</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.convert_blender_object_to_blender_mesh" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a blender object to a blender mesh and restore the transformation and
+parent/child relation of potential children.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><a href="#id17"><span class="problematic" id="id18">object_</span></a> (bpy.types.Object): object to be converted.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bpy.types.Object: converted mesh object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.convert_blender_object_to_trimesh">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">convert_blender_object_to_trimesh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">trimesh.Trimesh</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.convert_blender_object_to_trimesh" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.set_parent">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">set_parent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">child</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_transform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.set_parent" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.update_dependency_graph">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">update_dependency_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.update_dependency_graph" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.hide_in_render">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">hide_in_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.hide_in_render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.show_in_render">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">show_in_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.show_in_render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.select">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.select" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.deselect">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">deselect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.deselect" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.deselect_all">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">deselect_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.deselect_all" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.activate">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">activate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.activate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.set_context">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">set_context</span></span><a class="headerlink" href="#synthpic2.blender.utilities.set_context" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="synthpic2.blender.utilities.export_selected_objects_as_stl">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.blender.utilities.</span></span><span class="sig-name descname"><span class="pre">export_selected_objects_as_stl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">synthpic2.custom_types.AnyPath</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.blender.utilities.export_selected_objects_as_stl" title="Link to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Exports selected objects of the current blender scene as stl file. The output</dt><dd><p>root will be created, if necessary.</p>
+</dd>
+<dt>Args:</dt><dd><p>output_path (AnyPath): Path of the output image file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">API Reference</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.blender</span></code></a><ul>
+      <li>Previous: <a href="../gpu/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.blender.gpu</span></code></a></li>
+      <li>Next: <a href="../../recipe/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/synthpic2/blender/utilities/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

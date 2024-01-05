@@ -1,0 +1,41 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.custom_collision_manager`
+======================================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.custom_collision_manager
+
+.. autoapi-nested-parse::
+
+   Module for the customization of trimesh's CollisionManager class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.custom_collision_manager.CustomCollisionManager
+
+
+
+
+.. py:class:: CustomCollisionManager
+
+
+   Bases: :py:obj:`trimesh.collision.CollisionManager`
+
+   Customization of trimesh's CollisionManager class.
+
+   .. py:method:: transform_object(object_name: str, transform_matrix: numpy.ndarray | list | tuple) -> None
+
+
+   .. py:method:: get_object(object_name: str) -> fcl.CollisionObject
+
+
+   .. py:method:: merge(other_collision_manager: CustomCollisionManager) -> None
+
+
+

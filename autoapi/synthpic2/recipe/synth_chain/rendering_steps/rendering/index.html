@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>synthpic2.recipe.synth_chain.rendering_steps.rendering &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../../../../_static/copybutton.css?v=76b2166b" />
+    <script src="../../../../../../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../../../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../../../_static/copybutton.js?v=f281be69"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" />
+    <link rel="next" title="synthpic2.recipe.synth_chain.rendering_steps.state" href="../state/index.html" />
+    <link rel="prev" title="synthpic2.recipe.synth_chain.rendering_steps.base" href="../base/index.html" />
+   
+  <link rel="stylesheet" href="../../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-synthpic2.recipe.synth_chain.rendering_steps.rendering">
+<span id="synthpic2-recipe-synth-chain-rendering-steps-rendering"></span><h1><a class="reference internal" href="#module-synthpic2.recipe.synth_chain.rendering_steps.rendering" title="synthpic2.recipe.synth_chain.rendering_steps.rendering"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering</span></code></a><a class="headerlink" href="#module-synthpic2.recipe.synth_chain.rendering_steps.rendering" title="Link to this heading">¶</a></h1>
+<p>Module for SynthChainSteps.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer" title="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_Renderer</span></code></a></p></td>
+<td><p>Class to control the rendering method (e.g. image or stl).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene" title="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_Scene</span></code></a></p></td>
+<td><p>Class to control the preparation of the scene (i.e. everything but the particles)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles" title="synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_Particles</span></code></a></p></td>
+<td><p>Class to control the preparation of the particles for the different rendering</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.ParametricRenderingStep" title="synthpic2.recipe.synth_chain.rendering_steps.rendering.ParametricRenderingStep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParametricRenderingStep</span></code></a></p></td>
+<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep" title="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DiscreteRenderingStep</span></code></a></p></td>
+<td><p>Prepare and render the current scene.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesIndividually" title="synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesIndividually"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RenderParticlesIndividually</span></code></a></p></td>
+<td><p>Class to render a whole set of particles into a single image.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesTogether" title="synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesTogether"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RenderParticlesTogether</span></code></a></p></td>
+<td><p>Class to render a whole set of particles into a single image.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering.</span></span><span class="sig-name descname"><span class="pre">_Renderer</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../../render_preparation_mixin/index.html#synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin" title="synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin</span></code></a></p>
+<p>Class to control the rendering method (e.g. image or stl).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.select">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.select" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.deselect">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deselect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.deselect" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.render_image_to_file">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">render_image_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">synthpic2.custom_types.AnyPath</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.render_image_to_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.export_stl_to_file">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">export_stl_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">synthpic2.custom_types.AnyPath</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.export_stl_to_file" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.hide_in_render">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hide_in_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.hide_in_render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.show_in_render">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_in_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bpy.types.Object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer.show_in_render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer._prepare_stl_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_stl_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Renderer._prepare_stl_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering.</span></span><span class="sig-name descname"><span class="pre">_Scene</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../../render_preparation_mixin/index.html#synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin" title="synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin</span></code></a></p>
+<p>Class to control the preparation of the scene (i.e. everything but the particles)
+for the different rendering steps.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_real_rendering_mode">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_prepare_real_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_real_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_stl_rendering_mode">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_prepare_stl_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_stl_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_stylized_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_stylized_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_stylized_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_stylized_xray_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_stylized_xray_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_stylized_xray_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_normal_map_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_normal_map_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_normal_map_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_depth_map_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_depth_map_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_depth_map_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_categorical_rendering_mode">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_prepare_categorical_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._prepare_categorical_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._setup_accurate_colors">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_setup_accurate_colors</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._setup_accurate_colors" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_depth_of_field">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_disable_depth_of_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_depth_of_field" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_world">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_disable_world</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_world" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_emission">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_disable_emission</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_emission" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_lights">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_disable_lights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_lights" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_compositing">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_disable_compositing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._disable_compositing" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._delete_compositing_nodes">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_delete_compositing_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Scene._delete_compositing_nodes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering.</span></span><span class="sig-name descname"><span class="pre">_Particles</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../../render_preparation_mixin/index.html#synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin" title="synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin</span></code></a></p>
+<p>Class to control the preparation of the particles for the different rendering
+steps.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles.set_of_interest">
+<span class="sig-name descname"><span class="pre">set_of_interest</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../process_conditions/sets/index.html#synthpic2.recipe.process_conditions.sets.Set" title="synthpic2.recipe.process_conditions.sets.Set"><span class="pre">synthpic2.recipe.process_conditions.sets.Set</span></a></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles.set_of_interest" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles.set_overlapping">
+<span class="sig-name descname"><span class="pre">set_overlapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../../../process_conditions/sets/index.html#synthpic2.recipe.process_conditions.sets.Set" title="synthpic2.recipe.process_conditions.sets.Set"><span class="pre">synthpic2.recipe.process_conditions.sets.Set</span></a></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles.set_overlapping" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles.prepare_for_render">
+<span class="sig-name descname"><span class="pre">prepare_for_render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rendering_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles.prepare_for_render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles._prepare_categorical_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_categorical_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles._prepare_categorical_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles._prepare_real_rendering_mode">
+<span class="sig-name descname"><span class="pre">_prepare_real_rendering_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering._Particles._prepare_real_rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.ParametricRenderingStep">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering.</span></span><span class="sig-name descname"><span class="pre">ParametricRenderingStep</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.ParametricRenderingStep" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../base/index.html#synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep" title="synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep</span></code></a></p>
+<p>Helper class that provides a standard way to create an ABC using
+inheritance.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering.</span></span><span class="sig-name descname"><span class="pre">DiscreteRenderingStep</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../base/index.html#synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep" title="synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.base.RenderingStep</span></code></a></p>
+<p>Prepare and render the current scene.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.rendering_mode">
+<span class="sig-name descname"><span class="pre">rendering_mode</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.rendering_mode" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.output_file_name_prefix">
+<span class="sig-name descname"><span class="pre">output_file_name_prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.output_file_name_prefix" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.set_name_of_interest">
+<span class="sig-name descname"><span class="pre">set_name_of_interest</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'AllParticles'</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.set_name_of_interest" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.set_name_overlapping">
+<span class="sig-name descname"><span class="pre">set_name_overlapping</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Empty'</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.set_name_overlapping" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.subfolder">
+<span class="sig-name descname"><span class="pre">subfolder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.subfolder" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.do_save_features">
+<span class="sig-name descname"><span class="pre">do_save_features</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.do_save_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.do_save_state">
+<span class="sig-name descname"><span class="pre">do_save_state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.do_save_state" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.image_file_extension">
+<span class="sig-name descname"><span class="pre">image_file_extension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'png'</span></em><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.image_file_extension" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.__attrs_post_init__">
+<span class="sig-name descname"><span class="pre">__attrs_post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.__attrs_post_init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_features">
+<span class="sig-name descname"><span class="pre">save_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_particle_features">
+<span class="sig-name descname"><span class="pre">save_particle_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_particle_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_measurement_technique_features">
+<span class="sig-name descname"><span class="pre">save_measurement_technique_features</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_measurement_technique_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.__call__">
+<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runtime_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../state/index.html#synthpic2.recipe.synth_chain.state.RuntimeState" title="synthpic2.recipe.synth_chain.state.RuntimeState"><span class="pre">synthpic2.recipe.synth_chain.state.RuntimeState</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../state/index.html#synthpic2.recipe.synth_chain.state.RuntimeState" title="synthpic2.recipe.synth_chain.state.RuntimeState"><span class="pre">synthpic2.recipe.synth_chain.state.RuntimeState</span></a></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.__call__" title="Link to this definition">¶</a></dt>
+<dd><p>NotImplemented</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_set_info">
+<span class="sig-name descname"><span class="pre">save_set_info</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.save_set_info" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep._save_particle_set_associations">
+<span class="sig-name descname"><span class="pre">_save_particle_set_associations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep._save_particle_set_associations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep._save_set_hashes">
+<span class="sig-name descname"><span class="pre">_save_set_hashes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep._save_set_hashes" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.render">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep.render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesIndividually">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering.</span></span><span class="sig-name descname"><span class="pre">RenderParticlesIndividually</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesIndividually" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep" title="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DiscreteRenderingStep</span></code></a></p>
+<p>Class to render a whole set of particles into a single image.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesIndividually.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesIndividually.render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesTogether">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.rendering.</span></span><span class="sig-name descname"><span class="pre">RenderParticlesTogether</span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesTogether" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep" title="synthpic2.recipe.synth_chain.rendering_steps.rendering.DiscreteRenderingStep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DiscreteRenderingStep</span></code></a></p>
+<p>Class to render a whole set of particles into a single image.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesTogether.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.synth_chain.rendering_steps.rendering.RenderParticlesTogether.render" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../../../index.html">API Reference</a><ul>
+  <li><a href="../../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a><ul>
+  <li><a href="../../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe</span></code></a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps</span></code></a><ul>
+      <li>Previous: <a href="../base/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.base</span></code></a></li>
+      <li>Next: <a href="../state/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.rendering_steps.state</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../../../../../_sources/autoapi/synthpic2/recipe/synth_chain/rendering_steps/rendering/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

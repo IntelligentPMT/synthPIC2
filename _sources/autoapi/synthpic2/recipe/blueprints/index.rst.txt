@@ -1,0 +1,195 @@
+:py:mod:`synthpic2.recipe.blueprints`
+=====================================
+
+.. py:module:: synthpic2.recipe.blueprints
+
+.. autoapi-nested-parse::
+
+   Module for blueprint classes.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   blueprints/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.blueprints.MeasurementTechnique
+   synthpic2.recipe.blueprints.MeasurementTechniqueBlueprint
+   synthpic2.recipe.blueprints.Particle
+   synthpic2.recipe.blueprints.ParticleBlueprint
+
+
+
+
+.. py:class:: MeasurementTechnique
+
+
+   Bases: :py:obj:`_InvokedObject`
+
+   Class to store the features of a measurement technique.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: blueprint
+      :type: MeasurementTechniqueBlueprint
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: prepare_for_render(rendering_mode: str) -> None
+
+
+   .. py:method:: assign_material_prototype_to_object(material_prototype: synthpic2.recipe.prototypes.prototypes.MaterialPrototype, object_name: str) -> None
+
+
+
+.. py:class:: MeasurementTechniqueBlueprint
+
+
+   Bases: :py:obj:`_Blueprint`
+
+   Class to combine a `measurement_technique_prototype` and a `material_prototype`
+   to a particle.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.blueprints.MeasurementTechniqueBlueprint'
+
+      
+
+   .. py:attribute:: measurement_technique_prototype_name
+      :type: str
+
+      
+
+   .. py:attribute:: measurement_volume_material_prototype_name
+      :type: str
+      :value: 'vacuum'
+
+      
+
+   .. py:attribute:: background_material_prototype_name
+      :type: str
+      :value: 'vacuum'
+
+      
+
+   .. py:attribute:: name
+      :type: str
+      :value: 'MeasurementTechnique'
+
+      
+
+   .. py:attribute:: custom_features
+      :type: Optional[Features]
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: _gather_feature_subsets() -> List[Union[None, Features, synthpic2.recipe.registries.Registry]]
+
+
+   .. py:method:: invoke() -> None
+
+      Load a `measurement_technique_prototype`, assign a
+      `measurement_volume_material_prototype` and optionally assign a
+      `background_material_prototype`.
+
+
+
+.. py:class:: Particle
+
+
+   Bases: :py:obj:`_InvokedObject`
+
+   Class to represent an object, invoked by a particle blueprint.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:property:: md5
+      :type: str
+
+
+   .. py:attribute:: blueprint
+      :type: ParticleBlueprint
+
+      
+
+
+.. py:class:: ParticleBlueprint
+
+
+   Bases: :py:obj:`_Blueprint`
+
+   Class to combine a `geometry_prototype` and a `material_prototype` to a
+   particle.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.blueprints.ParticleBlueprint'
+
+      
+
+   .. py:attribute:: geometry_prototype_name
+      :type: str
+
+      
+
+   .. py:attribute:: material_prototype_name
+      :type: str
+      :value: 'default'
+
+      
+
+   .. py:attribute:: parent
+      :type: str
+      :value: 'MeasurementVolume'
+
+      
+
+   .. py:attribute:: number
+      :type: int
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: _gather_feature_subsets() -> List[Union[None, Features, synthpic2.recipe.registries.Registry]]
+
+
+   .. py:method:: invoke() -> None
+
+      Create the specified number of particles, according to the blueprint.
+
+
+

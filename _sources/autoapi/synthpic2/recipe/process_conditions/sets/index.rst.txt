@@ -1,0 +1,208 @@
+:py:mod:`synthpic2.recipe.process_conditions.sets`
+==================================================
+
+.. py:module:: synthpic2.recipe.process_conditions.sets
+
+.. autoapi-nested-parse::
+
+   Home of the Set class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.sets.Set
+   synthpic2.recipe.process_conditions.sets.AllParticlesSet
+   synthpic2.recipe.process_conditions.sets.AllUltimateParentsSet
+   synthpic2.recipe.process_conditions.sets.AllMeasurementTechniquesSet
+   synthpic2.recipe.process_conditions.sets.AllMeasurementTechniqueBlueprintsSet
+   synthpic2.recipe.process_conditions.sets.AllParticleBlueprintsSet
+   synthpic2.recipe.process_conditions.sets.EmptySet
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.sets.register_premade_sets
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.process_conditions.sets.FeatureOwners
+
+
+.. py:data:: FeatureOwners
+
+   
+
+.. py:class:: Set
+
+
+   Bases: :py:obj:`synthpic2.recipe.registries.self_registering_attrs_mixin.SelfRegisteringAttrsMixin`
+
+   Class to combine multiple FeatureCriterion instances.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.registry.Registry
+
+
+   .. py:property:: md5
+      :type: str
+
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: criterion
+      :type: str
+      :value: 'True'
+
+      
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.process_conditions.sets.Set'
+
+      
+
+   .. py:attribute:: _relevant_registries
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+   .. py:method:: parse_criterion() -> None
+
+
+   .. py:method:: check_criterion(obj: synthpic2.recipe.process_conditions.feature_criteria.FeatureOwner) -> bool
+
+
+   .. py:method:: __call__() -> FeatureOwners
+
+
+
+.. py:class:: AllParticlesSet
+
+
+   Bases: :py:obj:`Set`
+
+   Class to combine multiple FeatureCriterion instances.
+
+   .. py:attribute:: _relevant_registries
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+
+.. py:class:: AllUltimateParentsSet
+
+
+   Bases: :py:obj:`Set`
+
+   Class to combine multiple FeatureCriterion instances.
+
+   .. py:attribute:: _relevant_registries
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+
+.. py:class:: AllMeasurementTechniquesSet
+
+
+   Bases: :py:obj:`Set`
+
+   Class to combine multiple FeatureCriterion instances.
+
+   .. py:attribute:: _relevant_registries
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+
+.. py:class:: AllMeasurementTechniqueBlueprintsSet
+
+
+   Bases: :py:obj:`Set`
+
+   Class to combine multiple FeatureCriterion instances.
+
+   .. py:attribute:: _relevant_registries
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+
+.. py:class:: AllParticleBlueprintsSet
+
+
+   Bases: :py:obj:`Set`
+
+   Class to combine multiple FeatureCriterion instances.
+
+   .. py:attribute:: _relevant_registries
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+
+.. py:class:: EmptySet
+
+
+   Bases: :py:obj:`Set`
+
+   Class to combine multiple FeatureCriterion instances.
+
+   .. py:attribute:: _relevant_registries
+      :type: List[synthpic2.recipe.registries.registry.Registry]
+      :value: []
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+
+.. py:function:: register_premade_sets() -> None
+
+

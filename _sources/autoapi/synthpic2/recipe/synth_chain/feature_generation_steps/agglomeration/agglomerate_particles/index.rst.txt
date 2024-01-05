@@ -1,0 +1,63 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate_particles`
+===================================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate_particles
+
+.. autoapi-nested-parse::
+
+   Module for AgglomerateParticles synth chain step.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.agglomeration.agglomerate_particles.AgglomerateParticles
+
+
+
+
+.. py:class:: AgglomerateParticles
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   FeatureGenerationStep to simulate gas phase agglomeration.
+
+   .. py:attribute:: mode
+      :type: str
+
+      
+
+   .. py:attribute:: randomness
+      :type: float
+
+      
+
+   .. py:attribute:: speed
+      :type: float
+
+      
+
+   .. py:attribute:: sintering_ratio
+      :type: float
+      :value: 0
+
+      
+
+   .. py:attribute:: primary_particle_number_variability
+      :type: Any
+
+      
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+

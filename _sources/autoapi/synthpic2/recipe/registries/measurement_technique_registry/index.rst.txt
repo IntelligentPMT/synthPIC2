@@ -1,0 +1,42 @@
+:py:mod:`synthpic2.recipe.registries.measurement_technique_registry`
+====================================================================
+
+.. py:module:: synthpic2.recipe.registries.measurement_technique_registry
+
+.. autoapi-nested-parse::
+
+   Module for the MeasurementTechniqueRegistry class, which includes additional,
+   measurement technique specific validation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.measurement_technique_registry.MeasurementTechniqueRegistry
+
+
+
+
+.. py:class:: MeasurementTechniqueRegistry(name: Optional[str] = None)
+
+
+   Bases: :py:obj:`synthpic2.recipe.registries.registry.Registry`
+
+   MeasurementTechniqueRegistry class, which includes additional,
+   measurement technique specific validation.
+
+   .. py:method:: validate(item: Any) -> None
+
+      Validate a new item.
+
+      Args:
+          item (Any): item to be validated
+
+
+

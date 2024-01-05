@@ -1,0 +1,42 @@
+:py:mod:`synthpic2.recipe.synth_chain.rendering_steps.state`
+============================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.rendering_steps.state
+
+.. autoapi-nested-parse::
+
+   Module for State handling steps.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.rendering_steps.state.SaveState
+
+
+
+
+.. py:class:: SaveState
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.rendering_steps.rendering.ParametricRenderingStep`
+
+   Synth chain step to save a state to disk.
+
+   .. py:attribute:: name
+      :type: Optional[str]
+
+      
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+

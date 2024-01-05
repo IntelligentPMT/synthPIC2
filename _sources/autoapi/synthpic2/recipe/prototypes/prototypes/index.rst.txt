@@ -1,0 +1,252 @@
+:py:mod:`synthpic2.recipe.prototypes.prototypes`
+================================================
+
+.. py:module:: synthpic2.recipe.prototypes.prototypes
+
+.. autoapi-nested-parse::
+
+   Prototype definitions.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.prototypes.prototypes._Prototype
+   synthpic2.recipe.prototypes.prototypes.MeasurementTechniquePrototype
+   synthpic2.recipe.prototypes.prototypes._AppendablePrototype
+   synthpic2.recipe.prototypes.prototypes.GeometryPrototype
+   synthpic2.recipe.prototypes.prototypes.MaterialPrototype
+
+
+
+
+.. py:class:: _Prototype
+
+
+   Bases: :py:obj:`synthpic2.recipe.registries.SelfRegisteringAttrsMixin`, :py:obj:`abc.ABC`
+
+   Basic prototype definition with attributes common to all other prototype
+   classes.
+
+   .. py:attribute:: blend_file_path
+      :type: str
+
+      
+
+   .. py:attribute:: name
+      :type: str
+
+      
+
+   .. py:attribute:: features
+      :type: Optional[List[synthpic2.recipe.prototypes.feature.Feature]]
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: validate_blend_file_path(_: attr.Attribute, value: str) -> None
+
+
+
+.. py:class:: MeasurementTechniquePrototype
+
+
+   Bases: :py:obj:`_Prototype`, :py:obj:`synthpic2.recipe.render_preparation_mixin.RenderPreparationMixin`
+
+   Prototype definition for a measurement technique.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.prototypes.MeasurementTechniquePrototype'
+
+      
+
+   .. py:attribute:: measurement_volume_object_name
+      :type: str
+      :value: 'MeasurementVolume'
+
+      
+
+   .. py:attribute:: background_object_name
+      :type: Optional[str]
+
+      
+
+   .. py:attribute:: hideable_object_names
+      :type: Optional[List[str]]
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: _add_render_features() -> None
+
+
+   .. py:method:: initialize() -> None
+
+      Open the blend file that is associated with the prototype.
+
+
+   .. py:method:: setup_after_invocation() -> None
+
+      Setup steps to be executed after the `MeasurementTechniquePrototype` has been
+      invoked as part of a `MeasurementTechniqueBlueprint`.
+
+
+   .. py:method:: _fix_common_user_errors() -> None
+
+      Fix common user errors, such as no active object or measurement technique
+      being in edit mode.
+
+
+   .. py:method:: _validate() -> None
+
+      Validate that the specified blend file sticks to the conventions of
+      synthPIC2.
+
+      Raises:
+          ConventionError: if there is no scene named 'Scene' in the measurement
+              technique prototype
+          ConventionError: if there is no collection named 'MeasurementTechnique' in
+              the measurement technique prototype
+          ConventionError: if there is no camera in the measurement technique
+              prototype
+
+
+   .. py:method:: _prepare_categorical_rendering_mode() -> None
+
+
+   .. py:method:: _hide_hideable_objects() -> None
+
+
+   .. py:method:: _prepare_real_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_stylized_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_stylized_xray_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_normal_map_rendering_mode() -> None
+
+
+   .. py:method:: _prepare_depth_map_rendering_mode() -> None
+
+
+
+.. py:class:: _AppendablePrototype
+
+
+   Bases: :py:obj:`_Prototype`
+
+   Prototypes that can be appended using `bpy.ops.wm.append`.
+
+   .. py:property:: _internal_module
+      :type: bpy.types.Collection
+
+
+   .. py:property:: blender_object
+      :type: bpy.types.Collection
+
+
+   .. py:attribute:: name_in_blend_file
+      :type: str
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+   .. py:method:: update_feature_blender_links(renaming_maps: Dict[str, synthpic2.custom_types.RenamingMap]) -> None
+
+
+   .. py:method:: append() -> None
+
+      Append the prototype to the current blend state.
+
+      Raises:
+          PrototypeNotFoundError: if desired prototype does not exist in blend file
+          PrototypeAlreadyExistsError: if prototype already exists in scene
+
+
+
+.. py:class:: GeometryPrototype
+
+
+   Bases: :py:obj:`_AppendablePrototype`
+
+   Prototype for particle geometry.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.prototypes.GeometryPrototype'
+
+      
+
+   .. py:attribute:: name_in_blend_file
+      :type: str
+      :value: 'GeometryPrototype'
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+   .. py:method:: append() -> None
+
+      Append a GeometryPrototype, store it in the 'GeometryPrototypes' collection
+      and hide said collection. 
+
+
+
+.. py:class:: MaterialPrototype
+
+
+   Bases: :py:obj:`_AppendablePrototype`
+
+   Prototype definition for a material.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.Registry
+
+
+   .. py:attribute:: _target_
+      :type: str
+      :value: 'synthpic2.recipe.prototypes.MaterialPrototype'
+
+      
+
+   .. py:attribute:: name_in_blend_file
+      :type: str
+      :value: 'MaterialPrototype'
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+      Define attributes that are not accessible via Hydra.
+
+
+

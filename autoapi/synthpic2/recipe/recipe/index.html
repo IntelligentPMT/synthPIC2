@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>synthpic2.recipe.recipe &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <script src="../../../../_static/documentation_options.js?v=e160b93e"></script>
+    <script src="../../../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="synthpic2.recipe.render_preparation_mixin" href="../render_preparation_mixin/index.html" />
+    <link rel="prev" title="synthpic2.recipe.synth_chain.synth_chain" href="../synth_chain/synth_chain/index.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-synthpic2.recipe.recipe">
+<span id="synthpic2-recipe-recipe"></span><h1><a class="reference internal" href="#module-synthpic2.recipe.recipe" title="synthpic2.recipe.recipe"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.recipe</span></code></a><a class="headerlink" href="#module-synthpic2.recipe.recipe" title="Link to this heading">¶</a></h1>
+<p>Definition of the structure of the image synthesis Recipe class.</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.recipe.Blueprints" title="synthpic2.recipe.recipe.Blueprints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Blueprints</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#synthpic2.recipe.recipe.ProcessConditions" title="synthpic2.recipe.recipe.ProcessConditions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProcessConditions</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.recipe.Recipe" title="synthpic2.recipe.recipe.Recipe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Recipe</span></code></a></p></td>
+<td><p>Definition of the structure of the Recipe class.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#synthpic2.recipe.recipe.HELP_TEMPLATE" title="synthpic2.recipe.recipe.HELP_TEMPLATE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HELP_TEMPLATE</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Blueprints">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.recipe.</span></span><span class="sig-name descname"><span class="pre">Blueprints</span></span><a class="headerlink" href="#synthpic2.recipe.recipe.Blueprints" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Blueprints._convert_">
+<span class="sig-name descname"><span class="pre">_convert_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'all'</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Blueprints._convert_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Blueprints.measurement_techniques">
+<span class="sig-name descname"><span class="pre">measurement_techniques</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../blueprints/blueprints/index.html#synthpic2.recipe.blueprints.blueprints.MeasurementTechniqueBlueprint" title="synthpic2.recipe.blueprints.blueprints.MeasurementTechniqueBlueprint"><span class="pre">synthpic2.recipe.blueprints.blueprints.MeasurementTechniqueBlueprint</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Blueprints.measurement_techniques" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Blueprints.particles">
+<span class="sig-name descname"><span class="pre">particles</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../blueprints/blueprints/index.html#synthpic2.recipe.blueprints.blueprints.ParticleBlueprint" title="synthpic2.recipe.blueprints.blueprints.ParticleBlueprint"><span class="pre">synthpic2.recipe.blueprints.blueprints.ParticleBlueprint</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Blueprints.particles" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.ProcessConditions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.recipe.</span></span><span class="sig-name descname"><span class="pre">ProcessConditions</span></span><a class="headerlink" href="#synthpic2.recipe.recipe.ProcessConditions" title="Link to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.ProcessConditions._convert_">
+<span class="sig-name descname"><span class="pre">_convert_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'all'</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.ProcessConditions._convert_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.ProcessConditions.feature_criteria">
+<span class="sig-name descname"><span class="pre">feature_criteria</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.ProcessConditions.feature_criteria" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.ProcessConditions.sets">
+<span class="sig-name descname"><span class="pre">sets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../process_conditions/sets/index.html#synthpic2.recipe.process_conditions.sets.Set" title="synthpic2.recipe.process_conditions.sets.Set"><span class="pre">synthpic2.recipe.process_conditions.sets.Set</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.ProcessConditions.sets" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.ProcessConditions.feature_variabilities">
+<span class="sig-name descname"><span class="pre">feature_variabilities</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../process_conditions/feature_variability/index.html#synthpic2.recipe.process_conditions.feature_variability.FeatureVariability" title="synthpic2.recipe.process_conditions.feature_variability.FeatureVariability"><span class="pre">synthpic2.recipe.process_conditions.feature_variability.FeatureVariability</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.ProcessConditions.feature_variabilities" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.HELP_TEMPLATE">
+<span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.recipe.</span></span><span class="sig-name descname"><span class="pre">HELP_TEMPLATE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Multiline-String</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.HELP_TEMPLATE" title="Link to this definition">¶</a></dt>
+<dd><blockquote>
+<div><details><summary>Show Value</summary><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">${hydra.help.header}</span>
+
+<span class="sd">== Config ==</span>
+
+<span class="sd">Override anything in the config (foo.bar=value)</span>
+
+
+<span class="sd">$CONFIG</span>
+
+
+<span class="sd">${hydra.help.footer}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</details></div></blockquote>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">synthpic2.recipe.recipe.</span></span><span class="sig-name descname"><span class="pre">Recipe</span></span><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe" title="Link to this definition">¶</a></dt>
+<dd><p>Definition of the structure of the Recipe class.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.md5">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">md5</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.md5" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe._target_">
+<span class="sig-name descname"><span class="pre">_target_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'synthpic2.Recipe'</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe._target_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe._convert_">
+<span class="sig-name descname"><span class="pre">_convert_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'all'</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe._convert_" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.defaults">
+<span class="sig-name descname"><span class="pre">defaults</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.defaults" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.hydra">
+<span class="sig-name descname"><span class="pre">hydra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.hydra" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.initial_runtime_state">
+<span class="sig-name descname"><span class="pre">initial_runtime_state</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../synth_chain/state/index.html#synthpic2.recipe.synth_chain.state.RuntimeState" title="synthpic2.recipe.synth_chain.state.RuntimeState"><span class="pre">synthpic2.recipe.synth_chain.state.RuntimeState</span></a></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.initial_runtime_state" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.blueprints">
+<span class="sig-name descname"><span class="pre">blueprints</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#synthpic2.recipe.recipe.Blueprints" title="synthpic2.recipe.recipe.Blueprints"><span class="pre">Blueprints</span></a></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.blueprints" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.process_conditions">
+<span class="sig-name descname"><span class="pre">process_conditions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#synthpic2.recipe.recipe.ProcessConditions" title="synthpic2.recipe.recipe.ProcessConditions"><span class="pre">ProcessConditions</span></a></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.process_conditions" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.synth_chain">
+<span class="sig-name descname"><span class="pre">synth_chain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../synth_chain/index.html#synthpic2.recipe.synth_chain.SynthChain" title="synthpic2.recipe.synth_chain.SynthChain"><span class="pre">synthpic2.recipe.synth_chain.SynthChain</span></a></em><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.synth_chain" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="synthpic2.recipe.recipe.Recipe.execute">
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#synthpic2.recipe.recipe.Recipe.execute" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">synthPIC2</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../concepts.html">Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../dev_guides.html">Developer Guides</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">API Reference</a><ul>
+  <li><a href="../../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2</span></code></a><ul>
+  <li><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe</span></code></a><ul>
+      <li>Previous: <a href="../synth_chain/synth_chain/index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.synth_chain.synth_chain</span></code></a></li>
+      <li>Next: <a href="../render_preparation_mixin/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">synthpic2.recipe.render_preparation_mixin</span></code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../../../../_sources/autoapi/synthpic2/recipe/recipe/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

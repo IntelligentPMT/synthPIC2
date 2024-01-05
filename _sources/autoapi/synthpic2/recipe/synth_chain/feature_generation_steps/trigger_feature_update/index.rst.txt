@@ -1,0 +1,46 @@
+:py:mod:`synthpic2.recipe.synth_chain.feature_generation_steps.trigger_feature_update`
+======================================================================================
+
+.. py:module:: synthpic2.recipe.synth_chain.feature_generation_steps.trigger_feature_update
+
+.. autoapi-nested-parse::
+
+   Module for the TriggerFeatureUpdate class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.synth_chain.feature_generation_steps.trigger_feature_update.TriggerFeatureUpdate
+
+
+
+
+.. py:class:: TriggerFeatureUpdate
+
+
+   Bases: :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.set_based_mixin.SetBasedMixin`, :py:obj:`synthpic2.recipe.synth_chain.feature_generation_steps.base.FeatureGenerationStep`
+
+   SynthChainStep to update a feature of a set of objects according to a feature
+   variability.
+
+   .. py:attribute:: feature_variability_name
+      :type: str
+
+      
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+   .. py:method:: __call__(runtime_state: synthpic2.recipe.synth_chain.state.RuntimeState) -> synthpic2.recipe.synth_chain.state.RuntimeState
+
+      NotImplemented
+
+
+

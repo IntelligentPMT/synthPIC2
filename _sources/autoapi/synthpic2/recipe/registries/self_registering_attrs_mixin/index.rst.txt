@@ -1,0 +1,41 @@
+:py:mod:`synthpic2.recipe.registries.self_registering_attrs_mixin`
+==================================================================
+
+.. py:module:: synthpic2.recipe.registries.self_registering_attrs_mixin
+
+.. autoapi-nested-parse::
+
+   Module for the SelfRegisteringAttrsMixin class.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   synthpic2.recipe.registries.self_registering_attrs_mixin.SelfRegisteringAttrsMixin
+
+
+
+
+.. py:class:: SelfRegisteringAttrsMixin
+
+
+   Bases: :py:obj:`abc.ABC`
+
+   Mixin for attrs classes, so that they register themselves in a predefined
+   registry, after they have been initialized.
+
+   .. py:property:: _registry
+      :type: synthpic2.recipe.registries.registry.Registry
+      :abstractmethod:
+
+
+   .. py:method:: __attrs_post_init__() -> None
+
+
+

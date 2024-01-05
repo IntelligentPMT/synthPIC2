@@ -1,21 +1,20 @@
-
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
     <meta charset="utf-8" />
-    <title>Concepts &#8212; synthPIC2 0.5dev documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Concepts &#8212; synthPIC2 v1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <script src="_static/documentation_options.js?v=e160b93e"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Developer Guides" href="dev_guides.html" />
@@ -36,15 +35,15 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="concepts">
-<span id="sec-concept"></span><h1>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h1>
+  <section id="concepts">
+<span id="sec-concept"></span><h1>Concepts<a class="headerlink" href="#concepts" title="Link to this heading">¶</a></h1>
 <p>As demonstrated in the <a class="reference internal" href="tutorials.html#sec-tutorial"><span class="std std-ref">Tutorials</span></a> section, you would mainly define the
 synthetization directives in a recipe file called the <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code>. In this section,
 we will give an overview of the building blocks of the said recipe file. Subsequently,
 we will also describe the plugin mechanism. Plugins are the chosen approach to enable
 using self-defined <code class="docutils literal notranslate"><span class="pre">.blend</span></code>-files in the synthetization process.</p>
-<div class="section" id="domain-knowledge">
-<h2>Domain Knowledge<a class="headerlink" href="#domain-knowledge" title="Permalink to this headline">¶</a></h2>
+<section id="domain-knowledge">
+<h2>Domain Knowledge<a class="headerlink" href="#domain-knowledge" title="Link to this heading">¶</a></h2>
 <p>To use the <code class="docutils literal notranslate"><span class="pre">synthpic2</span></code> toolbox, you would have to provide a recipe containing the
 specific components and commands for the toolbox to produce synthesized particle images.
 This recipe is named as <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> and should be defined in the form of a
@@ -58,30 +57,20 @@ of four building blocks, namely one <code class="docutils literal notranslate"><
 <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> can be translated directly into the structure of the <code class="docutils literal notranslate"><span class="pre">recipe.yaml</span></code>
 file.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-text">recipe.yaml</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
-<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">initial_runtime_state</span><span class="p">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of InitialRunState&gt;</span>
-
-<span class="nt">blueprints</span><span class="p">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of Blueprints&gt;</span>
-
-<span class="nt">process_conditions</span><span class="p">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of ProcessConditions&gt;</span>
-
-<span class="nt">synth_chain</span><span class="p">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of SynthChain&gt;</span>
+<div class="code-block-caption"><span class="caption-text">recipe.yaml</span><a class="headerlink" href="#id1" title="Link to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">initial_runtime_state</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of InitialRunState&gt;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span><span class="nt">blueprints</span><span class="p">:</span>
+<span class="linenos"> 5</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of Blueprints&gt;</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="nt">process_conditions</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of ProcessConditions&gt;</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="nt">synth_chain</span><span class="p">:</span>
+<span class="linenos">11</span><span class="w">    </span><span class="l l-Scalar l-Scalar-Plain">&lt;building blocks of SynthChain&gt;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">InitialRunState</span></code> contains the initial conditions as the program starts. In the
 following example, the variable <code class="docutils literal notranslate"><span class="pre">time</span></code> and <code class="docutils literal notranslate"><span class="pre">seed</span></code> are defined. The variable <code class="docutils literal notranslate"><span class="pre">time</span></code>
@@ -89,14 +78,12 @@ gives the possibility of running dynamic simulation in the future. <code class="
 used to initialize a pseudorandom number generator. With it, we are able to <em>manage</em> the
 random states of the particles.</p>
 <div class="literal-block-wrapper docutils container" id="id2">
-<div class="code-block-caption"><span class="caption-text">recipe.yaml</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
-<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">initial_runtime_state</span><span class="p">:</span>
-    <span class="nt">time</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
-    <span class="nt">seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">42</span>
+<div class="code-block-caption"><span class="caption-text">recipe.yaml</span><a class="headerlink" href="#id2" title="Link to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nt">initial_runtime_state</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="nt">time</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span>
+<span class="linenos">3</span><span class="w">    </span><span class="nt">seed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">42</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <p>As of the rest of the building blocks, the <code class="docutils literal notranslate"><span class="pre">Blueprints</span></code> defines the characteristic of
 the particles and the measurement technique as a single element. The
@@ -104,8 +91,8 @@ the particles and the measurement technique as a single element. The
 and the measurement technique. The <code class="docutils literal notranslate"><span class="pre">SynthRecipe</span></code> contains the steps required to set up
 the particles to final image rendering. These building blocks will be described in more
 details in the following subsections.</p>
-<div class="section" id="blueprints">
-<h3>Blueprints<a class="headerlink" href="#blueprints" title="Permalink to this headline">¶</a></h3>
+<section id="blueprints">
+<h3>Blueprints<a class="headerlink" href="#blueprints" title="Link to this heading">¶</a></h3>
 <p>A synthesized particle image requires three physical entities at its most granular
 level: a particle or a swarm of particles, a camera that captures the particle image,
 and a medium where the particles and the camera are located. Each of these entities
@@ -136,37 +123,27 @@ the measurement technique itself and <code class="docutils literal notranslate">
 (<code class="docutils literal notranslate"><span class="pre">./prototype_library/materials/sem_patchy_silicone.blend</span></code>) as the material of the
 continuous phase.</p>
 <div class="literal-block-wrapper docutils container" id="id3">
-<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
-<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">blueprints</span><span class="p">:</span>
-    <span class="nt">measurement_techniques</span><span class="p">:</span>
-        <span class="nt">SEM</span><span class="p">:</span>
-            <span class="nt">measurement_technique_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">secondary_electron_microscope</span>
-            <span class="nt">background_material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sem_patchy_silicone</span>
-    <span class="nt">particles</span><span class="p">:</span>
-        <span class="nt">Bead</span><span class="p">:</span>
-            <span class="nt">geometry_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sphere</span>
-            <span class="nt">material_prototype_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sem_polystyrene</span>
-            <span class="nt">parent</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
-            <span class="nt">number</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">600</span>
+<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id3" title="Link to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">blueprints</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="nt">measurement_techniques</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="w">        </span><span class="nt">SEM</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="w">            </span><span class="nt">measurement_technique_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">secondary_electron_microscope</span>
+<span class="linenos"> 5</span><span class="w">            </span><span class="nt">background_material_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sem_patchy_silicone</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nt">particles</span><span class="p">:</span>
+<span class="linenos"> 7</span><span class="w">        </span><span class="nt">Bead</span><span class="p">:</span>
+<span class="linenos"> 8</span><span class="w">            </span><span class="nt">geometry_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sphere</span>
+<span class="linenos"> 9</span><span class="w">            </span><span class="nt">material_prototype_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sem_polystyrene</span>
+<span class="linenos">10</span><span class="w">            </span><span class="nt">parent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MeasurementVolume</span>
+<span class="linenos">11</span><span class="w">            </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">600</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <p>Similarly, the <code class="docutils literal notranslate"><span class="pre">Bead</span></code> particle blueprint is defined from the <code class="docutils literal notranslate"><span class="pre">sphere</span></code> geometry
 prototype and <code class="docutils literal notranslate"><span class="pre">sem_polystyrene</span></code> as its material. Additionally, the attributes
 <code class="docutils literal notranslate"><span class="pre">parent</span></code> and <code class="docutils literal notranslate"><span class="pre">number</span></code> have to be set for each particle blueprint.</p>
-</div>
-<div class="section" id="process-conditions">
-<h3>Process Conditions<a class="headerlink" href="#process-conditions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="process-conditions">
+<h3>Process Conditions<a class="headerlink" href="#process-conditions" title="Link to this heading">¶</a></h3>
 <a class="reference external image-reference" href="_static/MBSE/ProcessConditions.png"><img alt="Building blocks of a ``ProcessConditions``." src="_images/ProcessConditions.png" /></a>
 <p>Under the <code class="docutils literal notranslate"><span class="pre">ProcessConditions</span></code>, we would define the <code class="docutils literal notranslate"><span class="pre">FeatureCriterion</span></code>, <code class="docutils literal notranslate"><span class="pre">Set</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">FeatureVariability</span></code>. A <code class="docutils literal notranslate"><span class="pre">FeatureCriterion</span></code> is a custom criterion to filter out the
@@ -176,65 +153,43 @@ more criteria. For example, the <code class="docutils literal notranslate"><span
 criteria <code class="docutils literal notranslate"><span class="pre">IsParticle</span></code> and <code class="docutils literal notranslate"><span class="pre">IsBead</span></code>. The <code class="docutils literal notranslate"><span class="pre">FeatureVariability</span></code> defines the
 variability that can be applied to the specified set in the <code class="docutils literal notranslate"><span class="pre">SynthChain</span></code> afterwards.</p>
 <div class="literal-block-wrapper docutils container" id="id4">
-<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
-<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
-    <span class="nt">feature_criteria</span><span class="p">:</span>
-        <span class="nt">IsBead</span><span class="p">:</span>
-            <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.ContainsString</span>
-            <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">blueprint_name</span>
-            <span class="nt">search_string</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Bead</span>
-            <span class="nt">default_return_value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
-    <span class="nt">sets</span><span class="p">:</span>
-        <span class="nt">Beads</span><span class="p">:</span>
-            <span class="nt">criterion</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsBead</span>
-    <span class="nt">feature_variabilities</span><span class="p">:</span>
-        <span class="nt">ParticleDimension</span><span class="p">:</span>
-            <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">dimensions</span>
-            <span class="nt">variability</span><span class="p">:</span>
-                <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
-                <span class="nt">location</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">5</span>
-                <span class="nt">scale</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
-        <span class="nt">ParticleSubdivisions</span><span class="p">:</span>
-            <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">subdivisions</span>
-            <span class="nt">variability</span><span class="p">:</span>
-                <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
-                <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-        <span class="l l-Scalar l-Scalar-Plain">...</span>
+<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id4" title="Link to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">process_conditions</span><span class="p">:</span>
+<span class="linenos"> 2</span><span class="w">    </span><span class="nt">feature_criteria</span><span class="p">:</span>
+<span class="linenos"> 3</span><span class="w">        </span><span class="nt">IsBead</span><span class="p">:</span>
+<span class="linenos"> 4</span><span class="w">            </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.ContainsString</span>
+<span class="linenos"> 5</span><span class="w">            </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blueprint_name</span>
+<span class="linenos"> 6</span><span class="w">            </span><span class="nt">search_string</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Bead</span>
+<span class="linenos"> 7</span><span class="w">            </span><span class="nt">default_return_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="nt">sets</span><span class="p">:</span>
+<span class="linenos"> 9</span><span class="w">        </span><span class="nt">Beads</span><span class="p">:</span>
+<span class="linenos">10</span><span class="w">            </span><span class="nt">criterion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$IsParticle and $IsBead</span>
+<span class="linenos">11</span><span class="w">    </span><span class="nt">feature_variabilities</span><span class="p">:</span>
+<span class="linenos">12</span><span class="w">        </span><span class="nt">ParticleDimension</span><span class="p">:</span>
+<span class="linenos">13</span><span class="w">            </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dimensions</span>
+<span class="linenos">14</span><span class="w">            </span><span class="nt">variability</span><span class="p">:</span>
+<span class="linenos">15</span><span class="w">                </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.UniformDistribution3dHomogeneous</span>
+<span class="linenos">16</span><span class="w">                </span><span class="nt">location</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="linenos">17</span><span class="w">                </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="linenos">18</span><span class="w">        </span><span class="nt">ParticleSubdivisions</span><span class="p">:</span>
+<span class="linenos">19</span><span class="w">            </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">subdivisions</span>
+<span class="linenos">20</span><span class="w">            </span><span class="nt">variability</span><span class="p">:</span>
+<span class="linenos">21</span><span class="w">                </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.Constant</span>
+<span class="linenos">22</span><span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="linenos">23</span><span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">...</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <p>Note that there are built-ins process conditions that can be called in the recipe
 directly, such as the feature criterion <code class="docutils literal notranslate"><span class="pre">IsParticle</span></code> or the set <code class="docutils literal notranslate"><span class="pre">AllParticles</span></code>.
 There are also built-ins feature variabilities used in the example above
 (<code class="docutils literal notranslate"><span class="pre">builtins.UniformDistribution3dHomogeneous</span></code> or <code class="docutils literal notranslate"><span class="pre">builtins.Constant</span></code>). Please refer
-to <a class="reference internal" href="references.html#sec-references"><span class="std std-ref">References</span></a> for the built-in components.</p>
+to <span class="xref std std-ref">sec-references</span> for the built-in components.</p>
 <p>We also provide the possibility to write your own feature variabilities as python
 classes as a plugin (see <a class="reference internal" href="#subsec-plugin"><span class="std std-ref">Plugin Mechanism</span></a> below).</p>
-</div>
-<div class="section" id="synth-chain">
-<h3>Synth Chain<a class="headerlink" href="#synth-chain" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="synth-chain">
+<h3>Synth Chain<a class="headerlink" href="#synth-chain" title="Link to this heading">¶</a></h3>
 <p>After the <code class="docutils literal notranslate"><span class="pre">Blueprints</span></code> and the <code class="docutils literal notranslate"><span class="pre">ProcessConditions</span></code> for the synthesizing process are
 defined, the <code class="docutils literal notranslate"><span class="pre">SynthChain</span></code> would define the instructions for the toolbox to go from an
 empty blender scene to a rendered image of particles. These instructions are generally
@@ -246,47 +201,37 @@ in the set <code class="docutils literal notranslate"><span class="pre">AllParti
 <code class="docutils literal notranslate"><span class="pre">TriggerFeatureUpdate</span></code> applies the feature variability <code class="docutils literal notranslate"><span class="pre">ParticleDimension</span></code> to the
 set <code class="docutils literal notranslate"><span class="pre">AllParticles</span></code>.</p>
 <div class="literal-block-wrapper docutils container" id="id5">
-<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id5" title="Permalink to this code">¶</a></div>
-<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
-    <span class="nt">feature_generation_steps</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
-          <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
-        <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
-          <span class="nt">feature_variability_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
-          <span class="nt">affected_set_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
+<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id5" title="Link to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nt">synth_chain</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="nt">feature_generation_steps</span><span class="p">:</span>
+<span class="linenos">3</span><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.InvokeBlueprints</span>
+<span class="linenos">4</span><span class="w">          </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticleBlueprints</span>
+<span class="linenos">5</span><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.TriggerFeatureUpdate</span>
+<span class="linenos">6</span><span class="w">          </span><span class="nt">feature_variability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ParticleDimension</span>
+<span class="linenos">7</span><span class="w">          </span><span class="nt">affected_set_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AllParticles</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 </div>
 <p>The second group of the <code class="docutils literal notranslate"><span class="pre">SynthChain</span></code>, the <code class="docutils literal notranslate"><span class="pre">RenderingStep</span></code>, contains the instructions
 to render the current blender scene into an image. The step <code class="docutils literal notranslate"><span class="pre">RenderParticlesTogether</span></code>
 in the example below would render all particles in the scene. You can also choose the
 rendering mode and whether the features of the particles are to be written out (see
-<a class="reference internal" href="references.html#sec-references"><span class="std std-ref">References</span></a> for further rendering modes). To render one particle per image,
+<span class="xref std std-ref">sec-references</span> for further rendering modes). To render one particle per image,
 you can use the step <code class="docutils literal notranslate"><span class="pre">RenderParticlesIndividually</span></code> instead.</p>
 <div class="literal-block-wrapper docutils container" id="id6">
-<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id6" title="Permalink to this code">¶</a></div>
-<div class="highlight-yaml notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="nt">synth_chain</span><span class="p">:</span>
-    <span class="nt">rendering_steps</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
-          <span class="nt">rendering_mode</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">real</span>
-          <span class="nt">do_save_features</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>
+<div class="code-block-caption"><span class="caption-text">secondary_electron_microscopy.yaml</span><a class="headerlink" href="#id6" title="Link to this code">¶</a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nt">synth_chain</span><span class="p">:</span>
+<span class="linenos">2</span><span class="w">    </span><span class="nt">rendering_steps</span><span class="p">:</span>
+<span class="linenos">3</span><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$builtins.RenderParticlesTogether</span>
+<span class="linenos">4</span><span class="w">          </span><span class="nt">rendering_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">real</span>
+<span class="linenos">5</span><span class="w">          </span><span class="nt">do_save_features</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
 </pre></div>
-</td></tr></table></div>
 </div>
 </div>
-</div>
-<div class="section" id="plugin-mechanism">
-<span id="subsec-plugin"></span><h2>Plugin Mechanism<a class="headerlink" href="#plugin-mechanism" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="plugin-mechanism">
+<span id="subsec-plugin"></span><h2>Plugin Mechanism<a class="headerlink" href="#plugin-mechanism" title="Link to this heading">¶</a></h2>
 <p>The plugin mechanism is targeted towards advanced users and assumes a certain familiarity with Python, as well as synthPIC2.</p>
 <p>Plugins can be used to extend synthPIC2 to provide custom</p>
 <ul class="simple">
@@ -319,15 +264,15 @@ you can use the step <code class="docutils literal notranslate"><span class="pre
 </div>
 <p>Once you implemented a plugin <code class="docutils literal notranslate"><span class="pre">MyPlugin</span></code>, you can reference it in your recipes using the <code class="docutils literal notranslate"><span class="pre">$plugins.</span></code> directive, similar to <code class="docutils literal notranslate"><span class="pre">$builtins.</span></code> (see e.g. <a class="reference internal" href="tuts/tut_at_chocBeans_table.html#sec-tut-at-chocbeans-table"><span class="std std-ref">Chocolate Beans on Table</span></a>):</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">process_conditions</span><span class="p">:</span>
-  <span class="nt">feature_criteria</span><span class="p">:</span>
-    <span class="nt">FancyFeature</span><span class="p">:</span>
-      <span class="nt">feature_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">feature</span>
-      <span class="nt">variability</span><span class="p">:</span>
-<span class="hll">        <span class="nt">_target_</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">$plugins.mypackagename.MyPlugin</span>
+<span class="w">  </span><span class="nt">feature_criteria</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">FancyFeature</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">feature_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">feature</span>
+<span class="w">      </span><span class="nt">variability</span><span class="p">:</span>
+<span class="hll"><span class="w">        </span><span class="nt">_target_</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$plugins.mypackagename.MyPlugin</span>
 </span></pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -355,7 +300,7 @@ you can use the step <code class="docutils literal notranslate"><span class="pre
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dev_guides.html">Developer Guides</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
 </ul>
 
 <div class="relations">
@@ -371,12 +316,12 @@ you can use the step <code class="docutils literal notranslate"><span class="pre
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -393,8 +338,8 @@ you can use the step <code class="docutils literal notranslate"><span class="pre
       &copy;2024, Max Frei, Robert Panckow, Felix Febrian, Xuebei Zhu.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
       |
       <a href="_sources/concepts.rst.txt"
