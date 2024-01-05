@@ -7,7 +7,6 @@
 # NOTE: you have to use single-quoted strings in TOML for regular expressions.
 # It's the equivalent of r-strings in Python.
 
-
 [tool.mypy]
 check_untyped_defs = true
 disallow_untyped_defs = true
